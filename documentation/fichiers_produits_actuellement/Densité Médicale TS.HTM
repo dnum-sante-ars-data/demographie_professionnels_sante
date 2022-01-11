@@ -1,0 +1,3050 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta name="Generator" content="SAS Software Version 9.3, see www.sas.com">
+<meta http-equiv="Content-type" content="text/html; charset=windows-1252">
+<title>SAS Output</title>
+<style type="text/css">
+<!--
+.aftercaption
+{
+  background-color: #FAFBFE;
+  border-spacing: 0px;
+  color: #112277;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: x-small;
+  font-style: normal;
+  font-weight: bold;
+  padding-top: 4pt;
+}
+.batch
+{
+  background-color: #FAFBFE;
+  border: 1px solid #C1C1C1;
+  border-collapse: separate;
+  border-spacing: 1px;
+  color: #000000;
+  font-family: 'SAS Monospace', 'Courier New', Courier, monospace;
+  font-size: x-small;
+  font-style: normal;
+  font-weight: normal;
+  padding: 7px;
+}
+.beforecaption
+{
+  background-color: #FAFBFE;
+  border-spacing: 0px;
+  color: #112277;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: x-small;
+  font-style: normal;
+  font-weight: bold;
+}
+.body
+{
+  background-color: #FAFBFE;
+  color: #000000;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: x-small;
+  font-style: normal;
+  font-weight: normal;
+  margin-left: 8px;
+  margin-right: 8px;
+}
+.bodydate
+{
+  background-color: #FAFBFE;
+  border-spacing: 0px;
+  color: #000000;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: x-small;
+  font-style: normal;
+  font-weight: normal;
+  text-align: right;
+  vertical-align: top;
+  width: 100%;
+}
+.bycontentfolder
+{
+  color: #000000;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: x-small;
+  font-style: normal;
+  font-weight: normal;
+  list-style-type: none;
+  margin-left: 6pt;
+}
+.byline
+{
+  background-color: #FAFBFE;
+  border-spacing: 0px;
+  color: #112277;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: x-small;
+  font-style: normal;
+  font-weight: bold;
+}
+.bylinecontainer
+{
+  background-color: #FAFBFE;
+  border: 0px solid #000000;
+  border-spacing: 1px;
+  color: #000000;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: x-small;
+  font-style: normal;
+  font-weight: normal;
+  width: 100%;
+}
+.caption
+{
+  background-color: #FAFBFE;
+  border-spacing: 0px;
+  color: #112277;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: x-small;
+  font-style: normal;
+  font-weight: bold;
+}
+.cell
+{
+  background-color: #FAFBFE;
+  color: #000000;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: x-small;
+  font-style: normal;
+  font-weight: normal;
+}
+.container
+{
+  background-color: #FAFBFE;
+  color: #000000;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: x-small;
+  font-style: normal;
+  font-weight: normal;
+}
+.contentfolder
+{
+  color: #000000;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: x-small;
+  font-style: normal;
+  font-weight: normal;
+  list-style-type: none;
+  margin-left: 6pt;
+}
+.contentitem
+{
+  color: #000000;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: x-small;
+  font-style: normal;
+  font-weight: normal;
+  list-style-type: none;
+  margin-left: 6pt;
+}
+.contentproclabel
+{
+  background-color: #FAFBFE;
+  color: #112277;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: x-small;
+  font-style: normal;
+  font-weight: bold;
+}
+.contentprocname
+{
+  background-color: #FAFBFE;
+  color: #112277;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: x-small;
+  font-style: normal;
+  font-weight: bold;
+}
+.contents
+{
+  background-color: #FAFBFE;
+  color: #000000;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: x-small;
+  font-style: normal;
+  font-weight: normal;
+  list-style-type: decimal;
+  margin-left: 8px;
+  margin-right: 8px;
+}
+.contentsdate
+{
+  background-color: #FAFBFE;
+  color: #000000;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: x-small;
+  font-style: normal;
+  font-weight: normal;
+  width: 100%;
+}
+.contenttitle
+{
+  background-color: #FAFBFE;
+  color: #112277;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: x-small;
+  font-style: italic;
+  font-weight: bold;
+}
+.continued
+{
+  background-color: #FAFBFE;
+  border-spacing: 0px;
+  color: #112277;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: x-small;
+  font-style: normal;
+  font-weight: bold;
+  text-align: left;
+  width: 100%;
+}
+.data
+{
+  background-color: #FFFFFF;
+  border-bottom-width: 1px;
+  border-color: #C1C1C1;
+  border-left-width: 0px;
+  border-right-width: 1px;
+  border-style: solid;
+  border-top-width: 0px;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: x-small;
+  font-style: normal;
+  font-weight: normal;
+}
+.dataemphasis
+{
+  background-color: #FFFFFF;
+  border-bottom-width: 1px;
+  border-color: #C1C1C1;
+  border-left-width: 0px;
+  border-right-width: 1px;
+  border-style: solid;
+  border-top-width: 0px;
+  color: #000000;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: x-small;
+  font-style: italic;
+  font-weight: normal;
+}
+.dataemphasisfixed
+{
+  background-color: #FFFFFF;
+  border-bottom-width: 1px;
+  border-color: #C1C1C1;
+  border-left-width: 0px;
+  border-right-width: 1px;
+  border-style: solid;
+  border-top-width: 0px;
+  color: #000000;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: x-small;
+  font-style: italic;
+  font-weight: normal;
+}
+.dataempty
+{
+  background-color: #FFFFFF;
+  border-bottom-width: 1px;
+  border-color: #C1C1C1;
+  border-left-width: 0px;
+  border-right-width: 1px;
+  border-style: solid;
+  border-top-width: 0px;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: x-small;
+  font-style: normal;
+  font-weight: normal;
+}
+.datafixed
+{
+  background-color: #FFFFFF;
+  border-bottom-width: 1px;
+  border-color: #C1C1C1;
+  border-left-width: 0px;
+  border-right-width: 1px;
+  border-style: solid;
+  border-top-width: 0px;
+  font-family: 'Courier New', Courier;
+  font-size: x-small;
+  font-style: normal;
+  font-weight: normal;
+}
+.datastrong
+{
+  background-color: #FFFFFF;
+  border-bottom-width: 1px;
+  border-color: #C1C1C1;
+  border-left-width: 0px;
+  border-right-width: 1px;
+  border-style: solid;
+  border-top-width: 0px;
+  color: #000000;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: x-small;
+  font-style: normal;
+  font-weight: bold;
+}
+.datastrongfixed
+{
+  background-color: #FFFFFF;
+  border-bottom-width: 1px;
+  border-color: #C1C1C1;
+  border-left-width: 0px;
+  border-right-width: 1px;
+  border-style: solid;
+  border-top-width: 0px;
+  color: #000000;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: x-small;
+  font-style: normal;
+  font-weight: bold;
+}
+.date
+{
+  background-color: #FAFBFE;
+  color: #000000;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: x-small;
+  font-style: normal;
+  font-weight: normal;
+  width: 100%;
+}
+.document
+{
+  background-color: #FAFBFE;
+  color: #000000;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: x-small;
+  font-style: normal;
+  font-weight: normal;
+}
+a:link {
+color:#0000FF
+}
+a:visited {
+color:#800080
+}
+a:active {
+color:#800080
+}
+.errorbanner
+{
+  background-color: #FAFBFE;
+  color: #112277;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: x-small;
+  font-style: normal;
+  font-weight: bold;
+}
+.errorcontent
+{
+  background-color: #FAFBFE;
+  color: #112277;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: x-small;
+  font-style: normal;
+  font-weight: normal;
+}
+.errorcontentfixed
+{
+  background-color: #FAFBFE;
+  color: #112277;
+  font-family: 'Courier New', Courier;
+  font-size: x-small;
+  font-style: normal;
+  font-weight: normal;
+}
+.extendedpage
+{
+  background-color: #FAFBFE;
+  border: 1pt solid #000000;
+  color: #112277;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: x-small;
+  font-style: italic;
+  font-weight: normal;
+  text-align: center;
+}
+.fatalbanner
+{
+  background-color: #FAFBFE;
+  color: #112277;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: x-small;
+  font-style: normal;
+  font-weight: bold;
+}
+.fatalcontent
+{
+  background-color: #FAFBFE;
+  color: #112277;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: x-small;
+  font-style: normal;
+  font-weight: normal;
+}
+.fatalcontentfixed
+{
+  background-color: #FAFBFE;
+  color: #112277;
+  font-family: 'Courier New', Courier;
+  font-size: x-small;
+  font-style: normal;
+  font-weight: normal;
+}
+.folderaction
+{
+  color: #000000;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: x-small;
+  font-style: normal;
+  font-weight: normal;
+  list-style-type: none;
+  margin-left: 6pt;
+}
+.footer
+{
+  background-color: #EDF2F9;
+  color: #000000;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: x-small;
+  font-style: normal;
+  font-weight: bold;
+}
+.footeremphasis
+{
+  background-color: #EDF2F9;
+  color: #000000;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: x-small;
+  font-style: italic;
+  font-weight: normal;
+}
+.footeremphasisfixed
+{
+  background-color: #EDF2F9;
+  color: #000000;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: x-small;
+  font-style: italic;
+  font-weight: normal;
+}
+.footerempty
+{
+  background-color: #EDF2F9;
+  color: #000000;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: x-small;
+  font-style: normal;
+  font-weight: bold;
+}
+.footerfixed
+{
+  background-color: #EDF2F9;
+  color: #000000;
+  font-family: 'Courier New', Courier;
+  font-size: x-small;
+  font-style: normal;
+  font-weight: normal;
+}
+.footerstrong
+{
+  background-color: #EDF2F9;
+  color: #000000;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: x-small;
+  font-style: normal;
+  font-weight: bold;
+}
+.footerstrongfixed
+{
+  background-color: #EDF2F9;
+  color: #000000;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: x-small;
+  font-style: normal;
+  font-weight: bold;
+}
+.frame
+{
+  background-color: #FAFBFE;
+  color: #000000;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: x-small;
+  font-style: normal;
+  font-weight: normal;
+}
+.graph
+{
+  background-color: #FAFBFE;
+  border: 1px solid #C1C1C1;
+  border-collapse: separate;
+  border-spacing: 1px;
+  color: #000000;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: x-small;
+  font-style: normal;
+  font-weight: normal;
+}
+.header
+{
+  background-color: #EDF2F9;
+  border-bottom-width: 1px;
+  border-color: #B0B7BB;
+  border-left-width: 0px;
+  border-right-width: 1px;
+  border-style: solid;
+  border-top-width: 0px;
+  color: #112277;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: x-small;
+  font-style: normal;
+  font-weight: bold;
+}
+.headeremphasis
+{
+  background-color: #D8DBD3;
+  border-bottom-width: 1px;
+  border-color: #B0B7BB;
+  border-left-width: 0px;
+  border-right-width: 1px;
+  border-style: solid;
+  border-top-width: 0px;
+  color: #000000;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: x-small;
+  font-style: italic;
+  font-weight: normal;
+}
+.headeremphasisfixed
+{
+  background-color: #D8DBD3;
+  border-bottom-width: 1px;
+  border-color: #B0B7BB;
+  border-left-width: 0px;
+  border-right-width: 1px;
+  border-style: solid;
+  border-top-width: 0px;
+  color: #000000;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: x-small;
+  font-style: italic;
+  font-weight: normal;
+}
+.headerempty
+{
+  background-color: #EDF2F9;
+  border-bottom-width: 1px;
+  border-color: #B0B7BB;
+  border-left-width: 0px;
+  border-right-width: 1px;
+  border-style: solid;
+  border-top-width: 0px;
+  color: #112277;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: x-small;
+  font-style: normal;
+  font-weight: bold;
+}
+.headerfixed
+{
+  background-color: #EDF2F9;
+  border-bottom-width: 1px;
+  border-color: #B0B7BB;
+  border-left-width: 0px;
+  border-right-width: 1px;
+  border-style: solid;
+  border-top-width: 0px;
+  color: #112277;
+  font-family: 'Courier New', Courier;
+  font-size: x-small;
+  font-style: normal;
+  font-weight: normal;
+}
+.headersandfooters
+{
+  background-color: #EDF2F9;
+  color: #000000;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: x-small;
+  font-style: normal;
+  font-weight: bold;
+}
+.headerstrong
+{
+  background-color: #D8DBD3;
+  border-bottom-width: 1px;
+  border-color: #B0B7BB;
+  border-left-width: 0px;
+  border-right-width: 1px;
+  border-style: solid;
+  border-top-width: 0px;
+  color: #000000;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: x-small;
+  font-style: normal;
+  font-weight: bold;
+}
+.headerstrongfixed
+{
+  background-color: #D8DBD3;
+  border-bottom-width: 1px;
+  border-color: #B0B7BB;
+  border-left-width: 0px;
+  border-right-width: 1px;
+  border-style: solid;
+  border-top-width: 0px;
+  color: #000000;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: x-small;
+  font-style: normal;
+  font-weight: bold;
+}
+.index
+{
+  background-color: #FAFBFE;
+  color: #000000;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: x-small;
+  font-style: normal;
+  font-weight: normal;
+}
+.indexaction
+{
+  color: #000000;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: x-small;
+  font-style: normal;
+  font-weight: normal;
+  list-style-type: none;
+  margin-left: 6pt;
+}
+.indexitem
+{
+  color: #000000;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: x-small;
+  font-style: normal;
+  font-weight: normal;
+  list-style-type: none;
+  margin-left: 6pt;
+}
+.indexprocname
+{
+  background-color: #FAFBFE;
+  color: #112277;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: x-small;
+  font-style: normal;
+  font-weight: bold;
+}
+.indextitle
+{
+  background-color: #FAFBFE;
+  color: #112277;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: x-small;
+  font-style: italic;
+  font-weight: bold;
+}
+.layoutcontainer
+{
+  border: 0px solid #000000;
+  border-spacing: 30px;
+}
+.layoutregion
+{
+  border: 0px solid #000000;
+  border-spacing: 30px;
+}
+.list
+{
+  background-color: #FAFBFE;
+  color: #000000;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: x-small;
+  font-style: normal;
+  font-weight: normal;
+  list-style-type: disc;
+  text-align: left;
+}
+.list10
+{
+  background-color: #FAFBFE;
+  color: #000000;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: x-small;
+  font-style: normal;
+  font-weight: normal;
+  list-style-type: square;
+  text-align: left;
+}
+.list2
+{
+  background-color: #FAFBFE;
+  color: #000000;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: x-small;
+  font-style: normal;
+  font-weight: normal;
+  list-style-type: circle;
+  text-align: left;
+}
+.list3
+{
+  background-color: #FAFBFE;
+  color: #000000;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: x-small;
+  font-style: normal;
+  font-weight: normal;
+  list-style-type: square;
+  text-align: left;
+}
+.list4
+{
+  background-color: #FAFBFE;
+  color: #000000;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: x-small;
+  font-style: normal;
+  font-weight: normal;
+  list-style-type: square;
+  text-align: left;
+}
+.list5
+{
+  background-color: #FAFBFE;
+  color: #000000;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: x-small;
+  font-style: normal;
+  font-weight: normal;
+  list-style-type: square;
+  text-align: left;
+}
+.list6
+{
+  background-color: #FAFBFE;
+  color: #000000;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: x-small;
+  font-style: normal;
+  font-weight: normal;
+  list-style-type: square;
+  text-align: left;
+}
+.list7
+{
+  background-color: #FAFBFE;
+  color: #000000;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: x-small;
+  font-style: normal;
+  font-weight: normal;
+  list-style-type: square;
+  text-align: left;
+}
+.list8
+{
+  background-color: #FAFBFE;
+  color: #000000;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: x-small;
+  font-style: normal;
+  font-weight: normal;
+  list-style-type: square;
+  text-align: left;
+}
+.list9
+{
+  background-color: #FAFBFE;
+  color: #000000;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: x-small;
+  font-style: normal;
+  font-weight: normal;
+  list-style-type: square;
+  text-align: left;
+}
+.listitem
+{
+  background-color: #FAFBFE;
+  color: #000000;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: x-small;
+  font-style: normal;
+  font-weight: normal;
+}
+.listitem10
+{
+  background-color: #FAFBFE;
+  color: #000000;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: x-small;
+  font-style: normal;
+  font-weight: normal;
+}
+.listitem2
+{
+  background-color: #FAFBFE;
+  color: #000000;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: x-small;
+  font-style: normal;
+  font-weight: normal;
+}
+.listitem3
+{
+  background-color: #FAFBFE;
+  color: #000000;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: x-small;
+  font-style: normal;
+  font-weight: normal;
+}
+.listitem4
+{
+  background-color: #FAFBFE;
+  color: #000000;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: x-small;
+  font-style: normal;
+  font-weight: normal;
+}
+.listitem5
+{
+  background-color: #FAFBFE;
+  color: #000000;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: x-small;
+  font-style: normal;
+  font-weight: normal;
+}
+.listitem6
+{
+  background-color: #FAFBFE;
+  color: #000000;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: x-small;
+  font-style: normal;
+  font-weight: normal;
+}
+.listitem7
+{
+  background-color: #FAFBFE;
+  color: #000000;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: x-small;
+  font-style: normal;
+  font-weight: normal;
+}
+.listitem8
+{
+  background-color: #FAFBFE;
+  color: #000000;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: x-small;
+  font-style: normal;
+  font-weight: normal;
+}
+.listitem9
+{
+  background-color: #FAFBFE;
+  color: #000000;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: x-small;
+  font-style: normal;
+  font-weight: normal;
+}
+.note
+{
+  background-color: #FAFBFE;
+  color: #112277;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: x-small;
+  font-style: normal;
+  font-weight: normal;
+}
+.notebanner
+{
+  background-color: #FAFBFE;
+  color: #112277;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: x-small;
+  font-style: normal;
+  font-weight: bold;
+}
+.notecontent
+{
+  background-color: #FAFBFE;
+  color: #112277;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: x-small;
+  font-style: normal;
+  font-weight: normal;
+}
+.notecontentfixed
+{
+  background-color: #FAFBFE;
+  color: #112277;
+  font-family: 'Courier New', Courier;
+  font-size: x-small;
+  font-style: normal;
+  font-weight: normal;
+}
+.output
+{
+  background-color: #FAFBFE;
+  border: 1px solid #C1C1C1;
+  border-collapse: separate;
+  border-spacing: 1px;
+  color: #000000;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: x-small;
+  font-style: normal;
+  font-weight: normal;
+}
+.pageno
+{
+  background-color: #FAFBFE;
+  border-spacing: 0px;
+  color: #112277;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: x-small;
+  font-style: normal;
+  font-weight: bold;
+  text-align: right;
+  vertical-align: top;
+}
+.pages
+{
+  background-color: #FAFBFE;
+  color: #000000;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: x-small;
+  font-style: normal;
+  font-weight: normal;
+  list-style-type: decimal;
+  margin-left: 8px;
+  margin-right: 8px;
+}
+.pagesdate
+{
+  background-color: #FAFBFE;
+  color: #000000;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: x-small;
+  font-style: normal;
+  font-weight: normal;
+  width: 100%;
+}
+.pagesitem
+{
+  color: #000000;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: x-small;
+  font-style: normal;
+  font-weight: normal;
+  list-style-type: none;
+  margin-left: 6pt;
+}
+.pagesproclabel
+{
+  background-color: #FAFBFE;
+  color: #112277;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: x-small;
+  font-style: normal;
+  font-weight: bold;
+}
+.pagesprocname
+{
+  background-color: #FAFBFE;
+  color: #112277;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: x-small;
+  font-style: normal;
+  font-weight: bold;
+}
+.pagestitle
+{
+  background-color: #FAFBFE;
+  color: #112277;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: x-small;
+  font-style: italic;
+  font-weight: bold;
+}
+.paragraph
+{
+  background-color: #FAFBFE;
+  color: #000000;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: x-small;
+  font-style: normal;
+  font-weight: normal;
+  text-align: left;
+}
+.parskip
+{
+  border: 0px solid #000000;
+  border-spacing: 0px;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: x-small;
+  font-style: normal;
+  font-weight: bold;
+}
+.prepage
+{
+  background-color: #FAFBFE;
+  color: #112277;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: x-small;
+  font-style: normal;
+  font-weight: normal;
+  text-align: left;
+}
+.proctitle
+{
+  background-color: #FAFBFE;
+  color: #112277;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: x-small;
+  font-style: normal;
+  font-weight: bold;
+}
+.proctitlefixed
+{
+  background-color: #FAFBFE;
+  color: #112277;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: x-small;
+  font-style: normal;
+  font-weight: bold;
+}
+.rowfooter
+{
+  background-color: #EDF2F9;
+  color: #000000;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: x-small;
+  font-style: normal;
+  font-weight: bold;
+}
+.rowfooteremphasis
+{
+  background-color: #EDF2F9;
+  color: #000000;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: x-small;
+  font-style: italic;
+  font-weight: normal;
+}
+.rowfooteremphasisfixed
+{
+  background-color: #EDF2F9;
+  color: #000000;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: x-small;
+  font-style: italic;
+  font-weight: normal;
+}
+.rowfooterempty
+{
+  background-color: #EDF2F9;
+  color: #000000;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: x-small;
+  font-style: normal;
+  font-weight: bold;
+}
+.rowfooterfixed
+{
+  background-color: #EDF2F9;
+  color: #000000;
+  font-family: 'Courier New', Courier;
+  font-size: x-small;
+  font-style: normal;
+  font-weight: normal;
+}
+.rowfooterstrong
+{
+  background-color: #EDF2F9;
+  color: #000000;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: x-small;
+  font-style: normal;
+  font-weight: bold;
+}
+.rowfooterstrongfixed
+{
+  background-color: #EDF2F9;
+  color: #000000;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: x-small;
+  font-style: normal;
+  font-weight: bold;
+}
+.rowheader
+{
+  background-color: #EDF2F9;
+  border-bottom-width: 1px;
+  border-color: #B0B7BB;
+  border-left-width: 0px;
+  border-right-width: 1px;
+  border-style: solid;
+  border-top-width: 0px;
+  color: #112277;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: x-small;
+  font-style: normal;
+  font-weight: bold;
+}
+.rowheaderemphasis
+{
+  background-color: #EDF2F9;
+  border-bottom-width: 1px;
+  border-color: #B0B7BB;
+  border-left-width: 0px;
+  border-right-width: 1px;
+  border-style: solid;
+  border-top-width: 0px;
+  color: #112277;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: x-small;
+  font-style: italic;
+  font-weight: normal;
+}
+.rowheaderemphasisfixed
+{
+  background-color: #EDF2F9;
+  border-bottom-width: 1px;
+  border-color: #B0B7BB;
+  border-left-width: 0px;
+  border-right-width: 1px;
+  border-style: solid;
+  border-top-width: 0px;
+  color: #112277;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: x-small;
+  font-style: italic;
+  font-weight: normal;
+}
+.rowheaderempty
+{
+  background-color: #EDF2F9;
+  border-bottom-width: 1px;
+  border-color: #B0B7BB;
+  border-left-width: 0px;
+  border-right-width: 1px;
+  border-style: solid;
+  border-top-width: 0px;
+  color: #112277;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: x-small;
+  font-style: normal;
+  font-weight: bold;
+}
+.rowheaderfixed
+{
+  background-color: #EDF2F9;
+  border-bottom-width: 1px;
+  border-color: #B0B7BB;
+  border-left-width: 0px;
+  border-right-width: 1px;
+  border-style: solid;
+  border-top-width: 0px;
+  color: #112277;
+  font-family: 'Courier New', Courier;
+  font-size: x-small;
+  font-style: normal;
+  font-weight: normal;
+}
+.rowheaderstrong
+{
+  background-color: #EDF2F9;
+  border-bottom-width: 1px;
+  border-color: #B0B7BB;
+  border-left-width: 0px;
+  border-right-width: 1px;
+  border-style: solid;
+  border-top-width: 0px;
+  color: #112277;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: x-small;
+  font-style: normal;
+  font-weight: bold;
+}
+.rowheaderstrongfixed
+{
+  background-color: #EDF2F9;
+  border-bottom-width: 1px;
+  border-color: #B0B7BB;
+  border-left-width: 0px;
+  border-right-width: 1px;
+  border-style: solid;
+  border-top-width: 0px;
+  color: #112277;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: x-small;
+  font-style: normal;
+  font-weight: bold;
+}
+.systemfooter
+{
+  background-color: #FAFBFE;
+  color: #112277;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: x-small;
+  font-style: normal;
+  font-weight: normal;
+}
+.systemfooter10
+{
+  background-color: #FAFBFE;
+  color: #112277;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: x-small;
+  font-style: normal;
+  font-weight: normal;
+}
+.systemfooter2
+{
+  background-color: #FAFBFE;
+  color: #112277;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: x-small;
+  font-style: normal;
+  font-weight: normal;
+}
+.systemfooter3
+{
+  background-color: #FAFBFE;
+  color: #112277;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: x-small;
+  font-style: normal;
+  font-weight: normal;
+}
+.systemfooter4
+{
+  background-color: #FAFBFE;
+  color: #112277;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: x-small;
+  font-style: normal;
+  font-weight: normal;
+}
+.systemfooter5
+{
+  background-color: #FAFBFE;
+  color: #112277;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: x-small;
+  font-style: normal;
+  font-weight: normal;
+}
+.systemfooter6
+{
+  background-color: #FAFBFE;
+  color: #112277;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: x-small;
+  font-style: normal;
+  font-weight: normal;
+}
+.systemfooter7
+{
+  background-color: #FAFBFE;
+  color: #112277;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: x-small;
+  font-style: normal;
+  font-weight: normal;
+}
+.systemfooter8
+{
+  background-color: #FAFBFE;
+  color: #112277;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: x-small;
+  font-style: normal;
+  font-weight: normal;
+}
+.systemfooter9
+{
+  background-color: #FAFBFE;
+  color: #112277;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: x-small;
+  font-style: normal;
+  font-weight: normal;
+}
+.systemtitle
+{
+  background-color: #FAFBFE;
+  color: #112277;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: small;
+  font-style: normal;
+  font-weight: bold;
+}
+.systemtitle10
+{
+  background-color: #FAFBFE;
+  color: #112277;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: small;
+  font-style: normal;
+  font-weight: bold;
+}
+.systemtitle2
+{
+  background-color: #FAFBFE;
+  color: #112277;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: small;
+  font-style: normal;
+  font-weight: bold;
+}
+.systemtitle3
+{
+  background-color: #FAFBFE;
+  color: #112277;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: small;
+  font-style: normal;
+  font-weight: bold;
+}
+.systemtitle4
+{
+  background-color: #FAFBFE;
+  color: #112277;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: small;
+  font-style: normal;
+  font-weight: bold;
+}
+.systemtitle5
+{
+  background-color: #FAFBFE;
+  color: #112277;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: small;
+  font-style: normal;
+  font-weight: bold;
+}
+.systemtitle6
+{
+  background-color: #FAFBFE;
+  color: #112277;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: small;
+  font-style: normal;
+  font-weight: bold;
+}
+.systemtitle7
+{
+  background-color: #FAFBFE;
+  color: #112277;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: small;
+  font-style: normal;
+  font-weight: bold;
+}
+.systemtitle8
+{
+  background-color: #FAFBFE;
+  color: #112277;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: small;
+  font-style: normal;
+  font-weight: bold;
+}
+.systemtitle9
+{
+  background-color: #FAFBFE;
+  color: #112277;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: small;
+  font-style: normal;
+  font-weight: bold;
+}
+.systitleandfootercontainer
+{
+  background-color: #FAFBFE;
+  border: 0px solid #000000;
+  border-spacing: 1px;
+  color: #000000;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: x-small;
+  font-style: normal;
+  font-weight: normal;
+  width: 100%;
+}
+.table
+{
+  border-bottom-width: 0px;
+  border-collapse: separate;
+  border-color: #C1C1C1;
+  border-left-width: 1px;
+  border-right-width: 0px;
+  border-spacing: 0px;
+  border-style: solid;
+  border-top-width: 1px;
+}
+.top_stacked_value
+{
+  padding-bottom: 1px;
+}
+.middle_stacked_value
+{
+  padding-top: 1px;
+  padding-bottom: 1px;
+}
+.bottom_stacked_value
+{
+  padding-top: 1px;
+}
+.titleandnotecontainer
+{
+  background-color: #FAFBFE;
+  border: 0px solid #000000;
+  border-spacing: 1px;
+  color: #000000;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: x-small;
+  font-style: normal;
+  font-weight: normal;
+  width: 100%;
+}
+.titlesandfooters
+{
+  background-color: #FAFBFE;
+  color: #112277;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: x-small;
+  font-style: normal;
+  font-weight: bold;
+}
+.usertext
+{
+  background-color: #FAFBFE;
+  color: #112277;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: x-small;
+  font-style: normal;
+  font-weight: normal;
+  text-align: left;
+}
+.warnbanner
+{
+  background-color: #FAFBFE;
+  color: #112277;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: x-small;
+  font-style: normal;
+  font-weight: bold;
+}
+.warncontent
+{
+  background-color: #FAFBFE;
+  color: #112277;
+  font-family: Arial, 'Albany AMT', Helvetica, Helv;
+  font-size: x-small;
+  font-style: normal;
+  font-weight: normal;
+}
+.warncontentfixed
+{
+  background-color: #FAFBFE;
+  color: #112277;
+  font-family: 'Courier New', Courier;
+  font-size: x-small;
+  font-style: normal;
+  font-weight: normal;
+}
+.l {text-align: left }
+.c {text-align: center }
+.r {text-align: right }
+.d {text-align: right }
+.j {text-align: justify }
+.t {vertical-align: top }
+.m {vertical-align: middle }
+.b {vertical-align: bottom }
+TD, TH {vertical-align: top }
+.stacked_cell{padding: 0 }
+-->
+</style>
+<script language="javascript" type="text/javascript">
+<!-- 
+function startup(){
+
+}
+function shutdown(){
+
+}
+
+//-->
+</script>
+
+</head>
+<body onload="startup()" onunload="shutdown()" class="body">
+
+<script language="javascript" type="text/javascript">
+<!-- 
+var _info = navigator.userAgent
+var _ie = (_info.indexOf("MSIE") > 0
+          && _info.indexOf("Win") > 0
+          && _info.indexOf("Windows 3.1") < 0);
+var _ie64 = _info.indexOf("x64") > 0
+
+//-->
+</script>
+
+<div class="branch">
+<a name="IDX"></a>
+<table class="systitleandfootercontainer" width="100%" cellspacing="1" cellpadding="1" rules="none" frame="void" border="0" summary="Page Layout">
+<tr>
+<td class="c systemtitle" style=" color: #0000FF; font-size: 20pt;">Densité médicale des Territoires de Santé</td>
+</tr>
+<tr>
+<td class="c systemtitle2" style=" color: #008000; font-size: 18pt;">Densité Région Normandie : 80,23 MG y compris MEP pr 100.000 hab.</td>
+</tr>
+<tr>
+<td class="c systemtitle3" style=" color: #008000; font-size: 18pt;">Densité France Métropolitaine : 87,38 MG y compris MEP pr 100.000 hab.</td>
+</tr>
+</table><br>
+<div>
+<div align="center">
+<table class="table" cellspacing="0" cellpadding="5" rules="all" frame="box" bordercolor="#C1C1C1" summary="Procedure Print: Table WORK.A">
+<colgroup>
+<col>
+<col>
+</colgroup>
+<colgroup>
+<col>
+<col>
+<col>
+<col>
+<col>
+</colgroup>
+<thead>
+<tr>
+<th class="l header" scope="col">Numéro Territoire<br>Santé</th>
+<th class="l header" scope="col">Nom Territoire Santé</th>
+<th class="r header" scope="col">Population Légale TS</th>
+<th class="r header" scope="col">Population domiciliée<br>dans une commune<br>de la Région<br>Normandie</th>
+<th class="r header" scope="col">Part population<br>domiciliée <br>dans une commune<br>de la Région<br>Normandie</th>
+<th class="r header" scope="col">Nb de Médecins<br>Généralistes<br>y compris<br>MEP</th>
+<th class="r header" scope="col">Densité MG y<br>compris MEP<br>pr 100.000 hab.</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th class="l rowheader" scope="row">14020</th>
+<th class="l rowheader" scope="row">Argences</th>
+<td class="r data">  12786</td>
+<td class="r data">  12786</td>
+<td class="r data"> 100,00</td>
+<td class="r data"> 12</td>
+<td class="r data">  93,85</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">14027</th>
+<th class="l rowheader" scope="row">Aunay-sur-Odon</th>
+<td class="r data">   8483</td>
+<td class="r data">   8483</td>
+<td class="r data"> 100,00</td>
+<td class="r data">  6</td>
+<td class="r data">  70,73</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">14047</th>
+<th class="l rowheader" scope="row">Bayeux</th>
+<td class="r data">  40095</td>
+<td class="r data">  40095</td>
+<td class="r data"> 100,00</td>
+<td class="r data"> 32</td>
+<td class="r data">  79,81</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">14101</th>
+<th class="l rowheader" scope="row">Bretteville-sur-Odon</th>
+<td class="r data">  19849</td>
+<td class="r data">  19849</td>
+<td class="r data"> 100,00</td>
+<td class="r data"> 18</td>
+<td class="r data">  90,68</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">14117</th>
+<th class="l rowheader" scope="row">Cabourg</th>
+<td class="r data">   9781</td>
+<td class="r data">   9781</td>
+<td class="r data"> 100,00</td>
+<td class="r data">  7</td>
+<td class="r data">  71,57</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">14118</th>
+<th class="l rowheader" scope="row">Caen</th>
+<td class="r data"> 107871</td>
+<td class="r data"> 107871</td>
+<td class="r data"> 100,00</td>
+<td class="r data">193</td>
+<td class="r data"> 178,92</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">14167</th>
+<th class="l rowheader" scope="row">Colombelles</th>
+<td class="r data">  23975</td>
+<td class="r data">  23975</td>
+<td class="r data"> 100,00</td>
+<td class="r data"> 19</td>
+<td class="r data">  79,25</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">14174</th>
+<th class="l rowheader" scope="row">Condé-sur-Noireau</th>
+<td class="r data">  26787</td>
+<td class="r data">  26787</td>
+<td class="r data"> 100,00</td>
+<td class="r data"> 18</td>
+<td class="r data">  67,20</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">14191</th>
+<th class="l rowheader" scope="row">Courseulles-sur-Mer</th>
+<td class="r data">  13586</td>
+<td class="r data">  13586</td>
+<td class="r data"> 100,00</td>
+<td class="r data"> 13</td>
+<td class="r data">  95,69</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">14220</th>
+<th class="l rowheader" scope="row">Deauville</th>
+<td class="r data">  10659</td>
+<td class="r data">  10659</td>
+<td class="r data"> 100,00</td>
+<td class="r data"> 18</td>
+<td class="r data"> 168,87</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">14225</th>
+<th class="l rowheader" scope="row">Dives-sur-Mer</th>
+<td class="r data">  13562</td>
+<td class="r data">  13562</td>
+<td class="r data"> 100,00</td>
+<td class="r data"> 12</td>
+<td class="r data">  88,48</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">14258</th>
+<th class="l rowheader" scope="row">Falaise</th>
+<td class="r data">  30447</td>
+<td class="r data">  30447</td>
+<td class="r data"> 100,00</td>
+<td class="r data"> 18</td>
+<td class="r data">  59,12</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">14327</th>
+<th class="l rowheader" scope="row">Hérouville-Saint-Clair</th>
+<td class="r data">  30963</td>
+<td class="r data">  30963</td>
+<td class="r data"> 100,00</td>
+<td class="r data"> 37</td>
+<td class="r data"> 119,50</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">14333</th>
+<th class="l rowheader" scope="row">Honfleur</th>
+<td class="r data">  17774</td>
+<td class="r data">  17774</td>
+<td class="r data"> 100,00</td>
+<td class="r data"> 14</td>
+<td class="r data">  78,77</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">14341</th>
+<th class="l rowheader" scope="row">Ifs</th>
+<td class="r data">  51743</td>
+<td class="r data">  51743</td>
+<td class="r data"> 100,00</td>
+<td class="r data"> 44</td>
+<td class="r data">  85,04</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">14342</th>
+<th class="l rowheader" scope="row">Isigny-sur-Mer</th>
+<td class="r data">   8014</td>
+<td class="r data">   8014</td>
+<td class="r data"> 100,00</td>
+<td class="r data">  9</td>
+<td class="r data"> 112,30</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">14366</th>
+<th class="l rowheader" scope="row">Lisieux</th>
+<td class="r data">  38697</td>
+<td class="r data">  38697</td>
+<td class="r data"> 100,00</td>
+<td class="r data"> 23</td>
+<td class="r data">  59,44</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">14370</th>
+<th class="l rowheader" scope="row">Le Molay-Littry</th>
+<td class="r data">   9111</td>
+<td class="r data">   9111</td>
+<td class="r data"> 100,00</td>
+<td class="r data">  4</td>
+<td class="r data">  43,90</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">14371</th>
+<th class="l rowheader" scope="row">Livarot</th>
+<td class="r data">   6647</td>
+<td class="r data">   6647</td>
+<td class="r data"> 100,00</td>
+<td class="r data">  7</td>
+<td class="r data"> 105,31</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">14431</th>
+<th class="l rowheader" scope="row">Mézidon-Canon</th>
+<td class="r data">  11690</td>
+<td class="r data">  11690</td>
+<td class="r data"> 100,00</td>
+<td class="r data">  6</td>
+<td class="r data">  51,33</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">14437</th>
+<th class="l rowheader" scope="row">Mondeville</th>
+<td class="r data">  19594</td>
+<td class="r data">  19594</td>
+<td class="r data"> 100,00</td>
+<td class="r data"> 18</td>
+<td class="r data">  91,86</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">14478</th>
+<th class="l rowheader" scope="row">Orbec</th>
+<td class="r data">  13455</td>
+<td class="r data">  13455</td>
+<td class="r data"> 100,00</td>
+<td class="r data">  7</td>
+<td class="r data">  52,03</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">14488</th>
+<th class="l rowheader" scope="row">Ouistreham</th>
+<td class="r data">  20208</td>
+<td class="r data">  20208</td>
+<td class="r data"> 100,00</td>
+<td class="r data"> 20</td>
+<td class="r data">  98,97</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">14514</th>
+<th class="l rowheader" scope="row">Pont-l&#39;Évêque</th>
+<td class="r data">  10639</td>
+<td class="r data">  10639</td>
+<td class="r data"> 100,00</td>
+<td class="r data">  8</td>
+<td class="r data">  75,20</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">14654</th>
+<th class="l rowheader" scope="row">Saint-Pierre-sur-Dives</th>
+<td class="r data">  10309</td>
+<td class="r data">  10309</td>
+<td class="r data"> 100,00</td>
+<td class="r data">  6</td>
+<td class="r data">  58,20</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">14689</th>
+<th class="l rowheader" scope="row">Thury-Harcourt</th>
+<td class="r data">  10370</td>
+<td class="r data">  10370</td>
+<td class="r data"> 100,00</td>
+<td class="r data">  7</td>
+<td class="r data">  67,50</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">14712</th>
+<th class="l rowheader" scope="row">Troarn</th>
+<td class="r data">   7950</td>
+<td class="r data">   7950</td>
+<td class="r data"> 100,00</td>
+<td class="r data">  5</td>
+<td class="r data">  62,89</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">14715</th>
+<th class="l rowheader" scope="row">Trouville-sur-Mer</th>
+<td class="r data">   7206</td>
+<td class="r data">   7206</td>
+<td class="r data"> 100,00</td>
+<td class="r data">  6</td>
+<td class="r data">  83,26</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">14738</th>
+<th class="l rowheader" scope="row">Verson</th>
+<td class="r data">  32602</td>
+<td class="r data">  32602</td>
+<td class="r data"> 100,00</td>
+<td class="r data"> 28</td>
+<td class="r data">  85,88</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">14752</th>
+<th class="l rowheader" scope="row">Villers-Bocage</th>
+<td class="r data">  20723</td>
+<td class="r data">  20723</td>
+<td class="r data"> 100,00</td>
+<td class="r data"> 19</td>
+<td class="r data">  91,69</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">14754</th>
+<th class="l rowheader" scope="row">Villers-sur-Mer</th>
+<td class="r data">   9351</td>
+<td class="r data">   9351</td>
+<td class="r data"> 100,00</td>
+<td class="r data">  8</td>
+<td class="r data">  85,55</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">14762</th>
+<th class="l rowheader" scope="row">Vire</th>
+<td class="r data">  33497</td>
+<td class="r data">  33497</td>
+<td class="r data"> 100,00</td>
+<td class="r data"> 23</td>
+<td class="r data">  68,66</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">27016</th>
+<th class="l rowheader" scope="row">Les Andelys</th>
+<td class="r data">  14751</td>
+<td class="r data">  14751</td>
+<td class="r data"> 100,00</td>
+<td class="r data"> 10</td>
+<td class="r data">  67,79</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">27051</th>
+<th class="l rowheader" scope="row">Beaumont-le-Roger</th>
+<td class="r data">  17688</td>
+<td class="r data">  17688</td>
+<td class="r data"> 100,00</td>
+<td class="r data">  8</td>
+<td class="r data">  45,23</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">27056</th>
+<th class="l rowheader" scope="row">Bernay</th>
+<td class="r data">  25130</td>
+<td class="r data">  25130</td>
+<td class="r data"> 100,00</td>
+<td class="r data"> 17</td>
+<td class="r data">  67,65</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">27065</th>
+<th class="l rowheader" scope="row">Beuzeville</th>
+<td class="r data">  20599</td>
+<td class="r data">  20599</td>
+<td class="r data"> 100,00</td>
+<td class="r data"> 14</td>
+<td class="r data">  67,96</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">27103</th>
+<th class="l rowheader" scope="row">Bourg-Achard</th>
+<td class="r data">  22689</td>
+<td class="r data">  22689</td>
+<td class="r data"> 100,00</td>
+<td class="r data"> 16</td>
+<td class="r data">  70,52</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">27112</th>
+<th class="l rowheader" scope="row">Breteuil</th>
+<td class="r data">   8319</td>
+<td class="r data">   8319</td>
+<td class="r data"> 100,00</td>
+<td class="r data">  3</td>
+<td class="r data">  36,06</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">27116</th>
+<th class="l rowheader" scope="row">Brionne</th>
+<td class="r data">  15967</td>
+<td class="r data">  15967</td>
+<td class="r data"> 100,00</td>
+<td class="r data"> 11</td>
+<td class="r data">  68,89</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">27165</th>
+<th class="l rowheader" scope="row">Conches-en-Ouche</th>
+<td class="r data">  18454</td>
+<td class="r data">  18454</td>
+<td class="r data"> 100,00</td>
+<td class="r data">  6</td>
+<td class="r data">  32,51</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">27198</th>
+<th class="l rowheader" scope="row">Damville</th>
+<td class="r data">   8458</td>
+<td class="r data">   8458</td>
+<td class="r data"> 100,00</td>
+<td class="r data">  1</td>
+<td class="r data">  11,82</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">27226</th>
+<th class="l rowheader" scope="row">Étrépagny</th>
+<td class="r data">  11933</td>
+<td class="r data">  11933</td>
+<td class="r data"> 100,00</td>
+<td class="r data">  6</td>
+<td class="r data">  50,28</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">27229</th>
+<th class="l rowheader" scope="row">Évreux</th>
+<td class="r data">  84699</td>
+<td class="r data">  84699</td>
+<td class="r data"> 100,00</td>
+<td class="r data"> 62</td>
+<td class="r data">  73,20</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">27230</th>
+<th class="l rowheader" scope="row">Ézy-sur-Eure</th>
+<td class="r data">  36412</td>
+<td class="r data">  19384</td>
+<td class="r data">  53,24</td>
+<td class="r data"> 21</td>
+<td class="r data">  57,67</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">27246</th>
+<th class="l rowheader" scope="row">Fleury-sur-Andelle</th>
+<td class="r data">  13333</td>
+<td class="r data">  13333</td>
+<td class="r data"> 100,00</td>
+<td class="r data"> 13</td>
+<td class="r data">  97,50</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">27275</th>
+<th class="l rowheader" scope="row">Gaillon</th>
+<td class="r data">  29048</td>
+<td class="r data">  29048</td>
+<td class="r data"> 100,00</td>
+<td class="r data"> 14</td>
+<td class="r data">  48,20</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">27284</th>
+<th class="l rowheader" scope="row">Gisors</th>
+<td class="r data">  29311</td>
+<td class="r data">  18328</td>
+<td class="r data">  62,53</td>
+<td class="r data"> 13</td>
+<td class="r data">  44,35</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">27375</th>
+<th class="l rowheader" scope="row">Louviers</th>
+<td class="r data">  34663</td>
+<td class="r data">  34663</td>
+<td class="r data"> 100,00</td>
+<td class="r data"> 20</td>
+<td class="r data">  57,70</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">27428</th>
+<th class="l rowheader" scope="row">Le Neubourg</th>
+<td class="r data">  21285</td>
+<td class="r data">  21285</td>
+<td class="r data"> 100,00</td>
+<td class="r data"> 12</td>
+<td class="r data">  56,38</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">27448</th>
+<th class="l rowheader" scope="row">Pacy-sur-Eure</th>
+<td class="r data">  17435</td>
+<td class="r data">  16997</td>
+<td class="r data">  97,49</td>
+<td class="r data">  6</td>
+<td class="r data">  34,41</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">27467</th>
+<th class="l rowheader" scope="row">Pont-Audemer</th>
+<td class="r data">  35881</td>
+<td class="r data">  35881</td>
+<td class="r data"> 100,00</td>
+<td class="r data"> 21</td>
+<td class="r data">  58,53</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">27469</th>
+<th class="l rowheader" scope="row">Pont-de-l&#39;Arche</th>
+<td class="r data">   6981</td>
+<td class="r data">   6981</td>
+<td class="r data"> 100,00</td>
+<td class="r data">  6</td>
+<td class="r data">  85,95</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">27493</th>
+<th class="l rowheader" scope="row">Romilly-sur-Andelle</th>
+<td class="r data">  10108</td>
+<td class="r data">  10108</td>
+<td class="r data"> 100,00</td>
+<td class="r data">  9</td>
+<td class="r data">  89,04</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">27507</th>
+<th class="l rowheader" scope="row">Saint-André-de-l&#39;Eure</th>
+<td class="r data">   9559</td>
+<td class="r data">   9559</td>
+<td class="r data"> 100,00</td>
+<td class="r data">  5</td>
+<td class="r data">  52,31</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">27562</th>
+<th class="l rowheader" scope="row">Saint-Marcel</th>
+<td class="r data">  39366</td>
+<td class="r data">  10612</td>
+<td class="r data">  26,96</td>
+<td class="r data">  4</td>
+<td class="r data">  10,16</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">27679</th>
+<th class="l rowheader" scope="row">Verneuil-sur-Avre</th>
+<td class="r data">  22191</td>
+<td class="r data">  14483</td>
+<td class="r data">  65,27</td>
+<td class="r data"> 16</td>
+<td class="r data">  72,10</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">27681</th>
+<th class="l rowheader" scope="row">Vernon</th>
+<td class="r data">  38361</td>
+<td class="r data">  37262</td>
+<td class="r data">  97,14</td>
+<td class="r data"> 26</td>
+<td class="r data">  67,78</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">27701</th>
+<th class="l rowheader" scope="row">Val-de-Reuil</th>
+<td class="r data">  23558</td>
+<td class="r data">  23558</td>
+<td class="r data"> 100,00</td>
+<td class="r data"> 21</td>
+<td class="r data">  89,14</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">28134</th>
+<th class="l rowheader" scope="row">Dreux</th>
+<td class="r data">  41283</td>
+<td class="r data">   2818</td>
+<td class="r data">   6,83</td>
+<td class="r data"> 21</td>
+<td class="r data">  50,87</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">28214</th>
+<th class="l rowheader" scope="row">La Loupe</th>
+<td class="r data">  12160</td>
+<td class="r data">   2655</td>
+<td class="r data">  21,83</td>
+<td class="r data">  4</td>
+<td class="r data">  32,89</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">28280</th>
+<th class="l rowheader" scope="row">Nogent-le-Rotrou</th>
+<td class="r data">  30692</td>
+<td class="r data">  11061</td>
+<td class="r data">  36,04</td>
+<td class="r data"> 23</td>
+<td class="r data">  74,94</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">35004</th>
+<th class="l rowheader" scope="row">Antrain</th>
+<td class="r data">   7105</td>
+<td class="r data">    516</td>
+<td class="r data">   7,26</td>
+<td class="r data"> 12</td>
+<td class="r data"> 168,90</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">35162</th>
+<th class="l rowheader" scope="row">Louvigné-du-Désert</th>
+<td class="r data">  10886</td>
+<td class="r data">    687</td>
+<td class="r data">   6,31</td>
+<td class="r data">  4</td>
+<td class="r data">  36,74</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">50002</th>
+<th class="l rowheader" scope="row">Agneaux</th>
+<td class="r data">  30341</td>
+<td class="r data">  30341</td>
+<td class="r data"> 100,00</td>
+<td class="r data"> 21</td>
+<td class="r data">  69,21</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">50003</th>
+<th class="l rowheader" scope="row">Agon-Coutainville</th>
+<td class="r data">   9873</td>
+<td class="r data">   9873</td>
+<td class="r data"> 100,00</td>
+<td class="r data">  9</td>
+<td class="r data">  91,16</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">50025</th>
+<th class="l rowheader" scope="row">Avranches</th>
+<td class="r data">  31928</td>
+<td class="r data">  31928</td>
+<td class="r data"> 100,00</td>
+<td class="r data"> 27</td>
+<td class="r data">  84,57</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">50031</th>
+<th class="l rowheader" scope="row">Barneville-Carteret</th>
+<td class="r data">   8802</td>
+<td class="r data">   8802</td>
+<td class="r data"> 100,00</td>
+<td class="r data">  6</td>
+<td class="r data">  68,17</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">50041</th>
+<th class="l rowheader" scope="row">Beaumont-Hague</th>
+<td class="r data">  11634</td>
+<td class="r data">  11634</td>
+<td class="r data"> 100,00</td>
+<td class="r data">  4</td>
+<td class="r data">  34,38</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">50074</th>
+<th class="l rowheader" scope="row">Brécey</th>
+<td class="r data">   7395</td>
+<td class="r data">   7395</td>
+<td class="r data"> 100,00</td>
+<td class="r data">  4</td>
+<td class="r data">  54,09</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">50076</th>
+<th class="l rowheader" scope="row">Bréhal</th>
+<td class="r data">  12177</td>
+<td class="r data">  12177</td>
+<td class="r data"> 100,00</td>
+<td class="r data"> 11</td>
+<td class="r data">  90,33</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">50082</th>
+<th class="l rowheader" scope="row">Bricquebec</th>
+<td class="r data">  10134</td>
+<td class="r data">  10134</td>
+<td class="r data"> 100,00</td>
+<td class="r data">  7</td>
+<td class="r data">  69,07</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">50099</th>
+<th class="l rowheader" scope="row">Carentan</th>
+<td class="r data">  22607</td>
+<td class="r data">  22607</td>
+<td class="r data"> 100,00</td>
+<td class="r data"> 12</td>
+<td class="r data">  53,08</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">50129</th>
+<th class="l rowheader" scope="row">Cherbourg-Octeville</th>
+<td class="r data">  81813</td>
+<td class="r data">  81813</td>
+<td class="r data"> 100,00</td>
+<td class="r data"> 56</td>
+<td class="r data">  68,45</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">50147</th>
+<th class="l rowheader" scope="row">Coutances</th>
+<td class="r data">  26171</td>
+<td class="r data">  26171</td>
+<td class="r data"> 100,00</td>
+<td class="r data"> 20</td>
+<td class="r data">  76,42</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">50203</th>
+<th class="l rowheader" scope="row">La Glacerie</th>
+<td class="r data">   5778</td>
+<td class="r data">   5778</td>
+<td class="r data"> 100,00</td>
+<td class="r data"> 13</td>
+<td class="r data"> 224,99</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">50218</th>
+<th class="l rowheader" scope="row">Granville</th>
+<td class="r data">  28933</td>
+<td class="r data">  28933</td>
+<td class="r data"> 100,00</td>
+<td class="r data"> 29</td>
+<td class="r data"> 100,23</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">50236</th>
+<th class="l rowheader" scope="row">La Haye-du-Puits</th>
+<td class="r data">  14756</td>
+<td class="r data">  14756</td>
+<td class="r data"> 100,00</td>
+<td class="r data">  9</td>
+<td class="r data">  60,99</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">50237</th>
+<th class="l rowheader" scope="row">La Haye-Pesnel</th>
+<td class="r data">  11286</td>
+<td class="r data">  11286</td>
+<td class="r data"> 100,00</td>
+<td class="r data"> 12</td>
+<td class="r data"> 106,33</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">50341</th>
+<th class="l rowheader" scope="row">Montebourg</th>
+<td class="r data">   6263</td>
+<td class="r data">   6263</td>
+<td class="r data"> 100,00</td>
+<td class="r data">  3</td>
+<td class="r data">  47,90</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">50359</th>
+<th class="l rowheader" scope="row">Mortain</th>
+<td class="r data">  10111</td>
+<td class="r data">  10111</td>
+<td class="r data"> 100,00</td>
+<td class="r data">  7</td>
+<td class="r data">  69,23</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">50394</th>
+<th class="l rowheader" scope="row">Périers</th>
+<td class="r data">  12348</td>
+<td class="r data">  12348</td>
+<td class="r data"> 100,00</td>
+<td class="r data">  8</td>
+<td class="r data">  64,79</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">50402</th>
+<th class="l rowheader" scope="row">Les Pieux</th>
+<td class="r data">  16544</td>
+<td class="r data">  16544</td>
+<td class="r data"> 100,00</td>
+<td class="r data">  8</td>
+<td class="r data">  48,36</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">50410</th>
+<th class="l rowheader" scope="row">Pontorson</th>
+<td class="r data">  11282</td>
+<td class="r data">   5978</td>
+<td class="r data">  52,99</td>
+<td class="r data"> 10</td>
+<td class="r data">  88,64</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">50484</th>
+<th class="l rowheader" scope="row">Saint-Hilaire-du-Harcouët</th>
+<td class="r data">  15590</td>
+<td class="r data">  15590</td>
+<td class="r data"> 100,00</td>
+<td class="r data">  9</td>
+<td class="r data">  57,73</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">50487</th>
+<th class="l rowheader" scope="row">Saint-James</th>
+<td class="r data">   7852</td>
+<td class="r data">   5289</td>
+<td class="r data">  67,36</td>
+<td class="r data">  6</td>
+<td class="r data">  76,41</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">50502</th>
+<th class="l rowheader" scope="row">Saint-Lô</th>
+<td class="r data">  29876</td>
+<td class="r data">  29876</td>
+<td class="r data"> 100,00</td>
+<td class="r data">102</td>
+<td class="r data"> 341,41</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">50539</th>
+<th class="l rowheader" scope="row">Saint-Pierre-Église</th>
+<td class="r data">   4451</td>
+<td class="r data">   4451</td>
+<td class="r data"> 100,00</td>
+<td class="r data">  2</td>
+<td class="r data">  44,93</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">50551</th>
+<th class="l rowheader" scope="row">Saint-Sauveur-le-Vicomte</th>
+<td class="r data">   5579</td>
+<td class="r data">   5579</td>
+<td class="r data"> 100,00</td>
+<td class="r data">  3</td>
+<td class="r data">  53,77</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">50562</th>
+<th class="l rowheader" scope="row">Saint-Vaast-la-Hougue</th>
+<td class="r data">   9497</td>
+<td class="r data">   9497</td>
+<td class="r data"> 100,00</td>
+<td class="r data">  7</td>
+<td class="r data">  73,71</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">50582</th>
+<th class="l rowheader" scope="row">Sourdeval</th>
+<td class="r data">   4498</td>
+<td class="r data">   4498</td>
+<td class="r data"> 100,00</td>
+<td class="r data">  3</td>
+<td class="r data">  66,70</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">50601</th>
+<th class="l rowheader" scope="row">Torigni-sur-Vire</th>
+<td class="r data">  19930</td>
+<td class="r data">  19930</td>
+<td class="r data"> 100,00</td>
+<td class="r data"> 17</td>
+<td class="r data">  85,30</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">50602</th>
+<th class="l rowheader" scope="row">Tourlaville</th>
+<td class="r data">   5910</td>
+<td class="r data">   5910</td>
+<td class="r data"> 100,00</td>
+<td class="r data"> 16</td>
+<td class="r data"> 270,73</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">50615</th>
+<th class="l rowheader" scope="row">Valognes</th>
+<td class="r data">  13395</td>
+<td class="r data">  13395</td>
+<td class="r data"> 100,00</td>
+<td class="r data">  5</td>
+<td class="r data">  37,33</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">50639</th>
+<th class="l rowheader" scope="row">Villedieu-les-Poêles</th>
+<td class="r data">  16036</td>
+<td class="r data">  16036</td>
+<td class="r data"> 100,00</td>
+<td class="r data"> 11</td>
+<td class="r data">  68,60</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">53003</th>
+<th class="l rowheader" scope="row">Ambrières-les-Vallées</th>
+<td class="r data">   6927</td>
+<td class="r data">   1182</td>
+<td class="r data">  17,06</td>
+<td class="r data">  4</td>
+<td class="r data">  57,75</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">53185</th>
+<th class="l rowheader" scope="row">Pré-en-Pail</th>
+<td class="r data">   7275</td>
+<td class="r data">   2499</td>
+<td class="r data">  34,35</td>
+<td class="r data">  5</td>
+<td class="r data">  68,73</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">60245</th>
+<th class="l rowheader" scope="row">Formerie</th>
+<td class="r data">  10262</td>
+<td class="r data">   1999</td>
+<td class="r data">  19,48</td>
+<td class="r data">  4</td>
+<td class="r data">  38,98</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">61001</th>
+<th class="l rowheader" scope="row">Alençon</th>
+<td class="r data">  45694</td>
+<td class="r data">  34409</td>
+<td class="r data">  75,30</td>
+<td class="r data"> 43</td>
+<td class="r data">  94,10</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">61006</th>
+<th class="l rowheader" scope="row">Argentan</th>
+<td class="r data">  32587</td>
+<td class="r data">  32587</td>
+<td class="r data"> 100,00</td>
+<td class="r data"> 21</td>
+<td class="r data">  64,44</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">61038</th>
+<th class="l rowheader" scope="row">Bellême</th>
+<td class="r data">   7585</td>
+<td class="r data">   7585</td>
+<td class="r data"> 100,00</td>
+<td class="r data">  6</td>
+<td class="r data">  79,10</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">61117</th>
+<th class="l rowheader" scope="row">Condé-sur-Sarthe</th>
+<td class="r data">  17477</td>
+<td class="r data">  13285</td>
+<td class="r data">  76,01</td>
+<td class="r data"> 11</td>
+<td class="r data">  62,94</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">61145</th>
+<th class="l rowheader" scope="row">Domfront</th>
+<td class="r data">  12337</td>
+<td class="r data">  12337</td>
+<td class="r data"> 100,00</td>
+<td class="r data">  9</td>
+<td class="r data">  72,95</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">61168</th>
+<th class="l rowheader" scope="row">La Ferté-Macé</th>
+<td class="r data">  16832</td>
+<td class="r data">  16832</td>
+<td class="r data"> 100,00</td>
+<td class="r data">  9</td>
+<td class="r data">  53,47</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">61169</th>
+<th class="l rowheader" scope="row">Flers</th>
+<td class="r data">  34521</td>
+<td class="r data">  34521</td>
+<td class="r data"> 100,00</td>
+<td class="r data"> 17</td>
+<td class="r data">  49,25</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">61181</th>
+<th class="l rowheader" scope="row">Gacé</th>
+<td class="r data">   5943</td>
+<td class="r data">   5943</td>
+<td class="r data"> 100,00</td>
+<td class="r data">  4</td>
+<td class="r data">  67,31</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">61230</th>
+<th class="l rowheader" scope="row">Longny-au-Perche</th>
+<td class="r data">   3369</td>
+<td class="r data">   3369</td>
+<td class="r data"> 100,00</td>
+<td class="r data">  2</td>
+<td class="r data">  59,36</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">61293</th>
+<th class="l rowheader" scope="row">Mortagne-au-Perche</th>
+<td class="r data">  23312</td>
+<td class="r data">  23207</td>
+<td class="r data">  99,55</td>
+<td class="r data"> 17</td>
+<td class="r data">  72,92</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">61464</th>
+<th class="l rowheader" scope="row">Sées</th>
+<td class="r data">  13691</td>
+<td class="r data">  13691</td>
+<td class="r data"> 100,00</td>
+<td class="r data">  9</td>
+<td class="r data">  65,74</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">61483</th>
+<th class="l rowheader" scope="row">Bagnoles-de-l&#39;Orne</th>
+<td class="r data">   9034</td>
+<td class="r data">   8452</td>
+<td class="r data">  93,56</td>
+<td class="r data"> 15</td>
+<td class="r data"> 166,04</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">61508</th>
+<th class="l rowheader" scope="row">Vimoutiers</th>
+<td class="r data">   7667</td>
+<td class="r data">   7667</td>
+<td class="r data"> 100,00</td>
+<td class="r data">  5</td>
+<td class="r data">  65,21</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">72132</th>
+<th class="l rowheader" scope="row">La Ferté-Bernard</th>
+<td class="r data">  21385</td>
+<td class="r data">   2754</td>
+<td class="r data">  12,88</td>
+<td class="r data">  7</td>
+<td class="r data">  32,73</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">72180</th>
+<th class="l rowheader" scope="row">Mamers</th>
+<td class="r data">  14767</td>
+<td class="r data">   2068</td>
+<td class="r data">  14,00</td>
+<td class="r data">  9</td>
+<td class="r data">  60,95</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">76034</th>
+<th class="l rowheader" scope="row">Auffay</th>
+<td class="r data">  16654</td>
+<td class="r data">  16654</td>
+<td class="r data"> 100,00</td>
+<td class="r data"> 13</td>
+<td class="r data">  78,06</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">76035</th>
+<th class="l rowheader" scope="row">Aumale</th>
+<td class="r data">  13102</td>
+<td class="r data">   5804</td>
+<td class="r data">  44,30</td>
+<td class="r data"> 13</td>
+<td class="r data">  99,22</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">76051</th>
+<th class="l rowheader" scope="row">Bacqueville-en-Caux</th>
+<td class="r data">   6018</td>
+<td class="r data">   6018</td>
+<td class="r data"> 100,00</td>
+<td class="r data">  3</td>
+<td class="r data">  49,85</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">76057</th>
+<th class="l rowheader" scope="row">Barentin</th>
+<td class="r data">  29615</td>
+<td class="r data">  29615</td>
+<td class="r data"> 100,00</td>
+<td class="r data"> 25</td>
+<td class="r data">  84,42</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">76101</th>
+<th class="l rowheader" scope="row">Blangy-sur-Bresle</th>
+<td class="r data">  11813</td>
+<td class="r data">   9590</td>
+<td class="r data">  81,18</td>
+<td class="r data">  9</td>
+<td class="r data">  76,19</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">76103</th>
+<th class="l rowheader" scope="row">Bonsecours</th>
+<td class="r data">   6462</td>
+<td class="r data">   6462</td>
+<td class="r data"> 100,00</td>
+<td class="r data">  7</td>
+<td class="r data"> 108,33</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">76114</th>
+<th class="l rowheader" scope="row">Bolbec</th>
+<td class="r data">  26313</td>
+<td class="r data">  26313</td>
+<td class="r data"> 100,00</td>
+<td class="r data"> 12</td>
+<td class="r data">  45,60</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">76146</th>
+<th class="l rowheader" scope="row">Buchy</th>
+<td class="r data">   9344</td>
+<td class="r data">   9344</td>
+<td class="r data"> 100,00</td>
+<td class="r data"> 17</td>
+<td class="r data"> 181,93</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">76157</th>
+<th class="l rowheader" scope="row">Canteleu</th>
+<td class="r data">  16300</td>
+<td class="r data">  16300</td>
+<td class="r data"> 100,00</td>
+<td class="r data"> 15</td>
+<td class="r data">  92,02</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">76159</th>
+<th class="l rowheader" scope="row">Cany-Barville</th>
+<td class="r data">  11983</td>
+<td class="r data">  11983</td>
+<td class="r data"> 100,00</td>
+<td class="r data">  6</td>
+<td class="r data">  50,07</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">76164</th>
+<th class="l rowheader" scope="row">Caudebec-en-Caux</th>
+<td class="r data">  13135</td>
+<td class="r data">  13135</td>
+<td class="r data"> 100,00</td>
+<td class="r data">  9</td>
+<td class="r data">  68,52</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">76165</th>
+<th class="l rowheader" scope="row">Caudebec-lès-Elbeuf</th>
+<td class="r data">  28733</td>
+<td class="r data">  28733</td>
+<td class="r data"> 100,00</td>
+<td class="r data"> 20</td>
+<td class="r data">  69,61</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">76196</th>
+<th class="l rowheader" scope="row">Criquetot-l&#39;Esneval</th>
+<td class="r data">  15724</td>
+<td class="r data">  15724</td>
+<td class="r data"> 100,00</td>
+<td class="r data"> 12</td>
+<td class="r data">  76,32</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">76212</th>
+<th class="l rowheader" scope="row">Darnétal</th>
+<td class="r data">  33242</td>
+<td class="r data">  33242</td>
+<td class="r data"> 100,00</td>
+<td class="r data"> 38</td>
+<td class="r data"> 114,31</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">76216</th>
+<th class="l rowheader" scope="row">Déville-lès-Rouen</th>
+<td class="r data">  10492</td>
+<td class="r data">  10492</td>
+<td class="r data"> 100,00</td>
+<td class="r data">  9</td>
+<td class="r data">  85,78</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">76217</th>
+<th class="l rowheader" scope="row">Dieppe</th>
+<td class="r data">  69774</td>
+<td class="r data">  69774</td>
+<td class="r data"> 100,00</td>
+<td class="r data"> 50</td>
+<td class="r data">  71,66</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">76219</th>
+<th class="l rowheader" scope="row">Doudeville</th>
+<td class="r data">  11748</td>
+<td class="r data">  11748</td>
+<td class="r data"> 100,00</td>
+<td class="r data">  8</td>
+<td class="r data">  68,10</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">76222</th>
+<th class="l rowheader" scope="row">Duclair</th>
+<td class="r data">  19099</td>
+<td class="r data">  19099</td>
+<td class="r data"> 100,00</td>
+<td class="r data"> 16</td>
+<td class="r data">  83,77</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">76231</th>
+<th class="l rowheader" scope="row">Elbeuf</th>
+<td class="r data">  40534</td>
+<td class="r data">  40534</td>
+<td class="r data"> 100,00</td>
+<td class="r data"> 36</td>
+<td class="r data">  88,81</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">76255</th>
+<th class="l rowheader" scope="row">Eu</th>
+<td class="r data">  33882</td>
+<td class="r data">  23300</td>
+<td class="r data">  68,77</td>
+<td class="r data"> 30</td>
+<td class="r data">  88,54</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">76258</th>
+<th class="l rowheader" scope="row">Fauville-en-Caux</th>
+<td class="r data">  13055</td>
+<td class="r data">  13055</td>
+<td class="r data"> 100,00</td>
+<td class="r data"> 10</td>
+<td class="r data">  76,60</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">76259</th>
+<th class="l rowheader" scope="row">Fécamp</th>
+<td class="r data">  35156</td>
+<td class="r data">  35156</td>
+<td class="r data"> 100,00</td>
+<td class="r data"> 22</td>
+<td class="r data">  62,58</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">76276</th>
+<th class="l rowheader" scope="row">Forges-les-Eaux</th>
+<td class="r data">  11936</td>
+<td class="r data">  11936</td>
+<td class="r data"> 100,00</td>
+<td class="r data"> 12</td>
+<td class="r data"> 100,54</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">76302</th>
+<th class="l rowheader" scope="row">Goderville</th>
+<td class="r data">  13494</td>
+<td class="r data">  13494</td>
+<td class="r data"> 100,00</td>
+<td class="r data">  7</td>
+<td class="r data">  51,87</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">76305</th>
+<th class="l rowheader" scope="row">Gonfreville-l&#39;Orcher</th>
+<td class="r data">  14522</td>
+<td class="r data">  14522</td>
+<td class="r data"> 100,00</td>
+<td class="r data"> 10</td>
+<td class="r data">  68,86</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">76312</th>
+<th class="l rowheader" scope="row">Gournay-en-Bray</th>
+<td class="r data">  30535</td>
+<td class="r data">  16136</td>
+<td class="r data">  52,84</td>
+<td class="r data"> 19</td>
+<td class="r data">  62,22</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">76319</th>
+<th class="l rowheader" scope="row">Grand-Couronne</th>
+<td class="r data">  17109</td>
+<td class="r data">  17109</td>
+<td class="r data"> 100,00</td>
+<td class="r data"> 20</td>
+<td class="r data"> 116,90</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">76322</th>
+<th class="l rowheader" scope="row">Le Grand-Quevilly</th>
+<td class="r data">  34317</td>
+<td class="r data">  34317</td>
+<td class="r data"> 100,00</td>
+<td class="r data"> 28</td>
+<td class="r data">  81,59</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">76341</th>
+<th class="l rowheader" scope="row">Harfleur</th>
+<td class="r data">   8449</td>
+<td class="r data">   8449</td>
+<td class="r data"> 100,00</td>
+<td class="r data">  6</td>
+<td class="r data">  71,01</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">76351</th>
+<th class="l rowheader" scope="row">Le Havre</th>
+<td class="r data"> 177536</td>
+<td class="r data"> 177536</td>
+<td class="r data"> 100,00</td>
+<td class="r data">157</td>
+<td class="r data">  88,43</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">76384</th>
+<th class="l rowheader" scope="row">Lillebonne</th>
+<td class="r data">  27302</td>
+<td class="r data">  27302</td>
+<td class="r data"> 100,00</td>
+<td class="r data"> 15</td>
+<td class="r data">  54,94</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">76400</th>
+<th class="l rowheader" scope="row">Luneray</th>
+<td class="r data">  12233</td>
+<td class="r data">  12233</td>
+<td class="r data"> 100,00</td>
+<td class="r data">  8</td>
+<td class="r data">  65,40</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">76402</th>
+<th class="l rowheader" scope="row">Malaunay</th>
+<td class="r data">  14511</td>
+<td class="r data">  14511</td>
+<td class="r data"> 100,00</td>
+<td class="r data"> 14</td>
+<td class="r data">  96,48</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">76410</th>
+<th class="l rowheader" scope="row">Maromme</th>
+<td class="r data">  22899</td>
+<td class="r data">  22899</td>
+<td class="r data"> 100,00</td>
+<td class="r data"> 22</td>
+<td class="r data">  96,07</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">76429</th>
+<th class="l rowheader" scope="row">Le Mesnil-Esnard</th>
+<td class="r data">  30042</td>
+<td class="r data">  30042</td>
+<td class="r data"> 100,00</td>
+<td class="r data"> 29</td>
+<td class="r data">  96,53</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">76447</th>
+<th class="l rowheader" scope="row">Montivilliers</th>
+<td class="r data">  38079</td>
+<td class="r data">  38079</td>
+<td class="r data"> 100,00</td>
+<td class="r data"> 23</td>
+<td class="r data">  60,40</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">76451</th>
+<th class="l rowheader" scope="row">Mont-Saint-Aignan</th>
+<td class="r data">  18850</td>
+<td class="r data">  18850</td>
+<td class="r data"> 100,00</td>
+<td class="r data"> 22</td>
+<td class="r data"> 116,71</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">76452</th>
+<th class="l rowheader" scope="row">Montville</th>
+<td class="r data">  22641</td>
+<td class="r data">  22641</td>
+<td class="r data"> 100,00</td>
+<td class="r data"> 20</td>
+<td class="r data">  88,34</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">76462</th>
+<th class="l rowheader" scope="row">Neufchâtel-en-Bray</th>
+<td class="r data">  17736</td>
+<td class="r data">  17736</td>
+<td class="r data"> 100,00</td>
+<td class="r data"> 41</td>
+<td class="r data"> 231,17</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">76482</th>
+<th class="l rowheader" scope="row">Offranville</th>
+<td class="r data">   8370</td>
+<td class="r data">   8370</td>
+<td class="r data"> 100,00</td>
+<td class="r data">  5</td>
+<td class="r data">  59,74</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">76484</th>
+<th class="l rowheader" scope="row">Oissel</th>
+<td class="r data">  16889</td>
+<td class="r data">  16889</td>
+<td class="r data"> 100,00</td>
+<td class="r data"> 11</td>
+<td class="r data">  65,13</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">76498</th>
+<th class="l rowheader" scope="row">Le Petit-Quevilly</th>
+<td class="r data">  21995</td>
+<td class="r data">  21995</td>
+<td class="r data"> 100,00</td>
+<td class="r data"> 16</td>
+<td class="r data">  72,74</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">76540</th>
+<th class="l rowheader" scope="row">Rouen</th>
+<td class="r data"> 110145</td>
+<td class="r data"> 110145</td>
+<td class="r data"> 100,00</td>
+<td class="r data">157</td>
+<td class="r data"> 142,54</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">76575</th>
+<th class="l rowheader" scope="row">Saint-Étienne-du-Rouvray</th>
+<td class="r data">  29510</td>
+<td class="r data">  29510</td>
+<td class="r data"> 100,00</td>
+<td class="r data"> 21</td>
+<td class="r data">  71,16</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">76647</th>
+<th class="l rowheader" scope="row">Saint-Romain-de-Colbosc</th>
+<td class="r data">  18972</td>
+<td class="r data">  18972</td>
+<td class="r data"> 100,00</td>
+<td class="r data"> 13</td>
+<td class="r data">  68,52</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">76648</th>
+<th class="l rowheader" scope="row">Saint-Saëns</th>
+<td class="r data">   6897</td>
+<td class="r data">   6897</td>
+<td class="r data"> 100,00</td>
+<td class="r data">  8</td>
+<td class="r data"> 115,99</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">76655</th>
+<th class="l rowheader" scope="row">Saint-Valery-en-Caux</th>
+<td class="r data">   9001</td>
+<td class="r data">   9001</td>
+<td class="r data"> 100,00</td>
+<td class="r data">  8</td>
+<td class="r data">  88,88</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">76681</th>
+<th class="l rowheader" scope="row">Sotteville-lès-Rouen</th>
+<td class="r data">  28965</td>
+<td class="r data">  28965</td>
+<td class="r data"> 100,00</td>
+<td class="r data"> 32</td>
+<td class="r data"> 110,48</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">76705</th>
+<th class="l rowheader" scope="row">Tourville-la-Rivière</th>
+<td class="r data">  10925</td>
+<td class="r data">  10925</td>
+<td class="r data"> 100,00</td>
+<td class="r data"> 12</td>
+<td class="r data"> 109,84</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">76752</th>
+<th class="l rowheader" scope="row">Yerville</th>
+<td class="r data">   8957</td>
+<td class="r data">   8957</td>
+<td class="r data"> 100,00</td>
+<td class="r data">  3</td>
+<td class="r data">  33,49</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">76758</th>
+<th class="l rowheader" scope="row">Yvetot</th>
+<td class="r data">  26942</td>
+<td class="r data">  26942</td>
+<td class="r data"> 100,00</td>
+<td class="r data"> 24</td>
+<td class="r data">  89,08</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">80373</th>
+<th class="l rowheader" scope="row">Gamaches</th>
+<td class="r data">   7320</td>
+<td class="r data">   2568</td>
+<td class="r data">  35,08</td>
+<td class="r data">  8</td>
+<td class="r data"> 109,29</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">95355</th>
+<th class="l rowheader" scope="row">Magny-en-Vexin</th>
+<td class="r data">  17881</td>
+<td class="r data">    969</td>
+<td class="r data">   5,42</td>
+<td class="r data"> 13</td>
+<td class="r data">  72,70</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<br>
+<table class="systitleandfootercontainer" width="100%" cellspacing="1" cellpadding="1" rules="none" frame="void" border="0" summary="Page Layout">
+<tr>
+<td class="l systemfooter" style=" color: #0000FF; font-size: 10pt;">Source : INSEE/RPPS</td>
+</tr>
+</table><br>
+</div>
+</body>
+</html>
