@@ -22,7 +22,7 @@ def deploy_database(database="database") :
     cursor = conn.cursor()
     conn.commit
     conn.close()
-    print("Création de la BDD")
+    print("Création de la BDD.")
     return
 
 # Création du schéma de dump

@@ -14,13 +14,9 @@ def __main__(args):
 
 # Exécution de l'initialisation de la BDD
 def exe_db_init():
-<<<<<<< HEAD
-    
-=======
     print(" - Deploiement ...")
     param_config = route_sqlite.read_config_db("settings/settings.json", server="LOCAL SERVER")
     route_sqlite.deploy_database(database=param_config["database"])
->>>>>>> b1e3ace8f433539081040ab19f45fbb427e6160e
     return
 
 # Initialisation du parsing
@@ -49,8 +45,4 @@ args = parser.parse_args()
 
 # Core
 if __name__ == "__main__":
-<<<<<<< HEAD
     __main__(args)
-=======
-    __main__(args)
->>>>>>> b1e3ace8f433539081040ab19f45fbb427e6160e
