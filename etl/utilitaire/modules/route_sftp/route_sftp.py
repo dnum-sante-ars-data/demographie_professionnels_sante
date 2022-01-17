@@ -1,3 +1,4 @@
+from fileinput import filename
 import json
 import logging
 import pysftp
@@ -30,19 +31,43 @@ def save_wget_sftp(server_in_config):
     print('--- Lancement de la commande wget')
     #sftp_host = sftp_host
     host = server_in_config["host"]
-    print('host :', host)
+    #print('host :', host)
     username = server_in_config["username"]
-    print('username :', username)
+    #print('username :', username)
     password = server_in_config["password"]
-    print('password :', password)
+    #print('password :', password)
     # localisation du fichier a recuperer sur le serveur sftp
     cnopts = pysftp.CnOpts()
     cnopts.hostkeys = None 
     with pysftp.Connection(host=host, username=username, password=password, port =2222, cnopts=cnopts) as sftp:
-        dst = "data/imput"
-        path_sftp = "demographie_ps/RPPS_Profil1_CoordCorresp"
-        cmd = 'wget --directory-prefix='+dst+' --user="'+username+'" --password="'+password+'"  ftp://'+host+'/'+path_sftp+' --progress=bar'
-        subprocess.run(cmd, shell=True)
-        print(' - Commande "'+cmd+'" exécutée')
+        # Récupération des fichiers à importer
+        filenames = get_filenames(sftp)
+        print("Fichiers à importer : ", filenames)
+        for file in filenames:
+            dst = "data/input"
+            path_sftp = "demographie_ps/" + file
+            cmd = 'wget --directory-prefix='+dst+' --user="'+username+'" --password="'+password+'"  ftp://'+host+'/'+path_sftp+' --progress=bar'
+            subprocess.run(cmd, shell=True)
+            print(' - Commande "'+cmd+'" exécutée')
+            print('Fichier ', file, 'importé')
     return
 
+
+def get_filenames(sftp) :
+    """
+    Fonction permettant de récupérer le nom des 
+    fichiers .csv présents au sein du sftp
+
+    Returns:
+        filenames[list]: Liste contenant le nom des fichiers .csv présents
+                         dans le sftp.
+    """
+    # Récupération des noms des fichiers sources
+    directory_structure = sftp.listdir_attr('demographie_ps/')
+    dict_filenames = [attr.filename for attr in directory_structure]
+    filenames=[]
+    # Boucle permettant de ne récupérer que les fichiers .csv
+    for elem in dict_filenames:
+        if elem[-4::]=='.csv':
+            filenames.append(elem) 
+    return filenames

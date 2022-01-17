@@ -1,0 +1,21 @@
+{
+
+    "sqlite_db":
+    [
+        {
+            "server" : "LOCAL SERVER",
+            "database" : "data/database/demographie_ps.db"
+        }
+    ],
+
+    "sftp":
+    [
+        {
+            "server" : "ATLASANTE SFTP DEPOT",
+            "username" : "sftp_rdvvaccins_ars",
+            "password" : "****",
+            "host" : "www.atlasante.fr"
+        }
+    ]
+
+}
