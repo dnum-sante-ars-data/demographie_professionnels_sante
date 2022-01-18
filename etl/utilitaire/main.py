@@ -1,11 +1,13 @@
+# -*-coding:Latin-1-*
+
 # Modules
 import argparse
 import logging
 from datetime import datetime
+from tabnanny import verbose
 
 # Modules personnalisés
-from modules import route_sftp
-from modules import route_sqlite
+from modules import route_sftp, route_sqlite, private_transform
 
 # Commandes
 def __main__(args):
@@ -27,6 +29,32 @@ def import_wget_sftp():
     param_config = route_sftp.read_config_sftp("settings/settings.json", server_name="ATLASANTE SFTP DEPOT")
     print(param_config)
     route_sftp.save_wget_sftp(param_config)
+
+# Fonction de transformation
+def transform():
+    print(" - Transformation - ")
+    param_config = route_sqlite.read_config_db("settings/settings.json", server = "LOCAL SERVER")
+    # Remise en forme des données démographiques des professionnels de santé
+    private_transform.transform_f_libreacces_ps(database = param_config["database"], verbose = True)
+    # Remise en forme des données démographiques de population
+    private_transform.transform_f_population(database = param_config["database"], verbose = True)
+    # Remise en forme de la table ref_atlasante_t_corresp_cp
+    private_transform.transform_corresp_cp(database = param_config["database"], verbose = True)
+    # Transformation sur les  référentiels géo pour constituer les tables de dimension
+    private_transform.transform_corresp_cp(database = param_config["database"], verbose = True)
+    # Création des csv pour les visualisations
+    private_transform.transform_to_csv(database = param_config["database"], verbose = True)
+    print(" - Transformations terminées")
+
+
+
+
+
+
+
+
+
+
 
 # Initialisation du parsing
 parser = argparse.ArgumentParser()
