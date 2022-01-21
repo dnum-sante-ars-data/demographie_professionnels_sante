@@ -11,7 +11,7 @@ from modules import route_sftp, route_sqlite, private_transform
 
 # Commandes
 def __main__(args):
-    if args.commande == "init_db":
+    if args.commande == "init_database":
         exe_db_init()
     elif args.commande == "import":
         import_wget_sftp()
@@ -19,9 +19,13 @@ def __main__(args):
 
 # Exécution de l'initialisation de la BDD
 def exe_db_init():
-    print(" - Deploiement ...")
+    print(" -- Deploiement -- ")
     param_config = route_sqlite.read_config_db("settings/settings.json", server="LOCAL SERVER")
     route_sqlite.deploy_database(database=param_config["database"])
+    print(" -- Transformation -- ")
+    route_sqlite.init_empty_schema(database = param_config["database"], verbose = True)
+    route_sqlite.insert_data_2(database = param_config["database"], verbose = True)   
+ # route_sqlite.insert_autexerc(path_autexerc = "data/input/Extraction_RPPS_Profil1_AutExerc.csv")
     return
 
 # Fonction d'import des fichiers depuis SFTP
@@ -45,13 +49,6 @@ def transform():
     # Création des csv pour les visualisations
     private_transform.transform_to_csv(database = param_config["database"], verbose = True)
     print(" - Transformations terminées")
-
-
-
-
-
-
-
 
 
 
