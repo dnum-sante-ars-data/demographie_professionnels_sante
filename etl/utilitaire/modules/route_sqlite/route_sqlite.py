@@ -385,8 +385,12 @@ def init_empty_schema(database = "database", verbose = True):
         print("Initialisation de la BDD terminée")
     return
 
-# TEST 2
-def insert_data_2(database = "database", verbose = True):
+
+def insert_data(database = "database", verbose = True):
+    """
+    Fonction permettant d'importer les données depuis les fichiers sources
+    et les fichiers de l'insee, vers la base de données demographie_ps.db
+    """
     if verbose :
         print(" --- Insertion des données --- ")
     conn = sqlite3.connect(database = database)
@@ -394,14 +398,19 @@ def insert_data_2(database = "database", verbose = True):
 
     print(" --- Insertion des données depuis fichiers sources --- ")
     print(" ")
-    #insert_data_from_source_files(conn)
+    insert_data_from_source_files(conn)
    
     print(" --- Insertion des données depuis fichiers INSEE --- ")
     print(" ")
     insert_data_from_insee(conn)
     return
 
+
 def insert_data_from_insee(conn, verbose = True):
+    """
+    Fonction appelée par insert_data() et permettant d'importer 
+    uniquement les fichiers de l'INSEE dans les tables correspondantes
+    """
     filenames_from_insee = get_filenames_from_insee()
     print(" --- Filenames_from_insee :", filenames_from_insee)
 
@@ -437,7 +446,10 @@ def insert_data_from_insee(conn, verbose = True):
 
 
 def insert_data_from_source_files(conn, verbose = True):
-
+    """
+    Fonction appelée par insert_data() et permettant d'importer 
+    uniquement les fichiers sources dans les tables correspondantes
+    """
     filenames_from_os = get_filenames_from_os()
     filenames_from_os.remove("Extraction_RPPS_Profil1_DiplObt.csv")
 
@@ -456,10 +468,6 @@ def insert_data_from_source_files(conn, verbose = True):
         else:
             col = insert_file.columns
 
-        #col = insert_file.columns
-        #if col[-1][0:8:]=="Unnamed:":
-        #    col.remove(col[-1])
-
         print(" --- Nom des colonnes du fichier", files,": ", col)
         print(" ")
 
@@ -477,6 +485,10 @@ def insert_data_from_source_files(conn, verbose = True):
 
 
 def get_filenames_from_os():
+    """
+    Fonction appelée par insert_data_from_source_files() et permettant de lister 
+    le nom des différents fichiers sources CSV
+    """
     dict_filenames_from_os = os.listdir('data/input')
     files_from_os = []
 
@@ -487,6 +499,10 @@ def get_filenames_from_os():
     return files_from_os
  
 def get_filenames_from_insee():
+    """
+    Fonction appelée par insert_data_from_insee() et permettant de lister 
+    le nom des différents fichiers INSEE CSV
+    """
     dict_filenames_from_insee = os.listdir('utils/')
     files_from_insee = []
 

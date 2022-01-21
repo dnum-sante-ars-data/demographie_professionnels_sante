@@ -24,7 +24,7 @@ def exe_db_init():
     route_sqlite.deploy_database(database=param_config["database"])
     print(" -- Transformation -- ")
     route_sqlite.init_empty_schema(database = param_config["database"], verbose = True)
-    route_sqlite.insert_data_2(database = param_config["database"], verbose = True)   
+    route_sqlite.insert_data(database = param_config["database"], verbose = True)   
  # route_sqlite.insert_autexerc(path_autexerc = "data/input/Extraction_RPPS_Profil1_AutExerc.csv")
     return
 
