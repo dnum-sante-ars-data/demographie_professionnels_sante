@@ -396,10 +396,12 @@ def insert_data(database = "database", verbose = True):
     conn = sqlite3.connect(database = database)
     cursor = conn.cursor()
 
+    # Insertion des données des fichiers sources
     print(" --- Insertion des données depuis fichiers sources --- ")
     print(" ")
     insert_data_from_source_files(conn)
    
+    # Insertion des données des fichiers INSEE
     print(" --- Insertion des données depuis fichiers INSEE --- ")
     print(" ")
     insert_data_from_insee(conn)
@@ -411,24 +413,27 @@ def insert_data_from_insee(conn, verbose = True):
     Fonction appelée par insert_data() et permettant d'importer 
     uniquement les fichiers de l'INSEE dans les tables correspondantes
     """
+    # Récupération du nom des fichiers INSEE
     filenames_from_insee = get_filenames_from_insee()
-    print(" --- Filenames_from_insee :", filenames_from_insee)
+    #print(" --- Filenames_from_insee :", filenames_from_insee)
 
+    # Boucle permettant d'importer les données de chaque fichier INSEE dans la BDD
     for files in filenames_from_insee:
-        print(" ------------------------------------------------------------------------ ")
-        print(" --- Insertion des données depuis :", files)
-        print(" ------------------------------------------------------------------------ ")
+        print(" ----------------------------------------------------------------------------------------------------- ")
+        print(" --- Insertion des données depuis :", files.upper(), " --- ")
+        print(" ----------------------------------------------------------------------------------------------------- ")      
 
         filepath = "utils/" + files
         insert_file = pd.read_csv(filepath, sep=",")
 
         col = insert_file.columns
         print(" --- Nom des colonnes du fichier", files," :", col)
-        print(" ")
-
+        
+        # Boucle permettant de convertir les éléments du fichier en type object
         for elem in col:
             insert_file[[elem]] = insert_file[[elem]].astype(object)
 
+        # Test permettant de déterminer la table cible des données
         if files[:8] == "communes":
             table_name = "INSEE_COMMUNES"
         elif files[:11] == "departement":
@@ -442,6 +447,7 @@ def insert_data_from_insee(conn, verbose = True):
 
         if verbose :
             print(" --- Insertion des données depuis le fichier", files, "vers la table", table_name, "réussie ---")
+            print(" ----------------------------------------------------------------------------------------------------- ")
             print(" ")
 
 
@@ -450,30 +456,42 @@ def insert_data_from_source_files(conn, verbose = True):
     Fonction appelée par insert_data() et permettant d'importer 
     uniquement les fichiers sources dans les tables correspondantes
     """
+    #Récupération du nom des fichiers sources    
     filenames_from_os = get_filenames_from_os()
-    filenames_from_os.remove("Extraction_RPPS_Profil1_DiplObt.csv")
-
-    print(" --- filenames_from_os : ", filenames_from_os)
+    #filenames_from_os = ["Extraction_RPPS_Profil1_Structure.csv"]
+    #print(" --- filenames_from_os : ", filenames_from_os)
     print(" ")
 
     for files in filenames_from_os:
-        print(" ------------------------------------------------------------------------ ")
-        print(" --- Insertion des données depuis : ", files)
-        print(" ------------------------------------------------------------------------ ")
-        filepath = "data/input/" + files
-        insert_file = pd.read_csv(filepath, sep=";", low_memory = False)
+        print(" ------------------------------------------------------------------------------------ ")
+        print(" --- Insertion des données depuis : ", files.upper(), "--- ")
+        print(" ------------------------------------------------------------------------------------ ")       
 
+        filepath = "data/input/" + files
+
+        # Modification pour remplacer """ par "" et éviter erreurs 
+        if files == "Extraction_RPPS_Profil1_DiplObt.csv":
+            text = open(filepath, "r")
+            text = ''.join([i for i in text]).replace('"""', '""')
+            x = open(filepath, "w")
+            x.writelines(text)
+            x.close()
+
+        insert_file = pd.read_csv(filepath, sep=";", low_memory = False)
+        
+        # Test permettant de ne pas prendre une éventuelle colonne en trop
         if insert_file.columns[-1][0:8]=="Unnamed:":
             col = insert_file.columns[:-1]
         else:
             col = insert_file.columns
 
         print(" --- Nom des colonnes du fichier", files,": ", col)
-        print(" ")
 
+        # Boucle permettant de convertir les éléments des colonnes en type objet
         for elem in col:
             insert_file[[elem]] = insert_file[[elem]].astype(object)
 
+        # Determine la table à cibler
         table_name = files[24:-4:].upper()
         print(" --- Nom de la table à completer : ", table_name)
 
@@ -481,6 +499,7 @@ def insert_data_from_source_files(conn, verbose = True):
 
         if verbose :
             print(' --- Insertion des données depuis ', files, 'vers la table ', table_name, 'réussie --- ')
+            print(" -------------------------------------------------------------------------------------------- ")
             print(" ")
 
 
