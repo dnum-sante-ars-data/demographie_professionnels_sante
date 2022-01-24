@@ -6,16 +6,26 @@ import logging
 from datetime import datetime
 from tabnanny import verbose
 
+
 # Modules personnalisés
 from modules import route_sftp, route_sqlite, private_transform
 
+
 # Commandes
 def __main__(args):
-    if args.commande == "init_database":
-        exe_db_init()
-    elif args.commande == "import":
+    if args.commande == "import":
         import_wget_sftp()
+    elif args.commande == "init_database":
+        exe_db_init()
     return
+
+
+# Fonction d'import des fichiers depuis SFTP vers data/input
+def import_wget_sftp():
+    param_config = route_sftp.read_config_sftp("settings/settings.json", server_name="ATLASANTE SFTP DEPOT")
+    print(param_config)
+    route_sftp.save_wget_sftp(param_config)
+
 
 # Exécution de l'initialisation de la BDD
 def exe_db_init():
@@ -24,15 +34,9 @@ def exe_db_init():
     route_sqlite.deploy_database(database=param_config["database"])
     print(" -- Transformation -- ")
     route_sqlite.init_empty_schema(database = param_config["database"], verbose = True)
-    route_sqlite.insert_data(database = param_config["database"], verbose = True)   
- # route_sqlite.insert_autexerc(path_autexerc = "data/input/Extraction_RPPS_Profil1_AutExerc.csv")
+    route_sqlite.insert_data(database = param_config["database"], verbose = True)
     return
 
-# Fonction d'import des fichiers depuis SFTP
-def import_wget_sftp():
-    param_config = route_sftp.read_config_sftp("settings/settings.json", server_name="ATLASANTE SFTP DEPOT")
-    print(param_config)
-    route_sftp.save_wget_sftp(param_config)
 
 # Fonction de transformation
 def transform():
