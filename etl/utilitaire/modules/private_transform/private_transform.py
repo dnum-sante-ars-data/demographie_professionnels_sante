@@ -9,6 +9,306 @@ import logging
 import csv
 import datetime
 
+# Transformation activite
+def transform_ods_activite(database = "database", verbose = True):
+    print(" ----------------------------------------------------------------------------- ")
+    print(" --- Remise en forme des données des activités des professionnels de santé --- ")
+    print(" ----------------------------------------------------------------------------- ")
+    conn = sqlite3.connect(
+        database = database
+    )
+    cursor = conn.cursor()
+    query_select_ods_activite = """
+    SELECT
+        dep.NCC as DEPARTEMENT_COORD_CORRESPONDANCE,
+        reg.NCC as REGION_COORD_CORRESPONDANCE,
+        a.TYPE_D_IDENTIFIANT_PP,
+        a.IDENTIFIANT_PP,
+        a.IDENTIFIANT_DE_L_ACTIVITE,
+        a.IDENTIFICATION_NATIONALE_PP,
+        a.IDENTIFIANT_TECHNIQUE_DE_LA_STRUCTURE,
+        a.CODE_FONCTION,
+        a.LIBELLE_FONCTION,
+        a.CODE_MODE_EXERCICE,
+        a.LIBELLE_MODE_EXERCICE,
+        a.DATE_DE_DEBUT_ACTIVITE,
+        a.DATE_DE_FIN_ACTIVITE,
+        a.DATE_DE_MISE_A_JOUR_ACTIVITE,
+        a.CODE_REGION_EXERCICE,
+        a.LIBELLE_REGION_EXERCICE,
+        a.CODE_GENRE_ACTIVITE,
+        a.LIBELLE_GENRE_ACTIVITE,
+        a.CODE_MOTIF_DE_FIN_D_ACTIVITE,
+        a.LIBELLE_MOTIF_DE_FIN_D_ACTIVITE,
+        a.CODE_SECTION_TABLEAU_PHARMACIENS,
+        a.LIBELLE_SECTION_TABLEAU_PHARMACIENS,
+        a.CODE_SOUSSECTION_TABLEAU_PHARMACIENS,
+        a.LIBELLE_SOUSECTION_TABLEAU_PHARMACIENS,
+        a.CODE_TYPE_ACTIVITE_LIBERALE,
+        a.LIBELLE_TYPE_ACTIVITE_LIBERALE,
+        a.CODE_STATUT_DES_PS_DU_SSA,
+        a.LIBELLE_STATUT_DES_PS_DU_SSA,
+        a.CODE_STATUT_HOSPITALIER,
+        a.LIBELLE_STATUT_HOSPITALIER,
+        a.CODE_PROFESSION,
+        a.LIBELLE_PROFESSION,
+        a.CODE_CATEGORIE_PROFESSIONNELLE,
+        a.LIBELLE_CATEGORIE_PROFESSIONNELLE,
+        ca.COMPLEMENT_DESTINATAIRE_COORD_ACTIVITE,
+        ca.COMPLEMENT_POINT_GEOGRAPHIQUE_COORD_ACTIVITE,
+        ca.NUMERO_VOIE_COORD_ACTIVITE,
+        ca.INDICE_REPETITION_VOIE_COORD_ACTIVITE,
+        ca.CODE_TYPE_DE_VOIE_COORD_ACTIVITE,
+        ca.LIBELLE_TYPE_DE_VOIE_COORD_ACTIVITE,
+        ca.LIBELLE_VOIE_COORD_ACTIVITE,
+        ca.MENTION_DISTRIBUTION_COORD_ACTIVITE,
+        ca.BUREAU_CEDEX_COORD_ACTIVITE,
+        ca.CODE_POSTAL_COORD_ACTIVITE,
+        
+               
+    """
+
+# Transformation personne
+def transform_ods_personne(database = "database", verbose = True):
+    print(" ----------------------------------------------------------------------------- ")
+    print(" --- Remise en forme des données des personnes des professionnels de santé --- ")
+    print(" ----------------------------------------------------------------------------- ")
+    conn = sqlite3.connect(
+        database = database
+    )
+    cursor = conn.cursor()
+    query_select_ods_personne = """
+    SELECT
+        dep.NCC as DEPARTEMENT_COORD_CORRESPONDANCE,
+        reg.NCC as REGION_COORD_CORRESPONDANCE,
+        p.TYPE_D_IDENTIFIANT_PP,
+        p.IDENTIFIANT_PP,
+        p.IDENTIFICATION_NATIONALE_PP,
+        p.CODE_CIVILITE,
+        p.LIBELLE_CIVILITE,
+        p.NOM_D_USAGE,
+        p.PRENOM_D_USAGE,
+        p.NATURE,
+        p.DATE_D_EFFET,
+        p.DATE_DE_MISE_A_JOUR_PERSONNE,
+        cc.COMPLEMENT_DESTINATAIRE_COORD_CORRESPONDANCE,
+        cc.COMPLEMENT_POINT_GEOGRAPHIQUE_COORD_CORRESPONDANCE,
+        cc.NUMERO_VOIE_COORD_CORRESPONDANCE,
+        cc.INDICE_REPETITION_VOIE_COORD_CORRESPONDANCE,
+        cc.CODE_TYPE_DE_VOIE_COORD_CORRESPONDANCE,
+        cc.LIBELLE_TYPE_DE_VOIE_COORD_CORRESPONDANCE,
+        cc.LIBELLE_VOIE_COORD_CORRESPONDANCE,
+        cc.MENTION_DISTRIBUTION_COORD_CORRESPONDANCE,
+        cc.BUREAU_CEDEX_COORD_CORRESPONDANCE,
+        cc.CODE_POSTAL_COORD_CORRESPONDANCE,
+        cc.CODE_COMMUNE_COORD_CORRESPONDANCE,
+        cc.LIBELLE_COMMUNE_COORD_CORRESPONDANCE,
+        cc.CODE_PAYS_COORD_CORRESPONDANCE,
+        cc.LIBELLE_PAYS_COORD_CORRESPONDANCE,
+        cc.TELEPHONE_COORD_CORRESPONDANCE,
+        cc.TELEPHONE_2_COORD_CORRESPONDANCE,
+        cc.TELECOPIE_COORD_CORRESPONDANCE,
+        cc.ADRESSE_EMAIL_COORD_CORRESPONDANCE,
+        cc.DATE_DE_MISE_A_JOUR_COORD_CORRESPONDANCE,
+        cc.DATE_DE_FIN_COORD_CORRESPONDANCE,
+        ec.CODE_STATUT_ETAT_CIVIL,
+        ec.LIBELLE_STATUT_ETAT_CIVIL,
+        ec.CODE_SEXE,
+        ec.LIBELLE_SEXE,
+        ec.NOM_DE_FAMILLE,
+        ec.PRENOMS,
+        ec.DATE_DE_NAISSANCE,
+        ec.LIEU_DE_NAISSANCE,
+        ec.DATE_DE_DECES,
+        ec.DATE_D_EFFET_DE_L_ETAT_CIVIL,
+        ec.CODE_COMMUNE_DE_NAISSANCE,
+        ec.LIBELLE_COMMUNE_DE_NAISSANCE,
+        ec.CODE_PAYS_DE_NAISSANCE,
+        ec.LIBELLE_PAYS_DE_NAISSANCE,
+        ec.DATE_DE_MISE_A_JOUR_ETAT_CIVIL,
+        ae.DATE_EFFET_AUTORISATION,
+        ae.CODE_TYPE_AUTORISATION,
+        ae.LIBELLE_TYPE_AUTORISATION,
+        ae.DATE_FIN_AUTORISATION,
+        ae.DATE_DE_MISE_A_JOUR_AUTORISATION,
+        ae.CODE_DISCIPLINE_AUTORISATION,
+        ae.LIBELLE_DISCIPLINE_AUTORISATION,
+        ra.CODE_AE,
+        ra.LIBELLE_AE,
+        ra.DATE_DEBUT_INSCRIPTION,
+        ra.DATE_FIN_INSCRIPTION,
+        ra.DATE_DE_MISE_A_JOUR_INSCRIPTION,
+        ra.CODE_STATUT_INSCRIPTION,
+        ra.LIBELLE_STATUT_INSCRIPTION,
+        ra.CODE_DEPARTEMENT_INSCRIPTION,
+        ra.LIBELLE_DEPARTEMENT_INSCRIPTION,
+        ra.CODE_DEPARTEMENT_ACCUEIL,
+        ra.LIBELLE_DEPARTEMENT_ACCUEIL
+    FROM PERSONNE p
+    LEFT JOIN COORDCORRESP cc ON p.IDENTIFIANT_PP=cc.IDENTIFIANT_PP
+    LEFT JOIN ETATCIV ec ON p.IDENTIFIANT_PP=ec.IDENTIFIANT_PP
+    LEFT JOIN AUTEXERC ae ON p.IDENTIFIANT_PP=ae.IDENTIFIANT_PP
+    LEFT JOIN REFERAE ra ON p.IDENTIFIANT_PP=ra.IDENTIFIANT_PP
+    LEFT JOIN INSEE_COMMUNES com ON cc.CODE_COMMUNE_COORD_CORRESPONDANCE=com.com
+    LEFT JOIN INSEE_DEPARTEMENT dep ON com.dep=dep.DEP
+    LEFT JOIN INSEE_REGION reg ON dep.REG=reg.reg 
+    """
+    cursor.execute(query_select_ods_personne)
+    selected_ods_personne_rows = []
+    while True:
+        selected_ods_personne_data = cursor.fetchone()
+        if selected_ods_personne_data:
+            selected_ods_personne_rows.append(tuple(selected_ods_personne_data))
+        else:
+            break
+    
+    query_delete_ods_personne = """
+    DELETE FROM ODS_PERSONNE
+    """
+    cursor.execute(query_delete_ods_personne)
+
+    query_insert_ods_personne = """
+    INSERT INTO ODS_PERSONNE (
+        DEPARTEMENT_COORD_CORRESPONDANCE,
+        REGION_COORD_CORRESPONDANCE,
+        TYPE_D_IDENTIFIANT_PP,
+        IDENTIFIANT_PP,
+        IDENTIFICATION_NATIONALE_PP,
+        CODE_CIVILITE,
+        LIBELLE_CIVILITE,
+        NOM_D_USAGE,
+        PRENOM_D_USAGE,
+        NATURE,
+        DATE_D_EFFET,
+        DATE_DE_MISE_A_JOUR_PERSONNE,
+        COMPLEMENT_DESTINATAIRE_COORD_CORRESPONDANCE,
+        COMPLEMENT_POINT_GEOGRAPHIQUE_COORD_CORRESPONDANCE,
+        NUMERO_VOIE_COORD_CORRESPONDANCE,
+        INDICE_REPETITION_VOIE_COORD_CORRESPONDANCE,
+        CODE_TYPE_DE_VOIE_COORD_CORRESPONDANCE,
+        LIBELLE_TYPE_DE_VOIE_COORD_CORRESPONDANCE,
+        LIBELLE_VOIE_COORD_CORRESPONDANCE,
+        MENTION_DISTRIBUTION_COORD_CORRESPONDANCE,
+        BUREAU_CEDEX_COORD_CORRESPONDANCE,
+        CODE_POSTAL_COORD_CORRESPONDANCE,
+        CODE_COMMUNE_COORD_CORRESPONDANCE,
+        LIBELLE_COMMUNE_COORD_CORRESPONDANCE,
+        CODE_PAYS_COORD_CORRESPONDANCE,
+        LIBELLE_PAYS_COORD_CORRESPONDANCE,
+        TELEPHONE_COORD_CORRESPONDANCE,
+        TELEPHONE_2_COORD_CORRESPONDANCE,
+        TELECOPIE_COORD_CORRESPONDANCE,
+        ADRESSE_EMAIL_COORD_CORRESPONDANCE,
+        DATE_DE_MISE_A_JOUR_COORD_CORRESPONDANCE,
+        DATE_DE_FIN_COORD_CORRESPONDANCE,
+        CODE_STATUT_ETAT_CIVIL,
+        LIBELLE_STATUT_ETAT_CIVIL,
+        CODE_SEXE,
+        LIBELLE_SEXE,
+        NOM_DE_FAMILLE,
+        PRENOMS,
+        DATE_DE_NAISSANCE,
+        LIEU_DE_NAISSANCE,
+        DATE_DE_DECES,
+        DATE_D_EFFET_DE_L_ETAT_CIVIL,
+        CODE_COMMUNE_DE_NAISSANCE,
+        LIBELLE_COMMUNE_DE_NAISSANCE,
+        CODE_PAYS_DE_NAISSANCE,
+        LIBELLE_PAYS_DE_NAISSANCE,
+        DATE_DE_MISE_A_JOUR_ETAT_CIVIL,
+        DATE_EFFET_AUTORISATION,
+        CODE_TYPE_AUTORISATION,
+        LIBELLE_TYPE_AUTORISATION,
+        DATE_FIN_AUTORISATION,
+        DATE_DE_MISE_A_JOUR_AUTORISATION,
+        CODE_DISCIPLINE_AUTORISATION,
+        LIBELLE_DISCIPLINE_AUTORISATION,
+        CODE_AE,
+        LIBELLE_AE,
+        DATE_DEBUT_INSCRIPTION,
+        DATE_FIN_INSCRIPTION,
+        DATE_DE_MISE_A_JOUR_INSCRIPTION,
+        CODE_STATUT_INSCRIPTION,
+        LIBELLE_STATUT_INSCRIPTION,
+        CODE_DEPARTEMENT_INSCRIPTION,
+        LIBELLE_DEPARTEMENT_INSCRIPTION,
+        CODE_DEPARTEMENT_ACCUEIL,
+        LIBELLE_DEPARTEMENT_ACCUEIL
+    ) VALUES (
+        ?,
+        ?,
+        ?,
+        ?,
+        ?,
+        ?,
+        ?,
+        ?,
+        ?,
+        ?,
+        ?,
+        ?,
+        ?,
+        ?,
+        ?,
+        ?,
+        ?,
+        ?,
+        ?,
+        ?,
+        ?,
+        ?,
+        ?,
+        ?,
+        ?,
+        ?,
+        ?,
+        ?,
+        ?,
+        ?,
+        ?,
+        ?,
+        ?,
+        ?,
+        ?,
+        ?,
+        ?,
+        ?,
+        ?,
+        ?,
+        ?,
+        ?,
+        ?,
+        ?,
+        ?,
+        ?,
+        ?,
+        ?,
+        ?,
+        ?,
+        ?,
+        ?,
+        ?,
+        ?,
+        ?,
+        ?,
+        ?,
+        ?,
+        ?,
+        ?,
+        ?,
+        ?,
+        ?,
+        ?,
+        ?
+    )
+    """
+    cursor.executemany(query_insert_ods_personne, selected_ods_personne_rows)
+    conn.commit()
+    cursor.close
+    conn.close
+    
+
+
 # transformation sur les données démographiques des professionnels de santé
 def transform_f_libreacces_ps (database="database", verbose = True) :
     print(" - - - Remise en forme des données démographiques des professionels de santé ...")

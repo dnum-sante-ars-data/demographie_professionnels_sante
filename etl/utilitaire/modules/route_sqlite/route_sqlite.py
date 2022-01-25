@@ -258,7 +258,6 @@ def init_empty_schema(database = "database", verbose = True):
         NOM_D_USAGE                  TEXT,
         PRENOM_D_USAGE               TEXT,
         NATURE                       TEXT,
-        LIBELLE_NATIONALITE          TEXT,
         DATE_D_EFFET                 TEXT,
         DATE_DE_MISE_A_JOUR_PERSONNE TEXT
     );
@@ -275,7 +274,7 @@ def init_empty_schema(database = "database", verbose = True):
         DATE_DEBUT_INSCRIPTION            TEXT,
         DATE_FIN_INSCRIPTION              TEXT,
         DATE_DE_MISE_A_JOUR_INSCRIPTION   TEXT,
-        CODE_SATUT_INSCRIPTION            TEXT,
+        CODE_STATUT_INSCRIPTION           TEXT,
         LIBELLE_STATUT_INSCRIPTION        TEXT,
         CODE_DEPARTEMENT_INSCRIPTION      TEXT,
         LIBELLE_DEPARTEMENT_INSCRIPTION   TEXT,
@@ -378,8 +377,8 @@ def init_empty_schema(database = "database", verbose = True):
     """
     cursor.execute(query_create_insee_region)
 
-    query_create_ods_personne = """
-    CREATE TABLE IF NOT EXUSTS ODS_PERSONNE (
+    query_create_ods_activite = """
+    CREATE TABLE IF NOT EXISTS ODS_ACTIVITE (
         DEPARTEMENT_COORD_CORRESPONDANCE             TEXT,
         REGION_COORD_CORRESPONDANCE                  TEXT,
         TYPE_D_IDENTIFIANT_PP                        TEXT,
@@ -489,9 +488,6 @@ def init_empty_schema(database = "database", verbose = True):
         DATE_RECONNAISSANCE_SAVOIRFAIRE              TEXT,
         DATE_DE_MISE_A_JOUR_SAVOIRFAIRE              TEXT,
         DATE_ABANDON_SAVOIRFAIRE                     TEXT,
-        TYPE_D_IDENTIFIANT_PP_1                      TEXT,
-        IDENTIFIANT_PP_1                             TEXT,
-        IDENTIFICATION_NATIONALE_PP_1                TEXT,
         CODE_TYPE_DIPLOME_OBTENU                     TEXT,
         LIBELLE_TYPE_DIPLOME_OBTENU                  TEXT,
         CODE_DIPLOME_OBTENU                          TEXT,
@@ -503,10 +499,12 @@ def init_empty_schema(database = "database", verbose = True):
         NUMERO_DIPLOME                               TEXT
     );
     """
-    cursor.execute(query_create_ods_personne)
+    cursor.execute(query_create_ods_activite)
 
-    query_create_ods_activite = """
-    CREATE TABLE IF NOT EXISTS ODS_ACTIVITE (
+    query_create_ods_personne = """
+    CREATE TABLE IF NOT EXISTS ODS_PERSONNE (
+        DEPARTEMENT_COORD_CORRESPONDANCE                   TEXT,
+        REGION_COORD_CORRESPONDANCE                        TEXT,
         TYPE_D_IDENTIFIANT_PP                              TEXT,
         IDENTIFIANT_PP                                     TEXT,
         IDENTIFICATION_NATIONALE_PP                        TEXT,
@@ -515,7 +513,6 @@ def init_empty_schema(database = "database", verbose = True):
         NOM_D_USAGE                                        TEXT,
         PRENOM_D_USAGE                                     TEXT,
         NATURE                                             TEXT,
-        LIBELLE_NATIONALITE                                TEXT,
         DATE_D_EFFET                                       TEXT,
         DATE_DE_MISE_A_JOUR_PERSONNE                       TEXT,
         COMPLEMENT_DESTINATAIRE_COORD_CORRESPONDANCE       TEXT,
@@ -573,7 +570,7 @@ def init_empty_schema(database = "database", verbose = True):
         LIBELLE_DEPARTEMENT_ACCUEIL                        TEXT
     );
     """
-    cursor.execute(query_create_ods_activite)
+    cursor.execute(query_create_ods_personne)
 
     cursor.close()
     conn.commit
@@ -605,115 +602,6 @@ def insert_data(database = "database", verbose = True):
     return
 
 
-def insert_data_from_insee(conn, verbose = True):
-    """
-    Fonction appelée par insert_data() et permettant d'importer 
-    uniquement les fichiers de l'INSEE dans les tables correspondantes
-    """
-    # Récupération du nom des fichiers INSEE
-    filenames_from_insee = get_filenames_from_insee()
-    #print(" --- Filenames_from_insee :", filenames_from_insee)
-
-    # Boucle permettant d'importer les données de chaque fichier INSEE dans la BDD
-    for files in filenames_from_insee:
-        print(" ----------------------------------------------------------------------------------------------------- ")
-        print(" --- Insertion des données depuis :", files.upper(), " --- ")
-        print(" ----------------------------------------------------------------------------------------------------- ")      
-
-        filepath = "utils/" + files
-        insert_file = pd.read_csv(filepath, sep=",")
-
-        col = insert_file.columns
-        print(" --- Nom des colonnes du fichier", files," :", col)
-        
-        # Boucle permettant de convertir les éléments du fichier en type object
-        for elem in col:
-            insert_file[[elem]] = insert_file[[elem]].astype(object)
-
-        # Test permettant de déterminer la table cible des données
-        if files[:8] == "communes":
-            table_name = "INSEE_COMMUNES"
-        elif files[:11] == "departement":
-            table_name = "INSEE_DEPARTEMENT"
-        elif files[:6] == "region":
-            table_name = "INSEE_REGION"
-
-        print(" --- Nom de la table à complèter :", table_name)
-
-        insert_file.to_sql(table_name, conn, if_exists = "replace", index = False)
-
-        if verbose :
-            print(" --- Insertion des données depuis le fichier", files, "vers la table", table_name, "réussie ---")
-            print(" ----------------------------------------------------------------------------------------------------- ")
-            print(" ")
-
-
-def insert_data_from_source_files(conn, verbose = True):
-    """
-    Fonction appelée par insert_data() et permettant d'importer 
-    uniquement les fichiers sources dans les tables correspondantes
-    """
-    #Récupération du nom des fichiers sources    
-    filenames_from_os = get_filenames_from_os()
-    #filenames_from_os = ["Extraction_RPPS_Profil1_Structure.csv"]
-    #print(" --- filenames_from_os : ", filenames_from_os)
-    print(" ")
-
-    for files in filenames_from_os:
-        print(" ------------------------------------------------------------------------------------ ")
-        print(" --- Insertion des données depuis : ", files.upper(), "--- ")
-        print(" ------------------------------------------------------------------------------------ ")       
-
-        filepath = "data/input/" + files
-
-        # Modification pour remplacer """ par "" et éviter erreurs 
-        if files == "Extraction_RPPS_Profil1_DiplObt.csv":
-            text = open(filepath, "r")
-            text = ''.join([i for i in text]).replace('"""', '""')
-            x = open(filepath, "w")
-            x.writelines(text)
-            x.close()
-
-        insert_file = pd.read_csv(filepath, sep=";", low_memory = False)
-        
-        # Test permettant de ne pas prendre une éventuelle colonne en trop
-        if insert_file.columns[-1][0:8]=="Unnamed:":
-            col = insert_file.columns[:-1]
-        else:
-            col = insert_file.columns
-
-        print(" --- Nom des colonnes du fichier", files,": ", col)
-
-        # Boucle permettant de convertir les éléments des colonnes en type objet
-        for elem in col:
-            insert_file[[elem]] = insert_file[[elem]].astype(object)
-
-        # Determine la table à cibler
-        table_name = files[24:-4:].upper()
-        print(" --- Nom de la table à completer : ", table_name)
-
-        insert_file.to_sql(table_name, conn, if_exists = "replace", index = False)
-
-        if verbose :
-            print(' --- Insertion des données depuis ', files, 'vers la table ', table_name, 'réussie --- ')
-            print(" -------------------------------------------------------------------------------------------- ")
-            print(" ")
-
-
-def get_filenames_from_os():
-    """
-    Fonction appelée par insert_data_from_source_files() et permettant de lister 
-    le nom des différents fichiers sources CSV
-    """
-    dict_filenames_from_os = os.listdir('data/input')
-    files_from_os = []
-
-    for elem in dict_filenames_from_os:
-        if elem[-4::]=='.csv':
-            files_from_os.append(elem)
-
-    return files_from_os
- 
 def get_filenames_from_insee():
     """
     Fonction appelée par insert_data_from_insee() et permettant de lister 
@@ -727,6 +615,428 @@ def get_filenames_from_insee():
             files_from_insee.append(elem)
 
     return files_from_insee
+
+
+# Récupération du nom des colonnes et de la table à compléter
+def get_column_and_table_names_for_insee(files):
+    """
+    Fonction appelée dans insert_data_from_insee afin de récupérer le nom de la table et des colonnes   
+    cible.
+    """
+    if files[:8] == "communes":
+        table_name = "INSEE_COMMUNES"
+        column_names = (
+        'TYPECOM',
+        'COM',
+        'REG',
+        'DEP',
+        'ARR',
+        'TNCC',
+        'NCC',
+        'NCCENR',
+        'LIBELLE',
+        'CAN',
+        'COMPARENT'
+        )
+    elif files[:11] == "departement":
+        table_name = "INSEE_DEPARTEMENT"
+        column_names = (
+        'DEP',
+        'REG',
+        'CHEFLIEU',
+        'TNCC',
+        'NCC',
+        'NCCENR',
+        'LIBELLE'        
+        )
+    elif files[:6] == "region":
+        table_name = "INSEE_REGION"
+        column_names = (
+        'REG',
+        'CHEFLIEU',
+        'TNCC',
+        'NCC',
+        'NCCENR',
+        'LIBELLE'
+        )
+
+    return column_names, table_name
+
+
+def insert_data_from_insee(conn, verbose = True):
+    """
+    Fonction appelée par insert_data() et permettant d'importer 
+    uniquement les fichiers de l'INSEE dans les tables correspondantes
+    """
+    # Récupération du nom des fichiers INSEE
+    filenames_from_insee = get_filenames_from_insee()
+   
+    # Boucle permettant d'importer les données de chaque fichier INSEE dans la BDD
+    for files in filenames_from_insee:
+        print(" ----------------------------------------------------------------------------------------------------- ")
+        print(" --- Insertion des données depuis :", files.upper(), " --- ")
+        print(" ----------------------------------------------------------------------------------------------------- ")      
+        # Récupération du chemin où sont stockés les fichiers
+        filepath = "utils/" + files
+
+        # Récupération du nom des colonnes et de la table en fonction du fichier
+        column_names, table_name = get_column_and_table_names_for_insee(files)
+
+        # Lecture du fichier csv
+        print(" --- Lecture et transformation du fichier :", files)
+        insert_file = pd.read_csv(filepath, sep=",", header = 0, names = column_names, dtype="str")
+
+        print(" --- Nom des colonnes du fichier", files, ":", insert_file.columns)
+
+        print(" --- Insertion des données au sein de la table :", table_name)
+        insert_file.to_sql(table_name, conn, if_exists = "replace", index = False)
+
+        if verbose :
+            print(" --- Insertion des données depuis le fichier", files, "vers la table", table_name, "réussie ---")
+            print(" ----------------------------------------------------------------------------------------------------- ")
+            print(" ")
+
+
+# Récupération des noms des fichiers sources
+def get_filenames_from_source_files():
+    """
+    Fonction appelée par insert_data_from_source_files() et permettant de lister 
+    le nom des différents fichiers sources CSV
+    """
+    dict_filenames_from_os = os.listdir('data/input')
+    files_from_os = []
+
+    for elem in dict_filenames_from_os:
+        if elem[-4::]=='.csv':
+            files_from_os.append(elem)
+
+    return files_from_os
+
+
+# Récupération du nom des colonnes
+def get_column_and_table_names_for_source_files(files):
+    """
+    Fonction appelée dans insert_data_from_source_files afin de récupérer le nom de la table et des colonnes 
+    cible.
+    """
+    file_name = files[24:-4:].upper()
+
+    if file_name == "PERSONNE":
+        column_names = (
+        'TYPE_D_IDENTIFIANT_PP', 
+        'IDENTIFIANT_PP', 
+        'IDENTIFICATION_NATIONALE_PP', 
+        'CODE_CIVILITE', 
+        'LIBELLE_CIVILITE', 
+        'NOM_D_USAGE', 
+        'PRENOM_D_USAGE', 
+        'NATURE',
+        'DATE_D_EFFET', 
+        'DATE_DE_MISE_A_JOUR_PERSONNE')
+    elif file_name == "AUTEXERC":
+        column_names = (
+        'TYPE_D_IDENTIFIANT_PP', 
+        'IDENTIFIANT_PP', 
+        'IDENTIFICATION_NATIONALE_PP', 
+        'DATE_EFFET_AUTORISATION', 
+        'CODE_TYPE_AUTORISATION', 
+        'LIBELLE_TYPE_AUTORISATION', 
+        'DATE_FIN_AUTORISATION', 
+        'DATE_DE_MISE_A_JOUR_AUTORISATION', 
+        'CODE_DISCIPLINE_AUTORISATION', 
+        'LIBELLE_DISCIPLINE_AUTORISATION', 
+        'CODE_PROFESSION', 
+        'LIBELLE_PROFESSION')
+    elif file_name == "ACTIVITE":
+        column_names = (
+        'TYPE_D_IDENTIFIANT_PP', 
+        'IDENTIFIANT_PP', 
+        'IDENTIFIANT_DE_L_ACTIVITE', 
+        'IDENTIFICATION_NATIONALE_PP', 
+        'IDENTIFIANT_TECHNIQUE_DE_LA_STRUCTURE', 
+        'CODE_FONCTION', 
+        'LIBELLE_FONCTION', 
+        'CODE_MODE_EXERCICE', 
+        'LIBELLE_MODE_EXERCICE', 
+        'DATE_DE_DEBUT_ACTIVITE', 
+        'DATE_DE_FIN_ACTIVITE', 
+        'DATE_DE_MISE_A_JOUR_ACTIVITE', 
+        'CODE_REGION_EXERCICE', 
+        'LIBELLE_REGION_EXERCICE', 
+        'CODE_GENRE_ACTIVITE', 
+        'LIBELLE_GENRE_ACTIVITE', 
+        'CODE_MODIF_DE_FIN_D_ACTIVITE', 
+        'LIBELLE_MOTIF_DE_FIN_D_ACTIVITE', 
+        'CODE_SECTION_TABLEAU_PHARMACIENS', 
+        'LIBELLE_SECTION_TABLEAU_PHARMACIENS', 
+        'CODE_SOUSSECTION_TABLEAU_PHARMACIENS', 
+        'LIBELLE_SOUSSECTION_TABLEAU_PHARMACIENS', 
+        'CODE_TYPE_ACTIVITE_LIBERALE', 
+        'LIBELLE_TYPE_ACTIVITE_LIBERALE', 
+        'CODE_STATUT_DES_PS_DU_SSA', 
+        'LIBELLE_STATUT_DES_PS_DU_SSA', 
+        'CODE_STATUT_HOSPITALIER', 
+        'LIBELLE_STATUT_HOSPITALIER', 
+        'CODE_PROFESSION', 
+        'LIBELLE_PROFESSION', 
+        'CODE_CATEGORIE_PROFESSIONNELLE', 
+        'LIBELLE_CATEGORIE_PROFESSIONNELLE')
+    elif file_name == "COORDACT":
+        column_names = (
+        'TYPE_D_IDENTIFIANT_PP', 
+        'IDENTIFIANT_PP', 
+        'IDENTIFIANT_DE_L_ACTIVITE', 
+        'IDENTIFICATION_NATIONALE_PP', 
+        'IDENTIFIANT_TECHNIQUE_DE_LA_STRUCTURE', 
+        'CODE_PROFESSION', 
+        'LIBELLE_PROFESSION', 
+        'CODE_CATEGORIE_PROFESSIONNELLE', 
+        'LIBELLE_CATEGORIE_PROFESSIONNELLE', 
+        'COMPLEMENT_DESTINATAIRE_COORD_ACTIVITE', 
+        'COMPLEMENT_POINT_GEOGRAPHIQUE_COORD_ACTIVITE', 
+        'NUMERO_VOIE_COORD_ACTIVITE', 
+        'INDICE_REPETITION_VOIE_COORD_ACTIVITE', 
+        'CODE_TYPE_DE_VOIE_COORD_ACTIVITE', 
+        'LIBELLE_TYPE_DE_VOIE_COORD_ACTIVITE', 
+        'LIBELLE_VOIE_COORD_ACTIVITE', 
+        'MENTION_DISTRIBUTION_COORD_ACTIVITE', 
+        'BUREAU_CEDEX_COORD_ACTIVITE', 
+        'CODE_POSTAL_COORD_ACTIVITE', 
+        'CODE_COMMUNE_COORD_ACTIVITE', 
+        'LIBELLE_COMMUNE_COORD_ACTIVITE', 
+        'CODE_PAYS_COORD_ACTIVITE', 
+        'LIBELLE_PAYS_COORD_ACTIVITE', 
+        'TELEPHONE_COORD_ACTIVITE', 
+        'TELEPHONE_2_COORD_ACTIVITE', 
+        'TELECOPIE_COORD_ACTIVITE', 
+        'ADRESSE_EMAIL_COORD_ACTIVITE', 
+        'DATE_DE_MISE_A_JOUR_COORD_ACTIVITE', 
+        'DATE_DE_FIN_COORD_ACTIVITE')
+    elif file_name == "COORDCORRESP":
+        column_names = (
+        'TYPE_D_IDENTIFIANT_PP',
+        'IDENTIFIANT_PP',
+        'IDENTIFICATION_NATIONALE_PP',
+        'COMPLEMENT_DESTINATAIRE_COORD_CORRESPONDANCE',
+        'COMPLEMENT_POINT_GEOGRAPHIQUE_COORD_CORRESPONDANCE',
+        'NUMERO_VOIE_COORD_CORRESPONDANCE',
+        'INDICE_REPETITION_VOIE_COORD_CORRESPONDANCE',
+        'CODE_TYPE_DE_VOIE_COORD_CORRESPONDANCE',
+        'LIBELLE_TYPE_DE_VOIE_COORD_CORRESPONDANCE',
+        'LIBELLE_VOIE_COORD_CORRESPONDANCE',
+        'MENTION_DISTRIBUTION_COORD_CORRESPONDANCE',
+        'BUREAU_CEDEX_COORD_CORRESPONDANCE',
+        'CODE_POSTAL_COORD_CORRESPONDANCE',
+        'CODE_COMMUNE_COORD_CORRESPONDANCE',
+        'LIBELLE_COMMUNE_COORD_CORRESPONDANCE',
+        'CODE_PAYS_COORD_CORRESPONDANCE',
+        'LIBELLE_PAYS_COORD_CORRESPONDANCE',
+        'TELEPHONE_COORD_CORRESPONDANCE',
+        'TELEPHONE_2_COORD_CORRESPONDANCE',
+        'TELECOPIE_COORD_CORRESPONDANCE',
+        'ADRESSE_EMAIL_COORD_CORRESPONDANCE',
+        'DATE_DE_MISE_A_JOUR_COORD_CORRESPONDANCE',
+        'DATE_DE_FIN_COORD_CORRESPONDANCE'
+        )
+    elif file_name == "COORDSTRUCT":
+        column_names = (
+        'IDENTIFIANT_TECHNIQUE_DE_LA_STRUCTURE',    
+        'COMPLEMENT_DESTINATAIRE_COORD_STRUCTURE',      
+        'COMPLEMENT_POINT_GEOGRAPHIQUE_COORD_STRUCTURE',
+        'NUMERO_VOIE_COORD_STRUCTURE',           
+        'INDICE_REPETITION_VOIE_COORD_STRUCTURE',
+        'CODE_TYPE_DE_VOIE_COORD_STRUCTURE',   
+        'LIBELLE_TYPE_DE_VOIE_COORD_STRUCTURE',
+        'LIBELLE_VOIE_COORD_STRUCTURE',
+        'MENTION_DISTRIBUTION_COORD_STRUCTURE',
+        'BUREAU_CEDEX_COORD_STRUCTURE',
+        'CODE_POSTAL_COORD_STRUCTURE',
+        'CODE_COMMUNE_COORD_STRUCTURE',
+        'LIBELLE_COMMUNE_COORD_STRUCTURE',
+        'CODE_PAYS_COORD_STRUCTURE',
+        'LIBELLE_PAYS_COORD_STRUCTURE',
+        'TELEPHONE_COORD_STRUCTURE',
+        'TELEPHONE_2_COORD_STRUCTURE',
+        'TELECOPIE_COORD_STRUCTURE',
+        'ADRESSE_EMAIL_COORD_STRUCTURE',
+        'DATE_DE_MISE_A_JOUR_COORD_STRUCTURE',
+        'DATE_DE_FIN_COORD_STRUCTURE'
+        )
+    elif file_name == "DIPLOBT":
+        column_names = (
+        'TYPE_D_IDENTIFIANT_PP',
+        'IDENTIFIANT_PP',
+        'IDENTIFICATION_NATIONALE_PP',
+        'CODE_TYPE_DIPLOME_OBTENU',
+        'LIBELLE_TYPE_DIPLOME_OBTENU',
+        'CODE_DIPLOME_OBTENU', 
+        'LIBELLE_DIPLOME_OBTENU',
+        'DATE_DE_MISE_A_JOUR_DIPLOME_OBTENU',
+        'CODE_LIEU_OBTENTION',
+        'LIBELLE_LIEU_OBTENTION',
+        'DATE_D_OBTENTION_DIPLOME',
+        'NUMERO_DIPLOME'
+        )
+    elif file_name == "ETATCIV":
+        column_names = (
+        'TYPE_D_IDENTIFIANT_PP',
+        'IDENTIFIANT_PP',
+        'IDENTIFICATION_NATIONALE_PP',
+        'CODE_STATUT_ETAT_CIVIL',
+        'LIBELLE_STATUT_ETAT_CIVIL',
+        'CODE_SEXE',
+        'LIBELLE_SEXE',
+        'NOM_DE_FAMILLE',
+        'PRENOMS',
+        'DATE_DE_NAISSANCE',
+        'LIEU_DE_NAISSANCE',
+        'DATE_DE_DECES',
+        'DATE_D_EFFET_DE_L_ETAT_CIVIL',
+        'CODE_COMMUNE_DE_NAISSANCE',
+        'LIBELLE_COMMUNE_DE_NAISSANCE',
+        'CODE_PAYS_DE_NAISSANCE',
+        'LIBELLE_PAYS_DE_NAISSANCE',
+        'DATE_DE_MISE_A_JOUR_ETAT_CIVIL'
+        )
+    elif file_name == "EXERCPRO":
+        column_names = (
+        'TYPE_D_IDENTIFIANT_PP',
+        'IDENTIFIANT_PP',
+        'IDENTIFICATION_NATIONALE_PP',
+        'CODE_CIVILITE_D_EXERCICE',
+        'LIBELLE_CIVILITE_D_EXERCICE',
+        'NOM_D_EXERCICE',
+        'PRENOM_D_EXERCICE',
+        'CODE_PROFESSION',
+        'LIBELLE_PROFESSION',
+        'CODE_CATEGORIE_PROFESSIONNELLE',
+        'LIBELLE_CATEGORIE_PROFESSIONNELLE',
+        'DATE_DE_FIN_EXERCICE',
+        'DATE_DE_MISE_A_JOUR_EXERCICE',
+        'DATE_EFFET_EXERCICE',
+        'CODE_AE_1E_INSCRIPTION',
+        'LIBELLE_AE_1E_INSCRIPTION',
+        'DATE_DEBUT_1E_INSCRIPTION',
+        'DEPARTEMENT_1E_INSCRIPTION',
+        'LIBELLE_DEPARTEMENT_1E_INSCRIPTION'
+        )
+    elif file_name == "REFERAE":
+        column_names = (
+        'TYPE_D_IDENTIFIANT_PP',
+        'IDENTIFIANT_PP',
+        'IDENTIFICATION_NATIONALE_PP',
+        'CODE_AE',
+        'LIBELLE_AE',
+        'DATE_DEBUT_INSCRIPTION',
+        'DATE_FIN_INSCRIPTION',
+        'DATE_DE_MISE_A_JOUR_INSCRIPTION',
+        'CODE_STATUT_INSCRIPTION',
+        'LIBELLE_STATUT_INSCRIPTION',
+        'CODE_DEPARTEMENT_INSCRIPTION',
+        'LIBELLE_DEPARTEMENT_INSCRIPTION',
+        'CODE_DEPARTEMENT_ACCUEIL',
+        'LIBELLE_DEPARTEMENT_ACCUEIL',
+        'CODE_PROFESSION',
+        'LIBELLE_PROFESSION',
+        'CODE_CATEGORIE_PROFESSIONNELLE',
+        'LIBELLE_CATEGORIE_PROFESSIONNELLE'
+        )
+    elif file_name == "SAVOIRFAIRE":
+        column_names = (
+        'TYPE_D_IDENTIFIANT_PP',
+        'IDENTIFIANT_PP',
+        'IDENTIFICATION_NATIONALE_PP',
+        'CODE_SAVOIRFAIRE',
+        'LIBELLE_SAVOIRFAIRE',
+        'CODE_TYPE_SAVOIRFAIRE',
+        'LIBELLE_TYPE_SAVOIRFAIRE',
+        'CODE_PROFESSION',
+        'LIBELLE_PROFESSION',
+        'CODE_CATEGORIE_PROFESSIONNELLE',
+        'LIBELLE_CATEGORIE_PROFESSIONNELLE',
+        'DATE_RECONNAISSANCE_SAVOIRFAIRE',
+        'DATE_DE_MISE_A_JOUR_SAVOIRFAIRE',
+        'DATE_ABANDON_SAVOIRFAIRE'
+        )
+    elif file_name == "STRUCTURE":
+        column_names = (
+        'TYPE_DE_STRUCTURE',
+        'IDENTIFIANT_TECHNIQUE_DE_LA_STRUCTURE',
+        'IDENTIFICATION_NATIONALE_DE_LA_STRUCTURE',
+        'NUMERO_SIRET',
+        'NUMERO_SIREN',
+        'NUMERO_FINESS_ETABLISSEMENT',
+        'NUMERO_FINESS_EJ',
+        'RPPS_RANG',
+        'ADELI_RANG',
+        'NUMERO_LICENCE_OFFICINE',
+        'DATE_D_OUVERTURE_STRUCTURE',
+        'DATE_DE_FERMETURE_STRUCTURE',
+        'DATE_DE_MISE_A_JOUR_STRUCTURE',
+        'CODE_APE',
+        'LIBELLE_APE',
+        'CODE_CATEGORIE_JURIDIQUE',
+        'LIBELLE_CATEGORIE_JURIDIQUE',
+        'CODE_SECTEUR_D_ACTIVITE',
+        'LIBELLE_SECTEUR_D_ACTIVITE',
+        'RAISON_SOCIALE',
+        'ENSEIGNE_COMMERCIALE'
+        )
+
+    return column_names, file_name
+
+
+def insert_data_from_source_files(conn, verbose = True):
+    """
+    Fonction appelée par insert_data() et permettant d'importer 
+    uniquement les fichiers sources dans les tables correspondantes
+    """
+    #Récupération du nom des fichiers sources    
+    filenames_from_os = get_filenames_from_source_files()
+    #filenames_from_os = ["Extraction_RPPS_Profil1_Personne.csv"]
+    #print(" --- filenames_from_os : ", filenames_from_os)
+    print(" ")
+
+    for files in filenames_from_os:
+        print(" ------------------------------------------------------------------------------------ ")
+        print(" --- Insertion des données depuis : ", files.upper(), "--- ")
+        print(" ------------------------------------------------------------------------------------ ")       
+
+        # Récupération du chemin où sont stockés les fichiers csv
+        filepath = "data/input/" + files
+
+        # Récupération du nom des colonnes et de la table en fonction du fichier traité
+        column_names, table_name  = get_column_and_table_names_for_source_files(files)
+        #print("Test column_names : ", column_names)
+
+        # Modification pour remplacer """ par "" et éviter erreurs 
+        if files == "Extraction_RPPS_Profil1_DiplObt.csv":
+            text = open(filepath, "r")
+            text = ''.join([i for i in text]).replace('"""', '""')
+            x = open(filepath, "w")
+            x.writelines(text)
+            x.close()
+
+        # Lecture du fichier csv
+        print(" --- Lecture et transformation du fichier :", files)
+        insert_file = pd.read_csv(filepath, sep=";", header = 0, names = column_names, dtype="str", low_memory = False)
+
+        # Test permettant de ne pas prendre une éventuelle colonne en trop
+        if insert_file.columns[-1][0:8]=="Unnamed:":
+            insert_file.drop(insert_file.columns[-1], axis = 1, inplace = True)
+            print(" --- Suppression de la dernière colonne 'Unnammed'")
+           
+        print(" --- Nom des colonnes du fichier", files,":", insert_file.columns)
+
+        # Insertion du Dataframe dans la table cible
+        print(" --- Insertion des données au sein de la table :", table_name)
+        insert_file.to_sql(table_name, conn, if_exists = "replace", index = False)
+
+        if verbose :
+            print(' --- Insertion des données depuis', files, 'vers la table', table_name, 'réussie --- ')
+            print(" -------------------------------------------------------------------------------------------- ")
+            print(" ")
+
 
 
 #def insert_autexerc(database = "database", verbose = True):
