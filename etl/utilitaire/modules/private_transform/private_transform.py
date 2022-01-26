@@ -11,13 +11,16 @@ import datetime
 
 # Transformation activite
 def transform_ods_activite(database = "database", verbose = True):
-    print(" ----------------------------------------------------------------------------- ")
-    print(" --- Remise en forme des données des activités des professionnels de santé --- ")
-    print(" ----------------------------------------------------------------------------- ")
+    print(" ----------------------------------------------------- ")
+    print(" --- Remise en forme des données vers ODS_ACTIVITE --- ")
+    print(" ----------------------------------------------------- ")
+    print(" --- Connexion à la base de données")
     conn = sqlite3.connect(
         database = database
     )
     cursor = conn.cursor()
+
+    print(" --- query_select_ods_activite")
     query_select_ods_activite = """
     SELECT
         dep.NCC as DEPARTEMENT_COORD_CORRESPONDANCE,
@@ -158,11 +161,13 @@ def transform_ods_activite(database = "database", verbose = True):
         else:
             break
 
+    print(" --- query_delete_ods_activite")
     query_delete_ods_activite = """
     DELETE FROM ODS_ACTIVITE
     """
     cursor.execute(query_delete_ods_activite)
 
+    print(" --- query_insert_ods_activite")
     query_insert_ods_activite = """
     INSERT INTO ODS_ACTIVITE (
         DEPARTEMENT_COORD_CORRESPONDANCE,
@@ -411,13 +416,16 @@ def transform_ods_activite(database = "database", verbose = True):
 
 # Transformation personne
 def transform_ods_personne(database = "database", verbose = True):
-    print(" ----------------------------------------------------------------------------- ")
-    print(" --- Remise en forme des données des personnes des professionnels de santé --- ")
-    print(" ----------------------------------------------------------------------------- ")
+    print(" ----------------------------------------------------- ")
+    print(" --- Remise en forme des données vers ODS_PERSONNE --- ")
+    print(" ----------------------------------------------------- ")
+    print(" --- Connexion à la base de données")
     conn = sqlite3.connect(
         database = database
     )
     cursor = conn.cursor()
+    
+    print(" --- query_select_ods_personne")
     query_select_ods_personne = """
     SELECT
         dep.NCC as DEPARTEMENT_COORD_CORRESPONDANCE,
@@ -503,11 +511,13 @@ def transform_ods_personne(database = "database", verbose = True):
         else:
             break
     
+    print(" --- query_delete_ods_personne")
     query_delete_ods_personne = """
     DELETE FROM ODS_PERSONNE
     """
     cursor.execute(query_delete_ods_personne)
 
+    print(" --- query_insert_ods_personne")
     query_insert_ods_personne = """
     INSERT INTO ODS_PERSONNE (
         DEPARTEMENT_COORD_CORRESPONDANCE,
