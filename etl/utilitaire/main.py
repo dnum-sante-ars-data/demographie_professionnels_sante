@@ -46,12 +46,9 @@ def transform():
     param_config = route_sqlite.read_config_db("settings/settings.json", server = "LOCAL SERVER")
     # Remise en forme des données personne
     private_transform.transform_ods_personne(database = param_config["database"], verbose = True)
-    # Remise en forme des données démographiques des professionnels de santé
-    # private_transform.transform_f_libreacces_ps(database = param_config["database"], verbose = True)
-    # Remise en forme des données démographiques de population
-    # private_transform.transform_f_population(database = param_config["database"], verbose = True)
-    # Remise en forme de la table ref_atlasante_t_corresp_cp
-    # private_transform.transform_corresp_cp(database = param_config["database"], verbose = True)
+    # Remise en forme des données activité
+    private_transform.transform_ods_activite(database = param_config["database"], verbose = True)
+   
     # Transformation sur les  référentiels géo pour constituer les tables de dimension
     # private_transform.transform_corresp_cp(database = param_config["database"], verbose = True)
     # Création des csv pour les visualisations
