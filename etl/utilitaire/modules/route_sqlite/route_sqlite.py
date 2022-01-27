@@ -1022,9 +1022,9 @@ def insert_data_from_source_files(conn, verbose = True):
         insert_file = pd.read_csv(filepath, sep=";", header = 0, names = column_names, dtype="str", low_memory = False)
 
         # Test permettant de ne pas prendre une éventuelle colonne en trop
-        if insert_file.columns[-1][0:8]=="Unnamed:":
-            insert_file.drop(insert_file.columns[-1], axis = 1, inplace = True)
-            print(" --- Suppression de la dernière colonne 'Unnammed'")
+        #if insert_file.columns[-1][0:8]=="Unnamed:":
+         #   insert_file.drop(insert_file.columns[-1], axis = 1, inplace = True)
+          #  print(" --- Suppression de la dernière colonne 'Unnammed'")
            
         print(" --- Nom des colonnes du fichier", files,":", insert_file.columns)
 

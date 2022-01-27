@@ -94,7 +94,7 @@ def transform_ods_activite(database = "database", verbose = True):
         s.CODE_SECTEUR_D_ACTIVITE,
         s.LIBELLE_SECTEUR_D_ACTIVITE,
         s.RAISON_SOCIALE,
-        s.ENSEIGNE_COMMERCIAlE,
+        s.ENSEIGNE_COMMERCIALE,
         cs.NUMERO_VOIE_COORD_STRUCTURE,
         cs.INDICE_REPETITION_VOIE_COORD_STRUCTURE,
         cs.CODE_TYPE_DE_VOIE_COORD_STRUCTURE,
@@ -658,6 +658,36 @@ def transform_ods_personne(database = "database", verbose = True):
     cursor.close
     conn.close
     
+
+
+# Test export csv
+def transform_to_csv(database = "database", verbose = True):
+    conn = sqlite3.connect(
+        database = database
+    )
+    
+    print(" --- Extraction vers ODS_PERSONNE.csv en cours")
+    df = pd.read_sql('SELECT * FROM ODS_PERSONNE', conn)
+    df.to_csv('data/output/ODS_PERSONNE.csv', index = False)
+    print(" --- Extraction vers ODS_PERSONNE.csv réalisée")
+    print(" ")
+    print(" --- Extraction vers ODS_ACTIVITE.csv en cours")
+    df2 = pd.read_sql('SELECT * FROM ODS_ACTIVITE', conn)
+    df2.to.csv('data/output/ODS_ACTIVITE.csv', index = False)
+    print(" --- Extraction vers ODS_ACTIVITE.csv réalisée")
+
+    #cursor = conn.cursor()
+
+    #query = """
+    #SELECT * FROM ODS_PERSONNE
+    #"""
+    #cursor.execute(query)
+
+    #cols = [column[0] for column in query.description]
+
+    #results = pd.DataFrame.from_records(data = query.fetchall(), columns = cols)
+    #results = pd.DataFrame.from_records(data = query.fetchall())
+    #results.head(n=5)
 
 
 # transformation sur les données démographiques des professionnels de santé
@@ -1343,16 +1373,6 @@ def transform_corresp_cp (database='database', verbose = True) :
         nb_ccom
         from TMP_CORRESP_CP
         union
-        select
-        cp_code,
-        ccom_34 as ccom,
-        nb_ccom
-        from TMP_CORRESP_CP
-        union
-        select
-        cp_code,
-        ccom_35 as ccom,
-        nb_ccom
         from TMP_CORRESP_CP
         union
         select

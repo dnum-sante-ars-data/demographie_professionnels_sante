@@ -48,11 +48,11 @@ def transform():
     private_transform.transform_ods_personne(database = param_config["database"], verbose = True)
     # Remise en forme des données activité
     private_transform.transform_ods_activite(database = param_config["database"], verbose = True)
-   
+    print(" - Transformation de ODS_PERSONNE et ODS_ACTIVITE réalisées")
     # Transformation sur les  référentiels géo pour constituer les tables de dimension
     # private_transform.transform_corresp_cp(database = param_config["database"], verbose = True)
     # Création des csv pour les visualisations
-    # private_transform.transform_to_csv(database = param_config["database"], verbose = True)
+    private_transform.transform_to_csv(database = param_config["database"], verbose = True)
     print(" - Transformations terminées")
 
 
