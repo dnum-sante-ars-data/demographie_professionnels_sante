@@ -47,7 +47,8 @@ def init_empty_schema(database = "database", verbose = True):
         CODE_DISCIPLINE_AUTORISATION     TEXT,
         LIBELLE_DISCIPLINE_AUTORISATION  TEXT,
         CODE_PROFESSION                  TEXT,
-        LIBELLE_PROFESSION               TEXT
+        LIBELLE_PROFESSION               TEXT,
+        UNNAMED                          TEXT
     );
     """
     cursor.execute(query_create_autexerc)
@@ -85,7 +86,8 @@ def init_empty_schema(database = "database", verbose = True):
         CODE_PROFESSION                          TEXT,
         LIBELLE_PROFESSION                       TEXT,
         CODE_CATEGORIE_PROFESSIONNELLE           TEXT,
-        LIBELLE_CATEGORIE_PROFESSIONNELLE        TEXT
+        LIBELLE_CATEGORIE_PROFESSIONNELLE        TEXT,
+        UNNAMED                                  TEXT
     );
     """
     cursor.execute(query_create_activite)
@@ -120,7 +122,8 @@ def init_empty_schema(database = "database", verbose = True):
         TELECOPIE_COORD_ACTIVITE                     TEXT,
         ADRESSE_EMAIL_COORD_ACTIVITE                 TEXT,
         DATE_DE_MISE_A_JOUR_COORD_ACTIVITE           TEXT,
-        DATE_DE_FIN_COORD_ACTIVITE                   TEXT
+        DATE_DE_FIN_COORD_ACTIVITE                   TEXT,
+        UNNAMED                                      TEXT
     );
     """
     cursor.execute(query_create_coordact)
@@ -149,7 +152,8 @@ def init_empty_schema(database = "database", verbose = True):
         TELECOPIE_COORD_CORRESPONDANCE                     TEXT,
         ADRESSE_EMAIL_COORD_CORRESPONDANCE                 TEXT,
         DATE_DE_MISE_A_JOUR_COORD_CORRESPONDANCE           TEXT,
-        DATE_DE_FIN_COORD_CORRESPONDANCE                   TEXT
+        DATE_DE_FIN_COORD_CORRESPONDANCE                   TEXT,
+        UNNAMED                                            TEXT
     );
     """
     cursor.execute(query_create_coordcorresp)
@@ -176,7 +180,8 @@ def init_empty_schema(database = "database", verbose = True):
         TELECOPIE_COORD_STRUCTURE                     TEXT,
         ADRESSE_EMAIL_COORD_STRUCTURE                 TEXT,
         DATE_DE_MISE_A_JOUR_COORD_STRUCTURE           TEXT,
-        DATE_DE_FIN_COORD_STRUCTURE                   TEXT
+        DATE_DE_FIN_COORD_STRUCTURE                   TEXT,
+        UNNAMED                                       TEXT
     );
     """
     cursor.execute(query_create_coordstruct)
@@ -194,7 +199,8 @@ def init_empty_schema(database = "database", verbose = True):
         CODE_LIEU_OBTENTION                TEXT,
         LIBELLE_LIEU_OBTENTION             TEXT,
         DATE_D_OBTENTION_DIPLOME           TEXT,
-        NUMERO_DIPLOME                     TEXT
+        NUMERO_DIPLOME                     TEXT,
+        UNNAMED                            TEXT
     );
     """
     cursor.execute(query_create_diplobt)
@@ -218,7 +224,8 @@ def init_empty_schema(database = "database", verbose = True):
         LIBELLE_COMMUNE_DE_NAISSANCE   TEXT,
         CODE_PAYS_DE_NAISSANCE         TEXT,
         LIBELLE_PAYS_DE_NAISSANCE      TEXT,
-        DATE_DE_MISE_A_JOUR_ETAT_CIVIL TEXT
+        DATE_DE_MISE_A_JOUR_ETAT_CIVIL TEXT,
+        UNNAMED                        TEXT
     );
     """
     cursor.execute(query_create_etatciv)
@@ -243,7 +250,8 @@ def init_empty_schema(database = "database", verbose = True):
         LIBELLE_AE_1E_INSCRIPTION          TEXT,
         DATE_DEBUT_1E_INSCRIPTION          TEXT,
         DEPARTEMENT_1E_INSCRIPTION         TEXT,
-        LIBELLE_DEPARTEMENT_1E_INSCRIPTION TEXT
+        LIBELLE_DEPARTEMENT_1E_INSCRIPTION TEXT,
+        UNNAMED                            TEXT
     );
     """
     cursor.execute(query_create_exercpro)
@@ -283,7 +291,8 @@ def init_empty_schema(database = "database", verbose = True):
         CODE_PROFESSION                   TEXT,
         LIBELLE_PROFESSION                TEXT,
         CODE_CATEGORIE_PROFESSIONNELLE    TEXT,
-        LIBELLE_CATEGORIE_PROFESSIONNELLE TEXT
+        LIBELLE_CATEGORIE_PROFESSIONNELLE TEXT,
+        UNNAMED                           TEXT
     );
     """
     cursor.execute(query_create_referae)
@@ -303,7 +312,8 @@ def init_empty_schema(database = "database", verbose = True):
         LIBELLE_CATEGORIE_PROFESSIONNELLE TEXT,
         DATE_RECONNAISSANCE_SAVOIR_FAIRE  TEXT,
         DATE_DE_MISE_A_JOUR_SAVOIR_FAIRE  TEXT,
-        DATE_ABANDON_SAVOIR_FAIRE         TEXT
+        DATE_ABANDON_SAVOIR_FAIRE         TEXT,
+        UNNAMED                           TEXT
     );
     """
     cursor.execute(query_create_savoirfaire)
@@ -330,7 +340,8 @@ def init_empty_schema(database = "database", verbose = True):
         CODE_SECTEUR_D_ACTIVITE                  TEXT,
         LIBELLE_SECTEUR_D_ACTIVITE               TEXT,
         RAISON_SOCIALE                           TEXT,
-        ENSEIGNE_COMMERCIALE                     TEXT
+        ENSEIGNE_COMMERCIALE                     TEXT,
+        UNNAMED                                  TEXT
     );
     """
     cursor.execute(query_create_structure)
@@ -746,7 +757,9 @@ def get_column_and_table_names_for_source_files(files):
         'CODE_DISCIPLINE_AUTORISATION', 
         'LIBELLE_DISCIPLINE_AUTORISATION', 
         'CODE_PROFESSION', 
-        'LIBELLE_PROFESSION')
+        'LIBELLE_PROFESSION',
+        'UNNAMED'
+        )
     elif file_name == "ACTIVITE":
         column_names = (
         'TYPE_D_IDENTIFIANT_PP', 
@@ -780,7 +793,9 @@ def get_column_and_table_names_for_source_files(files):
         'CODE_PROFESSION', 
         'LIBELLE_PROFESSION', 
         'CODE_CATEGORIE_PROFESSIONNELLE', 
-        'LIBELLE_CATEGORIE_PROFESSIONNELLE')
+        'LIBELLE_CATEGORIE_PROFESSIONNELLE',
+        'UNNAMED'
+        )
     elif file_name == "COORDACT":
         column_names = (
         'TYPE_D_IDENTIFIANT_PP', 
@@ -811,7 +826,9 @@ def get_column_and_table_names_for_source_files(files):
         'TELECOPIE_COORD_ACTIVITE', 
         'ADRESSE_EMAIL_COORD_ACTIVITE', 
         'DATE_DE_MISE_A_JOUR_COORD_ACTIVITE', 
-        'DATE_DE_FIN_COORD_ACTIVITE')
+        'DATE_DE_FIN_COORD_ACTIVITE',
+        'UNNAMED'
+        )
     elif file_name == "COORDCORRESP":
         column_names = (
         'TYPE_D_IDENTIFIANT_PP',
@@ -836,7 +853,8 @@ def get_column_and_table_names_for_source_files(files):
         'TELECOPIE_COORD_CORRESPONDANCE',
         'ADRESSE_EMAIL_COORD_CORRESPONDANCE',
         'DATE_DE_MISE_A_JOUR_COORD_CORRESPONDANCE',
-        'DATE_DE_FIN_COORD_CORRESPONDANCE'
+        'DATE_DE_FIN_COORD_CORRESPONDANCE',
+        'UNNAMED'
         )
     elif file_name == "COORDSTRUCT":
         column_names = (
@@ -860,7 +878,8 @@ def get_column_and_table_names_for_source_files(files):
         'TELECOPIE_COORD_STRUCTURE',
         'ADRESSE_EMAIL_COORD_STRUCTURE',
         'DATE_DE_MISE_A_JOUR_COORD_STRUCTURE',
-        'DATE_DE_FIN_COORD_STRUCTURE'
+        'DATE_DE_FIN_COORD_STRUCTURE',
+        'UNNAMED'
         )
     elif file_name == "DIPLOBT":
         column_names = (
@@ -875,7 +894,8 @@ def get_column_and_table_names_for_source_files(files):
         'CODE_LIEU_OBTENTION',
         'LIBELLE_LIEU_OBTENTION',
         'DATE_D_OBTENTION_DIPLOME',
-        'NUMERO_DIPLOME'
+        'NUMERO_DIPLOME',
+        'UNNAMED'
         )
     elif file_name == "ETATCIV":
         column_names = (
@@ -896,7 +916,8 @@ def get_column_and_table_names_for_source_files(files):
         'LIBELLE_COMMUNE_DE_NAISSANCE',
         'CODE_PAYS_DE_NAISSANCE',
         'LIBELLE_PAYS_DE_NAISSANCE',
-        'DATE_DE_MISE_A_JOUR_ETAT_CIVIL'
+        'DATE_DE_MISE_A_JOUR_ETAT_CIVIL',
+        'UNNAMED'
         )
     elif file_name == "EXERCPRO":
         column_names = (
@@ -918,7 +939,8 @@ def get_column_and_table_names_for_source_files(files):
         'LIBELLE_AE_1E_INSCRIPTION',
         'DATE_DEBUT_1E_INSCRIPTION',
         'DEPARTEMENT_1E_INSCRIPTION',
-        'LIBELLE_DEPARTEMENT_1E_INSCRIPTION'
+        'LIBELLE_DEPARTEMENT_1E_INSCRIPTION',
+        'UNNAMED'
         )
     elif file_name == "REFERAE":
         column_names = (
@@ -939,7 +961,8 @@ def get_column_and_table_names_for_source_files(files):
         'CODE_PROFESSION',
         'LIBELLE_PROFESSION',
         'CODE_CATEGORIE_PROFESSIONNELLE',
-        'LIBELLE_CATEGORIE_PROFESSIONNELLE'
+        'LIBELLE_CATEGORIE_PROFESSIONNELLE',
+        'UNNAMED'
         )
     elif file_name == "SAVOIRFAIRE":
         column_names = (
@@ -956,7 +979,8 @@ def get_column_and_table_names_for_source_files(files):
         'LIBELLE_CATEGORIE_PROFESSIONNELLE',
         'DATE_RECONNAISSANCE_SAVOIR_FAIRE',
         'DATE_DE_MISE_A_JOUR_SAVOIR_FAIRE',
-        'DATE_ABANDON_SAVOIR_FAIRE'
+        'DATE_ABANDON_SAVOIR_FAIRE',
+        'UNNAMED'
         )
     elif file_name == "STRUCTURE":
         column_names = (
@@ -980,7 +1004,8 @@ def get_column_and_table_names_for_source_files(files):
         'CODE_SECTEUR_D_ACTIVITE',
         'LIBELLE_SECTEUR_D_ACTIVITE',
         'RAISON_SOCIALE',
-        'ENSEIGNE_COMMERCIALE'
+        'ENSEIGNE_COMMERCIALE',
+        'UNNAMED'
         )
 
     return column_names, file_name

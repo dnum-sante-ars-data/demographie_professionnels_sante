@@ -45,7 +45,7 @@ def transform():
     print(" - Transformation - ")
     param_config = route_sqlite.read_config_db("settings/settings.json", server = "LOCAL SERVER")
     # Remise en forme des données personne
-    private_transform.transform_ods_personne(database = param_config["database"], verbose = True)
+    #private_transform.transform_ods_personne(database = param_config["database"], verbose = True)
     # Remise en forme des données activité
     private_transform.transform_ods_activite(database = param_config["database"], verbose = True)
     print(" - Transformation de ODS_PERSONNE et ODS_ACTIVITE réalisées")
