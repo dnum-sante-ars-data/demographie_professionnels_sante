@@ -38,7 +38,9 @@ def exe_db_init():
     route_sqlite.deploy_database(database=param_config["database"])
     print(" -- Transformation -- ")
     route_sqlite.init_empty_schema(database = param_config["database"], verbose = True)
+    route_sqlite.drop_indexes(database = param_config["database"], verbose = True)
     route_sqlite.insert_data(database = param_config["database"], verbose = True)
+    route_sqlite.create_indexes(database = param_config["database"], verbose = True)
     return
 
 
@@ -61,7 +63,7 @@ def transform():
 def transform_export():
     print(" - Transformation et export - ")
     param_config = route_sqlite.read_config_db("settings/settings.json", server = "LOCAL SERVER")
-    private_transform.transform_export(database = param_config["database"], verbose = True)
+    private_transform.transform_export(filepath_activites = "data/output/activites.csv", filepath_personnes="data/output/personnes.csv", database = param_config["database"], verbose = True)
 
 # Initialisation du parsing
 parser = argparse.ArgumentParser()

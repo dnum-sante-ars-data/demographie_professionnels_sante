@@ -51,7 +51,7 @@ def save_wget_sftp(server_in_config):
         # Boucle for pour importer nouveaux fichiers depuis sftp
         for file in filenames_from_sftp:
             dst = "data/input"
-            path_sftp = "demographie_ps/" + file
+            path_sftp = "demographie_ps/input/" + file
             cmd = 'wget --directory-prefix='+dst+' --user="'+username+'" --password="'+password+'"  ftp://'+host+'/'+path_sftp+' --progress=bar'
             subprocess.run(cmd, shell=True)
             print(' - Commande "'+cmd+'" exécutée')
@@ -69,7 +69,7 @@ def get_filenames_from_sftp(sftp) :
                          dans le sftp.
     """
     # Récupération des noms des fichiers sources
-    directory_structure = sftp.listdir_attr('demographie_ps/')
+    directory_structure = sftp.listdir_attr('demographie_ps/input')
     dict_filenames = [attr.filename for attr in directory_structure]
     filenames=[]
     # Boucle permettant de ne récupérer que les fichiers .csv

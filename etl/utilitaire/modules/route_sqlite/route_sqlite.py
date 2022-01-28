@@ -590,6 +590,34 @@ def init_empty_schema(database = "database", verbose = True):
         print("Initialisation de la BDD terminée")
     return
 
+def drop_indexes(database="database", verbose = True):
+    """
+    Fonction permettant de supprimer les indexes si existants
+    """
+    if verbose :
+        print(" --- Suppression des index si existants --- ")
+    conn = sqlite3.connect(
+        database = database
+    )
+    cursor = conn.cursor()
+    cursor.executescript("""
+    DROP INDEX IF EXISTS ACTIVITE_IDENTIFIANT_PP;
+    DROP INDEX IF EXISTS ACTIVITE_IDENTIFIANT_DE_L_ACTIVITE;
+    DROP INDEX IF EXISTS AUTORISATION_EXERCICE_IDENTIFIANT_PP;
+    DROP INDEX IF EXISTS COORDONNEES_ACTIVITE_IDENTIFIANT_DE_L_ACTIVITE;
+    DROP INDEX IF EXISTS COORDONNEES_CORRESPONDANCE_IDENTIFIANT_PP;
+    DROP INDEX IF EXISTS COORDONNEES_STRUCTURE_IDENTIFIANT_TECHNIQUE_DE_LA_STRUCTURE;
+    DROP INDEX IF EXISTS DIPLOME_OBTENU_IDENTIFIANT_PP;
+    DROP INDEX IF EXISTS ETAT_CIVIL_IDENTIFIANT_PP;
+    DROP INDEX IF EXISTS EXERCICE_PROFESSIONNEL_IDENTIFIANT_PP;
+    DROP INDEX IF EXISTS INSCRIPTION_ORDRE_IDENTIFIANT_PP;
+    DROP INDEX IF EXISTS PERSONNE_IDENTIFIANT_PP;
+    DROP INDEX IF EXISTS SAVOIR_FAIRE_IDENTIFIANT_PP;
+    DROP INDEX IF EXISTS STRUCTURE_ACTIVITE_IDENTIFIANT_TECHNIQUE_DE_LA_STRUCTURE;
+    """)
+    cursor.close()
+    conn.commit()
+    conn.close()
 
 def insert_data(database = "database", verbose = True):
     """
@@ -612,6 +640,34 @@ def insert_data(database = "database", verbose = True):
     insert_data_from_insee(conn)
     return
 
+def create_indexes(database="database", verbose = True):
+    """
+    Fonction permettant de créer les indexes si existants
+    """
+    if verbose :
+        print(" --- Création des index --- ")
+    conn = sqlite3.connect(
+        database = database
+    )
+    cursor = conn.cursor()
+    cursor.executescript("""
+    CREATE INDEX ACTIVITE_IDENTIFIANT_PP on ACTIVITE(IDENTIFIANT_PP);
+    CREATE INDEX ACTIVITE_IDENTIFIANT_DE_L_ACTIVITE on ACTIVITE(IDENTIFIANT_DE_L_ACTIVITE);
+    CREATE INDEX AUTORISATION_EXERCICE_IDENTIFIANT_PP on AUTEXERC(IDENTIFIANT_PP);
+    CREATE INDEX COORDONNEES_ACTIVITE_IDENTIFIANT_DE_L_ACTIVITE on COORDACT(IDENTIFIANT_DE_L_ACTIVITE);
+    CREATE INDEX COORDONNEES_CORRESPONDANCE_IDENTIFIANT_PP on COORDCORRESP(IDENTIFIANT_PP);
+    CREATE INDEX COORDONNEES_STRUCTURE_IDENTIFIANT_TECHNIQUE_DE_LA_STRUCTURE on COORDSTRUCT(IDENTIFIANT_TECHNIQUE_DE_LA_STRUCTURE);
+    CREATE INDEX DIPLOME_OBTENU_IDENTIFIANT_PP on DIPLOBT(IDENTIFIANT_PP);
+    CREATE INDEX ETAT_CIVIL_IDENTIFIANT_PP on ETATCIV(IDENTIFIANT_PP);
+    CREATE INDEX EXERCICE_PROFESSIONNEL_IDENTIFIANT_PP on EXERCPRO(IDENTIFIANT_PP);
+    CREATE INDEX INSCRIPTION_ORDRE_IDENTIFIANT_PP on REFERAE(IDENTIFIANT_PP);
+    CREATE INDEX PERSONNE_IDENTIFIANT_PP on PERSONNE(IDENTIFIANT_PP);
+    CREATE INDEX SAVOIR_FAIRE_IDENTIFIANT_PP on SAVOIRFAIRE(IDENTIFIANT_PP);
+    CREATE INDEX STRUCTURE_ACTIVITE_IDENTIFIANT_TECHNIQUE_DE_LA_STRUCTURE on STRUCTURE(IDENTIFIANT_TECHNIQUE_DE_LA_STRUCTURE);
+    """)
+    cursor.close()
+    conn.commit()
+    conn.close()
 
 def get_filenames_from_insee():
     """
