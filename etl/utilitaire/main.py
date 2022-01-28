@@ -19,12 +19,14 @@ def __main__(args):
         exe_db_init()
     elif args.commande == "transform":
         transform()
+    elif args.commande == "transform_export":
+        transform_export()
     return
 
 
 # Fonction d'import des fichiers depuis SFTP vers data/input
 def import_wget_sftp():
-    param_config = route_sftp.read_config_sftp("settings/settings.json", server_name="ATLASANTE SFTP DEPOT")
+    param_config = route_sftp.read_config_sftp("settings/settings.json", server_name="FTP ODS")
     print(param_config)
     route_sftp.save_wget_sftp(param_config)
 
@@ -55,8 +57,11 @@ def transform():
     private_transform.transform_to_csv(database = param_config["database"], verbose = True)
     print(" - Transformations terminées")
 
-
-
+# Fonction de transformation et export
+def transform_export():
+    print(" - Transformation et export - ")
+    param_config = route_sqlite.read_config_db("settings/settings.json", server = "LOCAL SERVER")
+    private_transform.transform_export(database = param_config["database"], verbose = True)
 
 # Initialisation du parsing
 parser = argparse.ArgumentParser()

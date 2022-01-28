@@ -22,6 +22,7 @@ def transform_ods_activite(database = "database", verbose = True):
 
     print(" --- query_select_ods_activite")
     query_select_ods_activite = """
+    PRAGMA temp_store = 2;
     SELECT
         dep.NCC as DEPARTEMENT_COORD_CORRESPONDANCE,
         reg.NCC as REGION_COORD_CORRESPONDANCE,
@@ -1478,15 +1479,16 @@ def transform_corresp_cp (database='database', verbose = True) :
         print("Séparation des codes communes dans des colonnes à part terminée.")
     return
 
-def transform_export(database='database', verbose = True) :
+
+def transform_export_activites(database='database', verbose = True) :
     """
-    Transformations et export des activités
+    Transformations et exportation des activités
     """
-    print(" - - - Sélection des données ...")
     conn = sqlite3.connect(
         database=database
     )
-    select_activites_query = pd.read_sql_query("""
+    db_df = pd.read_sql_query("""
+    PRAGMA temp_store = 2;
     SELECT
         dep.NCC as DEPARTEMENT_COORD_CORRESPONDANCE,
         reg.NCC as REGION_COORD_CORRESPONDANCE,
@@ -1607,7 +1609,7 @@ def transform_export(database='database', verbose = True) :
         do.DATE_D_OBTENTION_DIPLOME,
         do.NUMERO_DIPLOME
     FROM ACTIVITE a
-    LEFT JOIN COORDACT ca ON a.IDENTIFIANT_PP=ca.IDENTIFIANT_PP
+    LEFT JOIN COORDACT ca ON a.IDENTIFIANT_DE_L_ACTIVITE=ca.IDENTIFIANT_DE_L_ACTIVITE
     LEFT JOIN STRUCTURE s ON a.IDENTIFIANT_TECHNIQUE_DE_LA_STRUCTURE=s.IDENTIFIANT_TECHNIQUE_DE_LA_STRUCTURE
     LEFT JOIN COORDSTRUCT cs ON a.IDENTIFIANT_TECHNIQUE_DE_LA_STRUCTURE=cs.IDENTIFIANT_TECHNIQUE_DE_LA_STRUCTURE
     LEFT JOIN EXERCPRO ep ON a.IDENTIFIANT_PP=ep.IDENTIFIANT_PP
@@ -1615,9 +1617,7 @@ def transform_export(database='database', verbose = True) :
     LEFT JOIN DIPLOBT do ON a.IDENTIFIANT_PP=do.IDENTIFIANT_PP
     LEFT JOIN INSEE_COMMUNES com ON ca.CODE_COMMUNE_COORD_ACTIVITE=com.com
     LEFT JOIN INSEE_DEPARTEMENT dep ON com.dep=dep.DEP
-    LEFT JOIN INSEE_REGION reg ON dep.REG=reg.reg 
-    WHERE a.IDENTIFIANT_PP BETWEEN 0 AND 10100161362;
+    LEFT JOIN INSEE_REGION reg ON dep.REG=reg.reg;
     """
     , conn)
-    df = pd.DataFrame(select_activites_query)
-    df.to_csv("data/output/activites_10100161362")
+    db_df.to_csv('data/output/activites.csv', index=False)
