@@ -21,6 +21,8 @@ def __main__(args):
         transform()
     elif args.commande == "transform_export":
         transform_export()
+    elif args.commande == "export_sftp":
+        export_to_sftp()
     return
 
 
@@ -64,6 +66,15 @@ def transform_export():
     print(" - Transformation et export - ")
     param_config = route_sqlite.read_config_db("settings/settings.json", server = "LOCAL SERVER")
     private_transform.transform_export(filepath_activites = "data/output/activites.csv", filepath_personnes="data/output/personnes.csv", database = param_config["database"], verbose = True)
+
+
+# Fonction export vers SFTP
+def export_to_sftp():
+    print(" - Exportation vers SFTP")
+    param_config = route_sftp.read_config_ecriture("settings/settings.json", server_name = "FTP ODS")
+    print(param_config)
+    route_sftp.execute_upload(param_config)
+
 
 # Initialisation du parsing
 parser = argparse.ArgumentParser()

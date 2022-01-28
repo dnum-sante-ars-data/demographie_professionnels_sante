@@ -1,12 +1,22 @@
+# coding: utf-8
+
 from fileinput import filename
 import json
 import logging
 import pysftp
+import re
+import ntpath
+import sys
+import time
+from tqdm import tqdm
+from glob import glob
 
 import subprocess
 import wget
 
 import os
+import ftplib
+from progressbar import AnimatedMarker, Bar, BouncingBar, Counter, ETA, AdaptiveETA, FileTransferSpeed, FormatLabel, Percentage, ProgressBar, ReverseBar, RotatingMarker, SimpleProgress, Timer, UnknownLength
 
 # retourne la config d'un serveur au format dictionnaire
 def read_config_sftp(path_in, server_name) :
@@ -107,3 +117,39 @@ def delete_old_files(files_from_sftp):
         for file in filenames_to_delete:
             os.remove("data/input/"+file)
             print(" -- Ancien fichier : ", file, " --> supprimé")
+
+
+# Lecture de la configuration du serveur SFTP avec le compte en écriture
+def read_config_ecriture(path_in, server_name):
+    print(" --- Lancement de la lecture de la configuration du serveur en écriture")
+    with open(path_in) as f:
+        dict_ret = json.load(f)
+    L_ret = dict_ret["sftp"]
+    param_config = {}
+    for server in L_ret:
+        if server["server"] == server_name:
+            server_config = server.copy()
+    print(" --- Lecture de la configuration en écriture", path_in, ".")
+    return server_config
+
+# Commande à exécuter 
+global ftp
+
+# Publication d'un fichier local sur le SFTP
+def execute_upload(server_in_config):
+    print(" --- Execution de l'upload vers SFTP")
+    print("server in config :", server_in_config)
+    host = server_in_config["host"]
+    username = server_in_config["username"]
+    password = server_in_config["password"]
+    
+    ftp = ftplib.FTP(host, username, password)
+    local_file = "data/output/personnes.csv"
+    size_local_file = os.path.getsize(local_file)
+    file_to_transfer = open(local_file, 'rb')
+    with tqdm(unit = 'blocks', unit_scale = True, leave = True, miniters = 1, desc = 'Uploading......', total = size_local_file) as tqdm_instance:
+        ftp.storbinary('STOR ' + local_file, file_to_transfer, 2048, callback = lambda sent: tqdm_instance.update(len(sent)))
+        file_to_transfer.close()
+    ftp.quit()
+    ftp = None
+    print(" --- Publication vers SFTP exécutée")
