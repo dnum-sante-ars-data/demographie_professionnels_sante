@@ -28,7 +28,8 @@ def __main__(args):
 def import_wget_sftp():
     param_config = route_sftp.read_config_sftp("settings/settings.json", server_name="FTP ODS")
     print(param_config)
-    route_sftp.save_wget_sftp(param_config)
+    # route_sftp.save_wget_sftp(param_config)
+    route_sftp.save_wget_sftp(param_config, path_sftp="demographie_ps/input/")
 
 
 # Exécution de l'initialisation de la BDD

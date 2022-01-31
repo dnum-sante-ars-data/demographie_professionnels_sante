@@ -31,7 +31,8 @@ def read_config_sftp(path_in, server_name) :
     return server_config
 
 # telechargement complet via wget
-def save_wget_sftp(server_in_config):
+# def save_wget_sftp(server_in_config):
+def save_wget_sftp(server_in_config, path_sftp):
     """Telechargement complet via wget
 
     Args:
@@ -52,7 +53,8 @@ def save_wget_sftp(server_in_config):
     cnopts.hostkeys = None 
     with pysftp.Connection(host=host, username=username, password=password, port =2222, cnopts=cnopts) as sftp:
         # Récupération des fichiers à importer
-        filenames_from_sftp = get_filenames_from_sftp(sftp)
+        # filenames_from_sftp ! get_filenames_from_sftp(sftp)
+        filenames_from_sftp = get_filenames_from_sftp(sftp, path_sftp)
         print(" -- Fichiers à importer depuis sftp : ", filenames_from_sftp)
         
         # Suppression des anciens fichiers importés précédemment 
@@ -68,8 +70,8 @@ def save_wget_sftp(server_in_config):
             print(' -- Nouveau fichier : ', file, ' --> importé')
     return
 
-
-def get_filenames_from_sftp(sftp) :
+# def get_filenames_from_sftp(sftp):
+def get_filenames_from_sftp(sftp, path_sftp) :
     """
     Fonction permettant de récupérer le nom des 
     fichiers .csv présents au sein du sftp
@@ -79,7 +81,9 @@ def get_filenames_from_sftp(sftp) :
                          dans le sftp.
     """
     # Récupération des noms des fichiers sources
-    directory_structure = sftp.listdir_attr('demographie_ps/input')
+    # print(path_sftp)
+    # directory_structure ! sftp.listdir_attr('demographie_ps/input')
+    directory_structure = sftp.listdir_attr(path_sftp)
     dict_filenames = [attr.filename for attr in directory_structure]
     filenames=[]
     # Boucle permettant de ne récupérer que les fichiers .csv
