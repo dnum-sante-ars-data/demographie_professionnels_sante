@@ -17,8 +17,6 @@ def __main__(args):
         import_wget_sftp()
     elif args.commande == "init_database":
         exe_db_init()
-    elif args.commande == "transform":
-        transform()
     elif args.commande == "transform_export":
         transform_export()
     elif args.commande == "export_sftp":
@@ -46,21 +44,6 @@ def exe_db_init():
     return
 
 
-# Fonction de transformation
-def transform():
-    print(" - Transformation - ")
-    param_config = route_sqlite.read_config_db("settings/settings.json", server = "LOCAL SERVER")
-    # Remise en forme des données personne
-    #private_transform.transform_ods_personne(database = param_config["database"], verbose = True)
-    # Remise en forme des données activité
-    private_transform.transform_ods_activite(database = param_config["database"], verbose = True)
-    print(" - Transformation de ODS_PERSONNE et ODS_ACTIVITE réalisées")
-    # Transformation sur les  référentiels géo pour constituer les tables de dimension
-    # private_transform.transform_corresp_cp(database = param_config["database"], verbose = True)
-    # Création des csv pour les visualisations
-    private_transform.transform_to_csv(database = param_config["database"], verbose = True)
-    print(" - Transformations terminées")
-
 # Fonction de transformation et export
 def transform_export():
     print(" - Transformation et export - ")
@@ -74,6 +57,7 @@ def export_to_sftp():
     param_config = route_sftp.read_config_ecriture("settings/settings.json", server_name = "FTP ODS")
     print(param_config)
     route_sftp.execute_upload(param_config)
+    print(" --- Fichiers exportés vers SFTP")
 
 
 # Initialisation du parsing
