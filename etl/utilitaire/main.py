@@ -57,7 +57,7 @@ def export_to_sftp():
     print(" - Exportation vers SFTP")
     param_config = route_sftp.read_config_ecriture("settings/settings.json", server_name = "FTP ODS")
     print(param_config)
-    route_sftp.execute_upload(param_config)
+    route_sftp.execute_upload(param_config, path_in = "data/output", path_out = "demographie_ps/output")
     print(" --- Fichiers exportés vers SFTP")
 
 
