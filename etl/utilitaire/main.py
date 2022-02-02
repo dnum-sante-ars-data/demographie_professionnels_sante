@@ -8,7 +8,7 @@ from tabnanny import verbose
 
 
 # Modules personnalisés
-from modules import route_sftp, route_sqlite, private_transform
+from modules import route_sftp, route_sqlite, private_transform, pgp_decrypt
 
 
 # Commandes
@@ -30,6 +30,7 @@ def import_wget_sftp():
     print(param_config)
     # route_sftp.save_wget_sftp(param_config)
     route_sftp.save_wget_sftp(param_config, path_sftp="demographie_ps/input/")
+    pgp_decrypt.decrypt_file(path = "data/input")
 
 
 # Exécution de l'initialisation de la BDD

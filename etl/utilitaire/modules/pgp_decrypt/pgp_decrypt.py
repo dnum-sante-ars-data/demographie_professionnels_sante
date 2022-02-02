@@ -1,6 +1,9 @@
 # Modules
 import sqlite3
 import json
+import gnupg
+import os
+
 
 # Lecture du paramétrage
 def read_config_db(path_in, server="LOCAL SERVER"):
@@ -14,25 +17,47 @@ def read_config_db(path_in, server="LOCAL SERVER"):
     print("Lecture configuration serveur " + path_in + ".")
     return param_config
 
-# Création de la BDD
-def deploy_database(database="database") :
-    conn = sqlite3.connect(
-        database=database
-    )
-    cursor = conn.cursor()
-    conn.commit
-    conn.close()
-    print("Création de la BDD")
-    return
 
-# Création du schéma de dump
+def decrypt_file(path):
+    gpg = gnupg.GPG("/usr/bin/gpg")
+    file = "Extraction_RPPS_Profil1_SavoirFaire.csv.gpg"
+    
+    print(" --- path :", path)
+    print(" --- file :", file)
+    
+    x = path + "/" + file 
+    print(" --- x :", x)   
 
+    with open(x, "rb") as f:
+        print(" --- f :", f)
+        status = gpg.decrypt_file(f, passphrase = "01062021@beD", output = x)
 
-# Dump des données
-## Données privées
+    print(status.ok)
+    print(status.stderr)
 
+    """
+# Décriptage des fichiers dans sources
+def decrypt_file(path):
+    gpg = gnupg.GPG("/usr/bin/gpg")
+    #path = "data/input"
+    
+    #dict_filenames = os.listdir(path)
+    
+    file = "Extraction_RPPS_Profil1_EtatCiv.csv.gpg"   
+    with open(path + "/" + file, "rb") as f:
+        print(" --- f :", f)
+        status = gpg.decrypt_file(f, passphrase = "01062021@beD", output = path + "/" + file)
 
-## Données restreintes
+    print(status.ok)
+    print(status.stderr)
 
-
-# Création du schéma de l'entrepôt de données
+    
+    for elem in dict_filenames:
+        file = elem
+        print(" --- File :", elem)
+        with open(path + "/" + file, "rb") as f:
+            status = gpg.decrypt_file(f, passphrase = "01062021@beD", output = path + "/" + file)
+    
+        print(" --- Status ok :", status.ok)
+        print(" --- Status stderr :", status.stderr)
+    """
