@@ -1,3 +1,7 @@
+/etl/utilitaire/data/output/
+/etl/utilitaire/data/input/
+/etl/utilitaire/data/database/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

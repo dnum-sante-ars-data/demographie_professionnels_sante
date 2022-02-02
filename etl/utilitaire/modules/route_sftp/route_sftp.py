@@ -53,24 +53,57 @@ def save_wget_sftp(server_in_config, path_sftp):
     #print('password :', password)
 
     # localisation du fichier a recuperer sur le serveur sftp
+<<<<<<< Updated upstream
     print(" --- Connexion au SFTP")
+=======
+<<<<<<< HEAD
+    print(" --- Connexion au SFTP --- ")
+=======
+    print(" --- Connexion au SFTP")
+>>>>>>> 5991021c26a050c6b9e3f246a5e00330f3716b46
+>>>>>>> Stashed changes
     cnopts = pysftp.CnOpts()
     cnopts.hostkeys = None 
     with pysftp.Connection(host=host, username=username, password=password, port =2222, cnopts=cnopts) as sftp:
         print(" ")        
 
         # Récupération des fichiers à importer
+<<<<<<< Updated upstream
         filenames_from_sftp = get_sftp_gpg_filenames(sftp, path_sftp)
         #print(" -- Fichiers à importer depuis sftp : ", filenames_from_sftp)
         
         # Suppression des anciens fichiers importés précédemment
         print(" --- Suppression des anciens fichiers .gpg déjà présent dans data/input de l'OS") 
+=======
+<<<<<<< HEAD
+        filenames_from_sftp = get_filenames_from_sftp(sftp, path_sftp)[0]
+        #filenames_from_sftp = get_sftp_gpg_filenames(sftp, path_sftp)
+        #print(" -- Fichiers à importer depuis sftp : ", filenames_from_sftp)
+        
+        # Suppression des anciens fichiers importés précédemment
+        print(" --- Suppression des anciens fichiers .gpg déjà présent dans data/input de l'OS --- ") 
+=======
+        filenames_from_sftp = get_sftp_gpg_filenames(sftp, path_sftp)
+        #print(" -- Fichiers à importer depuis sftp : ", filenames_from_sftp)
+        
+        # Suppression des anciens fichiers importés précédemment
+        print(" --- Suppression des anciens fichiers .gpg déjà présent dans data/input de l'OS") 
+>>>>>>> 5991021c26a050c6b9e3f246a5e00330f3716b46
+>>>>>>> Stashed changes
         delete_old_gpg_files_in_os(sftp, path_os = "data/input", path_sftp = "demographie_ps/input")
         print(" ")
 
         
         # Boucle for pour importer nouveaux fichiers depuis sftp
+<<<<<<< Updated upstream
         print(" --- Importation des nouveaux fichiers .gpg depuis le SFTP")
+=======
+<<<<<<< HEAD
+        print(" --- Importation des nouveaux fichiers .gpg depuis le SFTP --- ")
+=======
+        print(" --- Importation des nouveaux fichiers .gpg depuis le SFTP")
+>>>>>>> 5991021c26a050c6b9e3f246a5e00330f3716b46
+>>>>>>> Stashed changes
         print(" ")
 
         for file in filenames_from_sftp:
@@ -108,8 +141,21 @@ def get_sftp_gpg_filenames(sftp, path_sftp) :
     # Boucle permettant de ne récupérer que les fichiers .csv
     for elem in dict_filenames:
         if elem[-4::]=='.gpg':
+<<<<<<< Updated upstream
             filenames.append(elem) 
     return filenames
+=======
+<<<<<<< HEAD
+            gpg_files.append(elem)
+        elif elem[-4::]=='.csv':
+            csv_files.append(elem) 
+
+    return gpg_files, csv_files
+=======
+            filenames.append(elem) 
+    return filenames
+>>>>>>> 5991021c26a050c6b9e3f246a5e00330f3716b46
+>>>>>>> Stashed changes
 
 
 def delete_old_gpg_files_in_os(sftp, path_os, path_sftp):
@@ -125,9 +171,23 @@ def delete_old_gpg_files_in_os(sftp, path_os, path_sftp):
         path_sftp : Direction du dossier SFTP depuis lequel les fichiers vont être importés.
     """
     # Récupération du nom des fichiers présents dans data/input
+<<<<<<< Updated upstream
     files_in_os = get_os_gpg_filenames(path = path_os)
     print(" --- files_in_os :", files_in_os)
     files_in_sftp = get_sftp_gpg_filenames(sftp = sftp, path_sftp = path_sftp) 
+=======
+<<<<<<< HEAD
+    files_in_os = get_filenames_from_os(path = path_os)[0]
+    #files_in_os = get_os_gpg_filenames(path = path_os)
+    print(" --- files_in_os :", files_in_os)
+    files_in_sftp = get_filenames_from_sftp(sftp, path_sftp)[0]
+    #files_in_sftp = get_sftp_gpg_filenames(sftp = sftp, path_sftp = path_sftp) 
+=======
+    files_in_os = get_os_gpg_filenames(path = path_os)
+    print(" --- files_in_os :", files_in_os)
+    files_in_sftp = get_sftp_gpg_filenames(sftp = sftp, path_sftp = path_sftp) 
+>>>>>>> 5991021c26a050c6b9e3f246a5e00330f3716b46
+>>>>>>> Stashed changes
     print(" --- files_in_sftp :", files_in_sftp)    
 
     # Ci dessous, ancienne version de la fonction à supprimer une fois testée
@@ -173,7 +233,34 @@ def read_config_ecriture(path_in, server_name):
     return server_config
 
 # Fonction pour récupérer nom des fichiers .gpg
+<<<<<<< Updated upstream
 def get_os_gpg_filenames(path):
+=======
+<<<<<<< HEAD
+def get_filenames_from_os(path):
+=======
+def get_os_gpg_filenames(path):
+    dict_filenames = os.listdir(path)
+    files = []
+
+    for elem in dict_filenames:
+        if elem[-4::]=='.gpg':
+            files.append(elem)
+
+    return files
+
+
+# Fonction pour récupérer nom des fichiers .csv
+def get_os_csv_filenames(path_in):
+>>>>>>> 5991021c26a050c6b9e3f246a5e00330f3716b46
+    """
+    Fonction permettant de récupérer le nom des 
+    fichiers .gpg et .csv présents au sein d'un dossier de l'OS
+    
+    get_filenames_from_os(path)[0] : Récupère uniquement fichiers .gpg
+    get_filenames_from_os(path)[1] : Récupère uniquement fichiers .csv
+    """
+>>>>>>> Stashed changes
     dict_filenames = os.listdir(path)
     files = []
 
