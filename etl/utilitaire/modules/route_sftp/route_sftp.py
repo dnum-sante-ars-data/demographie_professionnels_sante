@@ -34,6 +34,32 @@ def read_config_sftp(path_in, server_name) :
     return server_config
 
 
+# Retourne le path_sftp
+def read_path_os(path_in, folder_name):
+    with open(path_in) as f:
+        dict_ret = json.load(f)
+    L_ret = dict_ret["path_os"]
+    path_config = {}
+    for folder in L_ret:
+        if folder["folder"] == folder_name:
+            path_config = folder.copy()
+    logging.info("Lecture path " + path_in + ".")
+    return path_config
+
+
+# Retourne le path_sftp
+def read_path_sftp(path_in, folder_name):
+    with open(path_in) as f:
+        dict_ret = json.load(f)
+    L_ret = dict_ret["path_sftp"]
+    path_config = {}
+    for folder in L_ret:
+        if folder["folder"] == folder_name:
+            path_config = folder.copy()
+    logging.info("Lecture path " + path_in + ".")
+    return path_config
+
+
 # def get_filenames_from_sftp(sftp):
 def get_filenames_from_sftp(sftp, path_sftp) :
     """
@@ -112,7 +138,7 @@ def delete_old_gpg_files_in_os(sftp, path_os, path_sftp):
         print(" --- files_to_delete :", files_to_delete)
 
         for file in files_to_delete:
-            os.remove(path_os + "/" + file)
+            os.remove(path_os + file)
             print(" --- Ancien fichier :", file, "--> supprimé")
     else:
         print(" --- Aucun fichier existant au sein du dossier data/input de l'os")
@@ -152,7 +178,7 @@ def delete_old_files_in_sftp(server_in_config, path_sftp, path_os):
 
 
 # telechargement complet via wget
-def save_wget_sftp(server_in_config, path_sftp):
+def save_wget_sftp(server_in_config, path_os, path_sftp):
     """Telechargement complet via wget
 
     Args:
@@ -170,6 +196,12 @@ def save_wget_sftp(server_in_config, path_sftp):
     password = server_in_config["password"]
     #print('password :', password)
 
+    path_sftp = path_sftp["path"]
+    print(path_sftp)
+
+    path_os = path_os["path"]
+    print(path_os)
+
     # localisation du fichier a recuperer sur le serveur sftp
     print(" --- Connexion au SFTP --- ")
     cnopts = pysftp.CnOpts()
@@ -180,13 +212,12 @@ def save_wget_sftp(server_in_config, path_sftp):
         # Récupération des fichiers à importer
         filenames_from_sftp = get_filenames_from_sftp(sftp, path_sftp)[0]
         #filenames_from_sftp = get_sftp_gpg_filenames(sftp, path_sftp)
-        #print(" -- Fichiers à importer depuis sftp : ", filenames_from_sftp)
+        print(" -- Fichiers à importer depuis sftp : ", filenames_from_sftp)
 
         # Suppression des anciens fichiers importés précédemment
         print(" --- Suppression des anciens fichiers .gpg déjà présent dans data/input de l'OS --- ")
-        delete_old_gpg_files_in_os(sftp, path_os = "data/input", path_sftp = "demographie_ps/input")
+        delete_old_gpg_files_in_os(sftp, path_os = path_os, path_sftp = path_sftp)
         print(" ")
-
 
         # Boucle for pour importer nouveaux fichiers depuis sftp
         print(" --- Importation des nouveaux fichiers .gpg depuis le SFTP --- ")
@@ -197,9 +228,9 @@ def save_wget_sftp(server_in_config, path_sftp):
             print(" --- Importation du fichier :", file, "--- ")
             print(" -------------------------------------------------------------------------- ")
 
-            dst = "data/input"
-            path_sftp = "demographie_ps/input/" + file
-            cmd = 'wget --directory-prefix='+dst+' --user="'+username+'" --password="'+password+'"  ftp://'+host+'/'+path_sftp+' --progress=bar'
+            dst = path_os
+            sftp_path = path_sftp + file
+            cmd = 'wget --directory-prefix='+dst+' --user="'+username+'" --password="'+password+'"  ftp://'+host+'/'+sftp_path+' --progress=bar'
             subprocess.run(cmd, shell=True)
             print(' --- Commande "'+cmd+'" exécutée')
             print(' --- Nouveau fichier : ', file, ' --> importé')
@@ -224,10 +255,10 @@ def read_config_ecriture(path_in, server_name):
 
 
 # Test export_sftp
-def execute_upload(server_in_config, path_in, path_out):
+def execute_upload(server_in_config, path_os, path_sftp):
     """
-    Fonction permettant de transférer un fichier présent dans le dossier "path_in" de l'os, 
-    vers le dossier "path_out" du SFTP.
+    Fonction permettant de transférer un fichier présent dans le dossier "path_os" de l'os, 
+    vers le dossier "path_sftp" du SFTP.
     """
     print(" ")
     print(" --- Execution de l'upload vers SFTP --- ")
@@ -242,17 +273,16 @@ def execute_upload(server_in_config, path_in, path_out):
     print(" --- Connecté au SFTP :", ftp.getwelcome())
 
     # Désignation du dossier cible dans SFTP
-    ftpResponseMessage = ftp.cwd(path_out)
-    print(" --- Dossier cible :", path_out,"->", ftpResponseMessage)
+    ftpResponseMessage = ftp.cwd(path_sftp)
+    print(" --- Dossier cible :", path_sftp,"->", ftpResponseMessage)
     print(" ")
 
     # Suppression des fichiers csv présents dans demographie_ps/output du SFTP et identiques aux fichiers qui vont être exportés vers ce même SFTP
     print(" --- Suppression des fichiers au sein du SFTP ---")
-    delete_old_files_in_sftp(server_in_config = server_in_config, path_sftp = path_out, path_os = path_in)
+    delete_old_files_in_sftp(server_in_config = server_in_config, path_sftp = path_sftp, path_os = path_os)
 
     # Récupération des noms des fichiers .csv présent dans data/output à transférer vers SFTP
-    files_to_sftp = get_filenames_from_os(path_in)[1]
-    #files_to_sftp = get_os_csv_filenames(path_in)
+    files_to_sftp = get_filenames_from_os(path_os)[1]
 
     # Boucle permettant d'exporter un à un les fichiers présents dans data/output vers le SFTP
     for files in files_to_sftp:
@@ -261,7 +291,7 @@ def execute_upload(server_in_config, path_in, path_out):
         print(" --- Transfert de", files, "vers le SFTP ---")
         print(" ----------------------------------------------- ")
 
-        filepath = path_in + "/" + files
+        filepath = path_os + files
         size_local_file = os.path.getsize(filepath)
         #print(" --- size_local_file :", size_local_file)
 

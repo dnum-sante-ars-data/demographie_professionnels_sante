@@ -56,7 +56,7 @@ def delete_old_csv_files_in_os(path):
         print(" --- files_to_delete :", files_to_delete)
 
         for file in files_to_delete:
-            os.remove(path + "/" + file)
+            os.remove(path + file)
             print(" --- Ancien fichier :", file, "--> supprimé")
     else:
         print(" --- Aucun fichier existant au sein du dossier data/input de l'os")
@@ -76,6 +76,7 @@ def decrypt_file(path):
 
     # Récupération du nom des fichiers .gpg qui viennent d'être 
     # téléchargés au sein de data/input
+    path = path["path"]
     files_to_decrypt = get_os_filenames(path)[0]
     #print(" --- files_to_decrypt :", files_to_decrypt)
     print(" ")

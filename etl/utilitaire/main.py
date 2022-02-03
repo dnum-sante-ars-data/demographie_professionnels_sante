@@ -28,9 +28,12 @@ def __main__(args):
 def import_wget_sftp():
     param_config = route_sftp.read_config_sftp("settings/settings.json", server_name="FTP ODS")
     print(param_config)
-    # route_sftp.save_wget_sftp(param_config)
-    route_sftp.save_wget_sftp(param_config, path_sftp="demographie_ps/input/")
-    pgp_decrypt.decrypt_file(path = "data/input")
+    param_path_sftp_input = route_sftp.read_path_sftp("settings/settings.json", folder_name="sftp_input")
+    print(param_path_sftp_input)
+    param_path_os_input = route_sftp.read_path_os("settings/settings.json", folder_name = "os_input")
+    print(param_path_os_input)
+    route_sftp.save_wget_sftp(param_config, param_path_os_input, param_path_sftp_input)
+    pgp_decrypt.decrypt_file(path = param_path_os_input)
 
 
 # Exécution de l'initialisation de la BDD
@@ -39,17 +42,18 @@ def exe_db_init():
     param_config = route_sqlite.read_config_db("settings/settings.json", server="LOCAL SERVER")
     route_sqlite.deploy_database(database=param_config["database"])
     print(" -- Transformation -- ")
-    route_sqlite.init_empty_schema(database = param_config["database"], verbose = True)        
+    route_sqlite.init_empty_schema(database = param_config["database"], verbose = True)
     route_sqlite.drop_indexes(database = param_config["database"], verbose = True)
     route_sqlite.insert_data(database = param_config["database"], verbose = True)
     route_sqlite.create_indexes(database = param_config["database"], verbose = True)
     return
 
+
 # Fonction de transformation et export
 def transform_export():
     print(" - Transformation et export - ")
     param_config = route_sqlite.read_config_db("settings/settings.json", server = "LOCAL SERVER")
-    private_transform.transform_export(filepath_activites = "data/output/activites.csv", filepath_personnes="data/output/personnes.csv", database = param_config["database"], verbose = True) 
+    private_transform.transform_export(filepath_activites = "data/output/activites.csv", filepath_personnes = "data/output/personnes.csv", database = param_config["database"], verbose = True)
 
 
 # Fonction export vers SFTP
