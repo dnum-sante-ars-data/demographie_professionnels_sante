@@ -1,14 +1,14 @@
 import os
 import sqlite3
-import json
+#import json
 import pandas as pd
-from datetime import datetime, timedelta
-from datetime import date
-from icecream import ic
-import pandas.io.sql as sqlio
-import logging
-import csv
-import datetime
+#from datetime import datetime, timedelta
+#from datetime import date
+#from icecream import ic
+#import pandas.io.sql as sqlio
+#import logging
+#import csv
+#import datetime
 
 
 def transform_export(filepath_activites, filepath_personnes, database="database", verbose = True) :

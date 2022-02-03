@@ -26,7 +26,8 @@ def __main__(args):
 
 # Fonction d'import des fichiers depuis SFTP vers data/input
 def import_wget_sftp():
-    param_config = route_sftp.read_config_sftp("settings/settings.json", server_name="FTP ODS")    print(param_config)
+    param_config = route_sftp.read_config_sftp("settings/settings.json", server_name="FTP ODS")
+    print(param_config)
     # route_sftp.save_wget_sftp(param_config)
     route_sftp.save_wget_sftp(param_config, path_sftp="demographie_ps/input/")
     pgp_decrypt.decrypt_file(path = "data/input")
@@ -35,7 +36,8 @@ def import_wget_sftp():
 # Exécution de l'initialisation de la BDD
 def exe_db_init():
     print(" -- Deploiement -- ")
-    param_config = route_sqlite.read_config_db("settings/settings.json", server="LOCAL SERVER")    route_sqlite.deploy_database(database=param_config["database"])
+    param_config = route_sqlite.read_config_db("settings/settings.json", server="LOCAL SERVER")
+    route_sqlite.deploy_database(database=param_config["database"])
     print(" -- Transformation -- ")
     route_sqlite.init_empty_schema(database = param_config["database"], verbose = True)        
     route_sqlite.drop_indexes(database = param_config["database"], verbose = True)

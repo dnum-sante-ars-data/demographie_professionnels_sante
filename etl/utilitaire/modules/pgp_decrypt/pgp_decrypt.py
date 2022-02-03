@@ -1,11 +1,9 @@
-
 # Modules
-import sqlite3
-import json
 import gnupg
 import os
 
-
+"""
+# Fonction à supprimer ?
 # Lecture du paramétrage
 def read_config_db(path_in, server="LOCAL SERVER"):
     with open(path_in) as f:
@@ -17,7 +15,7 @@ def read_config_db(path_in, server="LOCAL SERVER"):
             param_config = param.copy()
     print("Lecture configuration serveur " + path_in + ".")
     return param_config
-
+"""
 
 # Récupération des noms des fichiers .gpg téléchargés dans data/input
 def get_os_filenames(path):
@@ -44,7 +42,6 @@ def delete_old_csv_files_in_os(path):
     dans le répertoire data/input de l'OS avant décryptage des nouveaux
     fichiers .gpg.
     """
-
     gpg_files_in_os, csv_files_in_os = get_os_filenames(path)
 
     gpg_files = []
@@ -70,7 +67,6 @@ def decrypt_file(path):
     Fonction permettant de décripter les fichiers .gpg importés du SFTP
     en fichiers .csv au sein du répertoire data/input de l'OS.
     """
-
     print(" ")
     print(" ------------------------------------ ")
     print(" --- Decryptage des fichiers .gpg --- ")

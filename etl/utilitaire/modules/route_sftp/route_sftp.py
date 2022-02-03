@@ -1,15 +1,15 @@
 # coding: utf-8
 
-from fileinput import filename
+#from fileinput import filename
 import json
 import logging
 import pysftp
-import re
-import ntpath
-import sys
-import time
+#import re
+#import ntpath
+#import sys
+#import time
 from tqdm import tqdm
-from glob import glob
+#from glob import glob
 
 import subprocess
 import wget
@@ -19,6 +19,7 @@ import ftplib
 from progressbar import AnimatedMarker, Bar, BouncingBar, Counter, ETA, AdaptiveETA, FileTransferSpeed, FormatLabel, Percentage, ProgressBar, ReverseBar, RotatingMarker, SimpleProgress, Timer, UnknownLength
 
 global ftp
+
 
 # retourne la config d'un serveur au format dictionnaire
 def read_config_sftp(path_in, server_name) :
@@ -33,8 +34,124 @@ def read_config_sftp(path_in, server_name) :
     return server_config
 
 
+# def get_filenames_from_sftp(sftp):
+def get_filenames_from_sftp(sftp, path_sftp) :
+    """
+    Fonction permettant de récupérer le nom des 
+    fichiers .gpg et .csv présents au sein du sftp
+    
+    get_filenames_from_sftp(sftp, path_sftp)[0] : Récupère uniquement fichiers .gpg
+    get_filenames_from_sftp(sftp, path_sftp)[1] : Récupère uniquement fichiers .csv
+    """
+    # Récupération des noms des fichiers sources
+    directory_structure = sftp.listdir_attr(path_sftp)
+    dict_filenames = [attr.filename for attr in directory_structure]
+    gpg_files=[]
+    csv_files=[]
+
+    # Boucle permettant de ne récupérer que les fichiers .csv
+    for elem in dict_filenames:
+        if elem[-4::]=='.gpg':
+            gpg_files.append(elem)
+        elif elem[-4::]=='.csv':
+            csv_files.append(elem)
+
+    return gpg_files, csv_files
+
+
+# Fonction pour récupérer nom des fichiers .gpg
+def get_filenames_from_os(path):
+    """
+    Fonction permettant de récupérer le nom des 
+    fichiers .gpg et .csv présents au sein d'un dossier de l'OS
+    
+    get_filenames_from_os(path)[0] : Récupère uniquement fichiers .gpg
+    get_filenames_from_os(path)[1] : Récupère uniquement fichiers .csv
+    """
+    dict_filenames = os.listdir(path)
+    gpg_files = []
+    csv_files = []
+
+    for elem in dict_filenames:
+        if elem[-4::]=='.gpg':
+            gpg_files.append(elem)
+        elif elem[-4::]=='.csv':
+            csv_files.append(elem)
+
+    return gpg_files, csv_files
+
+
+def delete_old_gpg_files_in_os(sftp, path_os, path_sftp):
+    """
+    Fonction permettant de supprimer les anciennes versions des fichiers .gpg 
+    présentent au sein du dossier data/input de l'OS, avant importation 
+    des nouvelles versions depuis le SFTP. 
+
+    Args:
+        sftp : Elements de connexion au SFTP
+        path_os : Direction du dossier OS où vérifier la présence ou non des fichiers à importer.
+        path_sftp : Direction du dossier SFTP depuis lequel les fichiers vont être importés.
+    """
+    # Récupération du nom des fichiers présents dans data/input
+    files_in_os = get_filenames_from_os(path = path_os)[0]
+    #files_in_os = get_os_gpg_filenames(path = path_os)
+    print(" --- files_in_os :", files_in_os)
+    files_in_sftp = get_filenames_from_sftp(sftp, path_sftp)[0]
+    #files_in_sftp = get_sftp_gpg_filenames(sftp = sftp, path_sftp = path_sftp) 
+    print(" --- files_in_sftp :", files_in_sftp)
+
+    # Comparaison entre fichiers présents dans data/input et ceux dans sftp
+    files_to_delete = set(files_in_sftp) & set(files_in_os)
+    print(" --- files_to_delete :", files_to_delete)
+
+    # Suppression des fichiers présents dans data/input et qui vont être à nouveau importés
+    # depuis sftp
+    if len(files_to_delete) != 0:
+        print(" --- files_in_sftp   :", files_in_sftp)
+        print(" --- files_in_os     :", files_in_os)
+        print(" --- files_to_delete :", files_to_delete)
+
+        for file in files_to_delete:
+            os.remove(path_os + "/" + file)
+            print(" --- Ancien fichier :", file, "--> supprimé")
+    else:
+        print(" --- Aucun fichier existant au sein du dossier data/input de l'os")
+
+
+# Fonction de suppression des anciens fichiers transférés vers SFTP
+def delete_old_files_in_sftp(server_in_config, path_sftp, path_os):
+    """
+    Fonction permettant de supprimer les fichiers présents dans le dossier 
+    demographie_ps/output du SFTP et dont une nouvelle version est sur le 
+    point d'être transférée.
+    """
+    host = server_in_config["host"]
+    username = server_in_config["username"]
+    password = server_in_config["password"]
+
+    cnopts = pysftp.CnOpts()
+    cnopts.hostkeys = None
+    sftp = pysftp.Connection(host=host, username=username, password=password, port = 2222, cnopts=cnopts)
+
+    files_in_sftp = get_filenames_from_sftp(sftp, path_sftp)[1]
+
+    files_in_os = get_filenames_from_os(path_os)[1]
+
+    files_to_delete = set(files_in_sftp) & set(files_in_os)
+
+    if len(files_to_delete) != 0:
+        print(" --- files_in_sftp   :", files_in_sftp)
+        print(" --- files_in_os     :", files_in_os)
+        print(" --- files_to_delete :", files_to_delete)
+        for file in files_to_delete:
+            ftp = ftplib.FTP(host, username, password)
+            ftp.delete(path_sftp + "/" + file)
+            print(" --- Ancien fichier :", file, "--> supprimé")
+    else:
+        print(" --- Aucun fichier existant au sein du dossier demographie_ps/output dans le SFTP")
+
+
 # telechargement complet via wget
-# def save_wget_sftp(server_in_config):
 def save_wget_sftp(server_in_config, path_sftp):
     """Telechargement complet via wget
 
@@ -91,79 +208,6 @@ def save_wget_sftp(server_in_config, path_sftp):
     return
 
 
-# def get_filenames_from_sftp(sftp):
-def get_filenames_from_sftp(sftp, path_sftp) :
-    """
-    Fonction permettant de récupérer le nom des 
-    fichiers .gpg et .csv présents au sein du sftp
-    
-    get_filenames_from_sftp(sftp, path_sftp)[0] : Récupère uniquement fichiers .gpg
-    get_filenames_from_sftp(sftp, path_sftp)[1] : Récupère uniquement fichiers .csv
-    """
-    # Récupération des noms des fichiers sources
-    directory_structure = sftp.listdir_attr(path_sftp)
-    dict_filenames = [attr.filename for attr in directory_structure]
-    gpg_files=[]
-    csv_files=[]
-
-    # Boucle permettant de ne récupérer que les fichiers .csv
-    for elem in dict_filenames:
-        if elem[-4::]=='.gpg':
-            gpg_files.append(elem)
-        elif elem[-4::]=='.csv':
-            csv_files.append(elem)
-
-    return gpg_files, csv_files
-
-
-def delete_old_gpg_files_in_os(sftp, path_os, path_sftp):
-    """
-    Récupère noms des fichiers déjà importés dans data/input.
-    Effectue la comparaison entre les fichiers déjà présent dans data/input et ceux à importer (files_from_sftp)
-    Supprime les fichiers présents dans data/input identiques aux fichiers présents dans files_from_sftp et qui vont être à nouveau importés.
-
-    Args:
-        files_from_sftp ([List]): Liste contenant le nom des fichiers .csv présents dans le sftp et récupérée via get_filenames_from_os().
-        sftp : Elements de connexion au SFTP
-        path_os : Direction du dossier OS où vérifier la présence ou non des fichiers à importer.
-        path_sftp : Direction du dossier SFTP depuis lequel les fichiers vont être importés.
-    """
-    # Récupération du nom des fichiers présents dans data/input
-    files_in_os = get_filenames_from_os(path = path_os)[0]
-    #files_in_os = get_os_gpg_filenames(path = path_os)
-    print(" --- files_in_os :", files_in_os)
-    files_in_sftp = get_filenames_from_sftp(sftp, path_sftp)[0]
-    #files_in_sftp = get_sftp_gpg_filenames(sftp = sftp, path_sftp = path_sftp) 
-    print(" --- files_in_sftp :", files_in_sftp)
-
-    # Ci dessous, ancienne version de la fonction à supprimer une fois testée
-    """
-    dict_filenames_from_os = os.listdir('data/input')
-    files_from_os=[]
-    
-    # Boucle permettant de ne récupérer que les fichiers .csv
-    for elem in dict_filenames_from_os:
-        if elem[-4::]=='.csv':
-            files_from_os.append(elem)
-    """
-
-    # Comparaison entre fichiers présents dans data/input et ceux dans sftp
-    files_to_delete = set(files_in_sftp) & set(files_in_os)
-    print(" --- files_to_delete :", files_to_delete)
-    # Suppression des fichiers présents dans data/input et qui vont être à nouveau importés
-    # depuis sftp
-    if len(files_to_delete) != 0:
-        print(" --- files_in_sftp   :", files_in_sftp)
-        print(" --- files_in_os     :", files_in_os)
-        print(" --- files_to_delete :", files_to_delete)
-
-        for file in files_to_delete:
-            os.remove(path_os + "/" + file)
-            print(" --- Ancien fichier :", file, "--> supprimé")
-    else:
-        print(" --- Aucun fichier existant au sein du dossier data/input de l'os")
-
-
 # Lecture de la configuration du serveur SFTP avec le compte en écriture
 def read_config_ecriture(path_in, server_name):
     print(" ")
@@ -177,59 +221,6 @@ def read_config_ecriture(path_in, server_name):
             server_config = server.copy()
     print(" --- Lecture de la configuration en écriture", path_in, ".")
     return server_config
-
-# Fonction pour récupérer nom des fichiers .gpg
-def get_filenames_from_os(path):
-    """
-    Fonction permettant de récupérer le nom des 
-    fichiers .gpg et .csv présents au sein d'un dossier de l'OS
-    
-    get_filenames_from_os(path)[0] : Récupère uniquement fichiers .gpg
-    get_filenames_from_os(path)[1] : Récupère uniquement fichiers .csv
-    """
-    dict_filenames = os.listdir(path)
-    gpg_files = []
-    csv_files = []
-
-    for elem in dict_filenames:
-        if elem[-4::]=='.gpg':
-            gpg_files.append(elem)
-        elif elem[-4::]=='.csv':
-            csv_files.append(elem)
-
-    return gpg_files, csv_files
-
-
-# Fonction de suppression des anciens fichiers transférés vers SFTP
-def delete_old_files_in_sftp(server_in_config, path_sftp, path_os):
-    """
-    Fonction permettant de supprimer les fichiers présents dans le dossier demographie_ps/output du SFTP
-    et dont une nouvelle version est sur le point d'être transférée.
-    """
-    host = server_in_config["host"]
-    username = server_in_config["username"]
-    password = server_in_config["password"]
-
-    cnopts = pysftp.CnOpts()
-    cnopts.hostkeys = None
-    sftp = pysftp.Connection(host=host, username=username, password=password, port = 2222, cnopts=cnopts)
-
-    files_in_sftp = get_filenames_from_sftp(sftp, path_sftp)[1]
-
-    files_in_os = get_filenames_from_os(path_os)[1]
-
-    files_to_delete = set(files_in_sftp) & set(files_in_os)
-
-    if len(files_to_delete) != 0:
-        print(" --- files_in_sftp   :", files_in_sftp)
-        print(" --- files_in_os     :", files_in_os)
-        print(" --- files_to_delete :", files_to_delete)
-        for file in files_to_delete:
-            ftp = ftplib.FTP(host, username, password)
-            ftp.delete(path_sftp + "/" + file)
-            print(" --- Ancien fichier :", file, "--> supprimé")
-    else:
-        print(" --- Aucun fichier existant au sein du dossier demographie_ps/output dans le SFTP")
 
 
 # Test export_sftp
@@ -287,5 +278,4 @@ def execute_upload(server_in_config, path_in, path_out):
     ftp.quit()
     ftp = None
     print(" ")
-
 
