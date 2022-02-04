@@ -4,6 +4,8 @@ import json
 import os
 import pandas as pd
 
+from modules import route_sftp
+
 # Lecture du paramétrage
 def read_config_db(path_in, server="LOCAL SERVER"):
     with open(path_in) as f:
@@ -425,10 +427,15 @@ def drop_indexes(database="database", verbose = True):
     conn.commit()
     conn.close()
 
-def insert_data(database = "database", verbose = True):
+def insert_data(database, path_insee, path_os, verbose = True):
     """
     Fonction permettant d'importer les données depuis les fichiers sources
     et les fichiers de l'insee, vers la base de données demographie_ps.db
+
+    Paramètres : 
+        database : Eléments de connexions à la BDD demographie_ps.db.
+        path_insee : Chemin du dossier où sont stockés les fichiers INSEE.
+        path_os : Chemin du dossier où sont stockés les fichiers sources.
     """
     if verbose :
         print(" --- Insertion des données --- ")
@@ -438,13 +445,14 @@ def insert_data(database = "database", verbose = True):
     # Insertion des données des fichiers sources
     print(" --- Insertion des données depuis fichiers sources --- ")
     print(" ")
-    insert_data_from_source_files(conn)
+    insert_data_from_source_files(conn, path_os)
    
     # Insertion des données des fichiers INSEE
     print(" --- Insertion des données depuis fichiers INSEE --- ")
     print(" ")
-    insert_data_from_insee(conn)
+    insert_data_from_insee(conn, path_insee)
     return
+
 
 def create_indexes(database="database", verbose = True):
     """
@@ -474,20 +482,6 @@ def create_indexes(database="database", verbose = True):
     cursor.close()
     conn.commit()
     conn.close()
-
-def get_filenames_from_insee():
-    """
-    Fonction appelée par insert_data_from_insee() et permettant de lister 
-    le nom des différents fichiers INSEE CSV
-    """
-    dict_filenames_from_insee = os.listdir('utils/')
-    files_from_insee = []
-
-    for elem in dict_filenames_from_insee:
-        if elem[-4::]=='.csv':
-            files_from_insee.append(elem)
-
-    return files_from_insee
 
 
 # Récupération du nom des colonnes et de la table à compléter
@@ -536,21 +530,23 @@ def get_column_and_table_names_for_insee(files):
     return column_names, table_name
 
 
-def insert_data_from_insee(conn, verbose = True):
+def insert_data_from_insee(conn, path_insee, verbose = True):
     """
     Fonction appelée par insert_data() et permettant d'importer 
     uniquement les fichiers de l'INSEE dans les tables correspondantes
     """
     # Récupération du nom des fichiers INSEE
-    filenames_from_insee = get_filenames_from_insee()
-   
+    #filenames_from_insee = get_filenames_from_insee()
+    filenames_from_insee = route_sftp.get_filenames_from_os(path_insee)[1]     
+
     # Boucle permettant d'importer les données de chaque fichier INSEE dans la BDD
     for files in filenames_from_insee:
         print(" ----------------------------------------------------------------------------------------------------- ")
         print(" --- Insertion des données depuis :", files.upper(), " --- ")
         print(" ----------------------------------------------------------------------------------------------------- ")      
         # Récupération du chemin où sont stockés les fichiers
-        filepath = "utils/" + files
+        #filepath = "utils/" + files
+        filepath = path_insee + files
 
         # Récupération du nom des colonnes et de la table en fonction du fichier
         column_names, table_name = get_column_and_table_names_for_insee(files)
@@ -568,22 +564,6 @@ def insert_data_from_insee(conn, verbose = True):
             print(" --- Insertion des données depuis le fichier", files, "vers la table", table_name, "réussie ---")
             print(" ----------------------------------------------------------------------------------------------------- ")
             print(" ")
-
-
-# Récupération des noms des fichiers sources
-def get_filenames_from_source_files():
-    """
-    Fonction appelée par insert_data_from_source_files() et permettant de lister 
-    le nom des différents fichiers sources CSV
-    """
-    dict_filenames_from_os = os.listdir('data/input')
-    files_from_os = []
-
-    for elem in dict_filenames_from_os:
-        if elem[-4::]=='.csv':
-            files_from_os.append(elem)
-
-    return files_from_os
 
 
 # Récupération du nom des colonnes
@@ -873,15 +853,16 @@ def get_column_and_table_names_for_source_files(files):
     return column_names, file_name
 
 
-def insert_data_from_source_files(conn, verbose = True):
+def insert_data_from_source_files(conn, path_os_input, verbose = True):
     """
     Fonction appelée par insert_data() et permettant d'importer 
     uniquement les fichiers sources dans les tables correspondantes
     """
     #Récupération du nom des fichiers sources    
-    filenames_from_os = get_filenames_from_source_files()
+    #filenames_from_os = get_filenames_from_source_files(path_os_input)
     #filenames_from_os = ["Extraction_RPPS_Profil1_Personne.csv"]
     #print(" --- filenames_from_os : ", filenames_from_os)
+    filenames_from_os = route_sftp.get_filenames_from_os(path_os_input)[1]
     print(" ")
 
     for files in filenames_from_os:
@@ -890,7 +871,8 @@ def insert_data_from_source_files(conn, verbose = True):
         print(" ------------------------------------------------------------------------------------ ")       
 
         # Récupération du chemin où sont stockés les fichiers csv
-        filepath = "data/input/" + files
+        #filepath = "data/input/" + files
+        filepath = path_os_input + files
 
         # Récupération du nom des colonnes et de la table en fonction du fichier traité
         column_names, table_name  = get_column_and_table_names_for_source_files(files)
@@ -907,11 +889,6 @@ def insert_data_from_source_files(conn, verbose = True):
         # Lecture du fichier csv
         print(" --- Lecture et transformation du fichier :", files)
         insert_file = pd.read_csv(filepath, sep=";", header = 0, names = column_names, dtype="str", low_memory = False)
-
-        # Test permettant de ne pas prendre une éventuelle colonne en trop
-        #if insert_file.columns[-1][0:8]=="Unnamed:":
-         #   insert_file.drop(insert_file.columns[-1], axis = 1, inplace = True)
-          #  print(" --- Suppression de la dernière colonne 'Unnammed'")
            
         print(" --- Nom des colonnes du fichier", files,":", insert_file.columns)
 
@@ -924,23 +901,4 @@ def insert_data_from_source_files(conn, verbose = True):
             print(" -------------------------------------------------------------------------------------------- ")
             print(" ")
 
-
-
-#def insert_autexerc(database = "database", verbose = True):
- #   if verbose :
-  #      print(" --- Insertion des données sources autexerc dans la BDD --- ")
-   # conn = sqlite3.connect(database = database)
-   # cursor = conn.cursor()
-   # autexerc = pd.read_csv("data/input/Extraction_RPPS_Profil1_AutExerc.csv", sep = ";", dtype = {"Identifiant PP" : object})
-
-
-
-# Création du schéma de dump
-
-
-# Dump des données
-## Données privées
-
-
-## Données restreintes
 
