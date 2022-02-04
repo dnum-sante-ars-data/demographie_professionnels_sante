@@ -2,20 +2,6 @@
 import gnupg
 import os
 
-"""
-# Fonction à supprimer ?
-# Lecture du paramétrage
-def read_config_db(path_in, server="LOCAL SERVER"):
-    with open(path_in) as f:
-        dict_ret = json.load(f)
-    L_ret = dict_ret["sqlite_db"]
-    param_config = {}
-    for param in L_ret :
-        if param["server"] == server :
-            param_config = param.copy()
-    print("Lecture configuration serveur " + path_in + ".")
-    return param_config
-"""
 
 # Récupération des noms des fichiers .gpg téléchargés dans data/input
 def get_os_filenames(path):
@@ -66,6 +52,9 @@ def decrypt_file(path):
     """
     Fonction permettant de décripter les fichiers .gpg importés du SFTP
     en fichiers .csv au sein du répertoire data/input de l'OS.
+
+    Param : 
+        path : Dossier OS au sein duquel se trouve les fichiers .gpg à décripter.
     """
     print(" ")
     print(" ------------------------------------ ")
@@ -76,7 +65,7 @@ def decrypt_file(path):
 
     # Récupération du nom des fichiers .gpg qui viennent d'être 
     # téléchargés au sein de data/input
-    path = path["path"]
+    path = path
     files_to_decrypt = get_os_filenames(path)[0]
     #print(" --- files_to_decrypt :", files_to_decrypt)
     print(" ")
@@ -97,10 +86,10 @@ def decrypt_file(path):
         # newfile = nouveau nom du fichier en supprimant ".gpg" à la fin
         newfile = file[:-4]
 
-        filepath = path + "/" + file
+        filepath = path + file
 
         with open(filepath, "rb") as f:
-            status = gpg.decrypt_file(f, passphrase = "01062021@beD", output = path + "/" + newfile)
+            status = gpg.decrypt_file(f, passphrase = "01062021@beD", output = path + newfile)
 
         print(status.ok)
         print(status.stderr)

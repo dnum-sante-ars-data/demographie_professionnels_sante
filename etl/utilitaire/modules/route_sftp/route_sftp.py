@@ -196,10 +196,10 @@ def save_wget_sftp(server_in_config, path_os, path_sftp):
     password = server_in_config["password"]
     #print('password :', password)
 
-    path_sftp = path_sftp["path"]
+    #path_sftp = path_sftp["path"]
     print(path_sftp)
 
-    path_os = path_os["path"]
+    #path_os = path_os["path"]
     print(path_os)
 
     # localisation du fichier a recuperer sur le serveur sftp

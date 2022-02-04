@@ -1,7 +1,8 @@
 import os
 import sqlite3
-#import json
+import json
 import pandas as pd
+import logging
 #from datetime import datetime, timedelta
 #from datetime import date
 #from icecream import ic
@@ -9,6 +10,19 @@ import pandas as pd
 #import logging
 #import csv
 #import datetime
+
+
+def read_filepath(path_in, file_name):
+    with open(path_in) as f:
+        dict_ret = json.load(f)
+    L_ret = dict_ret["file_to_transform_export"]
+    file_config = {} 
+    for file in L_ret:
+        if file["file"] == file_name:
+            file_config = file.copy()
+    logging.info("Lecture path " + path_in + ".")
+    return file_config
+    
 
 
 def transform_export(filepath_activites, filepath_personnes, database="database", verbose = True) :

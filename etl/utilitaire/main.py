@@ -27,13 +27,13 @@ def __main__(args):
 # Fonction d'import des fichiers depuis SFTP vers data/input
 def import_wget_sftp():
     param_config = route_sftp.read_config_sftp("settings/settings.json", server_name="FTP ODS")
-    print(param_config)
+    #print(param_config)
     param_path_sftp_input = route_sftp.read_path_sftp("settings/settings.json", folder_name="sftp_input")
-    print(param_path_sftp_input)
+    #print(param_path_sftp_input)
     param_path_os_input = route_sftp.read_path_os("settings/settings.json", folder_name = "os_input")
-    print(param_path_os_input)
-    route_sftp.save_wget_sftp(param_config, param_path_os_input, param_path_sftp_input)
-    pgp_decrypt.decrypt_file(path = param_path_os_input)
+    #print(param_path_os_input)
+    route_sftp.save_wget_sftp(param_config, param_path_os_input["path"], param_path_sftp_input["path"])
+    pgp_decrypt.decrypt_file(path = param_path_os_input["path"])
 
 
 # Exécution de l'initialisation de la BDD
@@ -53,7 +53,12 @@ def exe_db_init():
 def transform_export():
     print(" - Transformation et export - ")
     param_config = route_sqlite.read_config_db("settings/settings.json", server = "LOCAL SERVER")
-    private_transform.transform_export(filepath_activites = "data/output/activites.csv", filepath_personnes = "data/output/personnes.csv", database = param_config["database"], verbose = True)
+    param_path_activites = private_transform.read_filepath("settings/settings.json", file_name = "activites.csv")
+    print(param_path_activites)
+    param_path_personnes = private_transform.read_filepath("settings/settings.json", file_name = "personnes.csv")
+    print(param_path_personnes)
+    private_transform.transform_export(filepath_activites = param_path_activites["path"], filepath_personnes = param_path_personnes["path"], database = param_config["database"], verbose = True)
+    #private_transform.transform_export(filepath_activites = "data/output/activites.csv", filepath_personnes = "data/output/personnes.csv", database = param_config["database"], verbose = True)
 
 
 # Fonction export vers SFTP
