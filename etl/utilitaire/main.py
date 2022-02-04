@@ -26,48 +26,61 @@ def __main__(args):
 
 # Fonction d'import des fichiers depuis SFTP vers data/input
 def import_wget_sftp():
+    print(" ")
+    print(" --- Import des fichiers depuis le SFTP --- ")
     param_config = route_sftp.read_config_sftp("settings/settings.json", server_name="FTP ODS")
-    #print(param_config)
     param_path_sftp_input = route_sftp.read_path_sftp("settings/settings.json", folder_name="sftp_input")
-    #print(param_path_sftp_input)
     param_path_os_input = route_sftp.read_path_os("settings/settings.json", folder_name = "os_input")
-    #print(param_path_os_input)
     route_sftp.save_wget_sftp(param_config, param_path_os_input["path"], param_path_sftp_input["path"])
     pgp_decrypt.decrypt_file(path = param_path_os_input["path"])
 
 
 # Exécution de l'initialisation de la BDD
 def exe_db_init():
-    print(" -- Deploiement -- ")
+    print(" ")
+    print(" --- Deploiement --- ")
     param_config = route_sqlite.read_config_db("settings/settings.json", server="LOCAL SERVER")
     route_sqlite.deploy_database(database=param_config["database"])
-    print(" -- Transformation -- ")
+    print(" ")
+    print(" --- Transformation --- ")
     route_sqlite.init_empty_schema(database = param_config["database"], verbose = True)
     route_sqlite.drop_indexes(database = param_config["database"], verbose = True)
     route_sqlite.insert_data(database = param_config["database"], verbose = True)
     route_sqlite.create_indexes(database = param_config["database"], verbose = True)
+    print(" --- Initialisation de la BDD terminée --- ")
     return
 
 
 # Fonction de transformation et export
 def transform_export():
-    print(" - Transformation et export - ")
+    print(" ")
+    print(" --- Transformation et export --- ")
     param_config = route_sqlite.read_config_db("settings/settings.json", server = "LOCAL SERVER")
     param_path_activites = private_transform.read_filepath("settings/settings.json", file_name = "activites.csv")
-    print(param_path_activites)
     param_path_personnes = private_transform.read_filepath("settings/settings.json", file_name = "personnes.csv")
-    print(param_path_personnes)
     private_transform.transform_export(filepath_activites = param_path_activites["path"], filepath_personnes = param_path_personnes["path"], database = param_config["database"], verbose = True)
-    #private_transform.transform_export(filepath_activites = "data/output/activites.csv", filepath_personnes = "data/output/personnes.csv", database = param_config["database"], verbose = True)
-
 
 # Fonction export vers SFTP
 def export_to_sftp():
-    print(" - Exportation vers SFTP")
+    print(" ")
+    print(" --- Exportation vers SFTP --- ")
+    print(" --- Récupération des paramètres :")
     param_config = route_sftp.read_config_ecriture("settings/settings.json", server_name = "FTP ODS")
-    print(param_config)
-    route_sftp.execute_upload(param_config, path_in = "data/output", path_out = "demographie_ps/output")
-    print(" --- Fichiers exportés vers SFTP")
+    param_path_sftp_output = route_sftp.read_path_sftp("settings/settings.json", folder_name = "sftp_output")
+    param_path_os_output = route_sftp.read_path_os("settings/settings.json", folder_name = "os_output")
+    param_path_os_input = route_sftp.read_path_os("settings/settings.json", folder_name = "os_input")
+    
+    print(" --- param_config :", param_config)
+    print(" --- param_path_sftp_output :", param_path_sftp_output)
+    print(" --- param_path_os_output :", param_path_os_output)
+    print(" --- param_path_os_input :", param_path_os_input)
+
+    # execute_upload permettant d'importer fichiers .csv de data/output vers SFTP
+    route_sftp.execute_upload(param_config, path_os = param_path_os_output["path"], path_sftp = param_path_sftp_output["path"])
+    # execute_upload permettant d'importer fichiers .csv de data/input vers SFTP
+    route_sftp.execute_upload(param_config, path_os = param_path_os_input["path"], path_sftp = param_path_sftp_output["path"])
+
+    print(" --- Fichiers exportés vers SFTP --- ")
 
 
 # Initialisation du parsing

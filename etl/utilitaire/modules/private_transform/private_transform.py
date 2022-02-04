@@ -3,16 +3,13 @@ import sqlite3
 import json
 import pandas as pd
 import logging
-#from datetime import datetime, timedelta
-#from datetime import date
-#from icecream import ic
-#import pandas.io.sql as sqlio
-#import logging
-#import csv
-#import datetime
 
 
 def read_filepath(path_in, file_name):
+    """
+    Fonction permettant de récupérer le chemin des fichiers
+    activites.csv et personnes.csv.
+    """
     with open(path_in) as f:
         dict_ret = json.load(f)
     L_ret = dict_ret["file_to_transform_export"]
@@ -24,10 +21,10 @@ def read_filepath(path_in, file_name):
     return file_config
     
 
-
 def transform_export(filepath_activites, filepath_personnes, database="database", verbose = True) :
     """
-    Transformations et export des activités
+    Création des fichiers activités.csv et personnes.csv à partir des fichiers .csv 
+    présents dans data/input.
     """
     conn = sqlite3.connect(
         database=database

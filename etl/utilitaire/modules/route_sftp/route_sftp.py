@@ -1,15 +1,9 @@
 # coding: utf-8
 
-#from fileinput import filename
 import json
 import logging
 import pysftp
-#import re
-#import ntpath
-#import sys
-#import time
 from tqdm import tqdm
-#from glob import glob
 
 import subprocess
 import wget
@@ -120,23 +114,21 @@ def delete_old_gpg_files_in_os(sftp, path_os, path_sftp):
     """
     # Récupération du nom des fichiers présents dans data/input
     files_in_os = get_filenames_from_os(path = path_os)[0]
-    #files_in_os = get_os_gpg_filenames(path = path_os)
-    print(" --- files_in_os :", files_in_os)
+       
     files_in_sftp = get_filenames_from_sftp(sftp, path_sftp)[0]
-    #files_in_sftp = get_sftp_gpg_filenames(sftp = sftp, path_sftp = path_sftp) 
-    print(" --- files_in_sftp :", files_in_sftp)
-
+        
     # Comparaison entre fichiers présents dans data/input et ceux dans sftp
     files_to_delete = set(files_in_sftp) & set(files_in_os)
-    print(" --- files_to_delete :", files_to_delete)
-
+   
     # Suppression des fichiers présents dans data/input et qui vont être à nouveau importés
     # depuis sftp
     if len(files_to_delete) != 0:
         print(" --- files_in_sftp   :", files_in_sftp)
+        print(" ")
         print(" --- files_in_os     :", files_in_os)
+        print(" ")
         print(" --- files_to_delete :", files_to_delete)
-
+        print(" ")
         for file in files_to_delete:
             os.remove(path_os + file)
             print(" --- Ancien fichier :", file, "--> supprimé")
@@ -167,8 +159,11 @@ def delete_old_files_in_sftp(server_in_config, path_sftp, path_os):
 
     if len(files_to_delete) != 0:
         print(" --- files_in_sftp   :", files_in_sftp)
+        print(" ")
         print(" --- files_in_os     :", files_in_os)
+        print(" ")
         print(" --- files_to_delete :", files_to_delete)
+        print(" ")
         for file in files_to_delete:
             ftp = ftplib.FTP(host, username, password)
             ftp.delete(path_sftp + "/" + file)
@@ -186,21 +181,12 @@ def save_wget_sftp(server_in_config, path_os, path_sftp):
         format dictionnaire. Récupéré via read_config_sftp
     """
     print(" ")
-    print(' --- Lancement de la commande wget')
+    print(' --- Lancement de la commande wget --- ')
     print(" ")
 
     host = server_in_config["host"]
-    #print('host :', host)
     username = server_in_config["username"]
-    #print('username :', username)
     password = server_in_config["password"]
-    #print('password :', password)
-
-    #path_sftp = path_sftp["path"]
-    print(path_sftp)
-
-    #path_os = path_os["path"]
-    print(path_os)
 
     # localisation du fichier a recuperer sur le serveur sftp
     print(" --- Connexion au SFTP --- ")
@@ -213,6 +199,7 @@ def save_wget_sftp(server_in_config, path_os, path_sftp):
         filenames_from_sftp = get_filenames_from_sftp(sftp, path_sftp)[0]
         #filenames_from_sftp = get_sftp_gpg_filenames(sftp, path_sftp)
         print(" -- Fichiers à importer depuis sftp : ", filenames_from_sftp)
+        print(" ")
 
         # Suppression des anciens fichiers importés précédemment
         print(" --- Suppression des anciens fichiers .gpg déjà présent dans data/input de l'OS --- ")
@@ -236,6 +223,8 @@ def save_wget_sftp(server_in_config, path_os, path_sftp):
             print(' --- Nouveau fichier : ', file, ' --> importé')
             print(" -------------------------------------------------------------------------- ")
             print(" ")
+
+        print(" --- Téléchargement des fichiers .gpg depuis le SFTP vers data/input terminé --- ")
     return
 
 
@@ -261,7 +250,7 @@ def execute_upload(server_in_config, path_os, path_sftp):
     vers le dossier "path_sftp" du SFTP.
     """
     print(" ")
-    print(" --- Execution de l'upload vers SFTP --- ")
+    print(" --- Execution de l'upload depuis data/output vers SFTP --- ")
     print(" ")
     host = server_in_config["host"]
     username = server_in_config["username"]
@@ -308,4 +297,4 @@ def execute_upload(server_in_config, path_os, path_sftp):
     ftp.quit()
     ftp = None
     print(" ")
-
+    print(" --- Upload des fichiers depuis", path_os, "vers", path_sftp, "réalisé --- ")

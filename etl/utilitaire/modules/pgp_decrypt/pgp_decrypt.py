@@ -38,8 +38,11 @@ def delete_old_csv_files_in_os(path):
 
     if len(files_to_delete) != 0:
         print(" --- gpg_files_in_os :", gpg_files_in_os)
+        print(" ")
         print(" --- csv_files_in_os :", csv_files_in_os)
+        print(" ")
         print(" --- files_to_delete :", files_to_delete)
+        print(" ")
 
         for file in files_to_delete:
             os.remove(path + file)
@@ -71,7 +74,7 @@ def decrypt_file(path):
     print(" ")
 
     # Suppression des anciens fichiers .csv avant décryptage des nouveaux fichiers .gpg
-    print(" --- Suppression des anciens fichiers .csv avant decryptage --- ")
+    print(" --- Suppression des anciens fichiers .csv présent dans data/input avant decryptage --- ")
     delete_old_csv_files_in_os(path)
     print(" ")
 
@@ -97,3 +100,5 @@ def decrypt_file(path):
         print(" --- Fichier", file, "decrypté ---")
         print(" -------------------------------------------------------------------------- ")
         print(" ")
+
+    print(" --- Décryptage des fichiers au sein de data/input terminé --- ")
