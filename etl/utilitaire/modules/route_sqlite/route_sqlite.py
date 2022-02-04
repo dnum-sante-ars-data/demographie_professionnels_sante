@@ -19,6 +19,20 @@ def read_config_db(path_in, server="LOCAL SERVER"):
     return param_config
 
 
+# Lecture du paramétrage
+def read_create_table(path_in, table_name):
+    with open(path_in) as f:
+        dict_ret = json.load(f)
+    L_ret = dict_ret["CREATE TABLE"]
+    query_create_table = {}
+    for table in L_ret :
+        if table["table_name"] == table_name :
+            query_create_table = table.copy()
+    print("Lecture configuration serveur " + path_in + ".")
+    return query_create_table
+
+
+
 # Création de la BDD
 def deploy_database(database="database") :
     conn = sqlite3.connect(
@@ -36,6 +50,25 @@ def init_empty_schema(database = "database", verbose = True):
     print(" --- Initialisation de la BDD --- ")
     conn = sqlite3.connect(database = database)
     cursor = conn.cursor()
+    
+    # Test optimisation
+    """
+    query_name = "query_create_autexerc"
+    #query_create_autexerc = ""
+    #read_create_table("modules/route_sqlite/route_sqlite.json", query_name)
+    #query_create_autexerc = '"""' + json.dumps(read_create_table("modules/route_sqlite/route_sqlite.json", query_name)["query"])[1:-1] + '"""'
+    test = read_create_table("modules/route_sqlite/route_sqlite.json", query_name)["query"]
+    print(" --- test :", test)
+
+    str = json.dumps(read_create_table("modules/route_sqlite/route_sqlite.json", query_name)["query"])
+    print(" --- str :", str)
+
+    query_create_autexerc = '\"'+str+'\"' 
+    print(" --- query_create_autexerc :", query_create_autexerc)
+
+    cursor.execute(query_create_autexerc)
+    """
+    
     query_create_autexerc = """
     CREATE TABLE IF NOT EXISTS AUTEXERC (
         TYPE_D_IDENTIFIANT_PP            TEXT, 
