@@ -4,7 +4,8 @@ import json
 import os
 import pandas as pd
 
-from modules import route_sftp
+from modules import route_sftp, route_sqlite
+from .requetes_sql_route_sqlite import *
 
 # Lecture du paramétrage
 def read_config_db(path_in, server="LOCAL SERVER"):
@@ -51,41 +52,26 @@ def init_empty_schema(database = "database", verbose = True):
     conn = sqlite3.connect(database = database)
     cursor = conn.cursor()
     
-    # Test optimisation
-    """
-    query_name = "query_create_autexerc"
-    #query_create_autexerc = ""
-    #read_create_table("modules/route_sqlite/route_sqlite.json", query_name)
-    #query_create_autexerc = '"""' + json.dumps(read_create_table("modules/route_sqlite/route_sqlite.json", query_name)["query"])[1:-1] + '"""'
-    test = read_create_table("modules/route_sqlite/route_sqlite.json", query_name)["query"]
-    print(" --- test :", test)
+    query_create_autexerc = requetes_sql_route_sqlite.query_create_autexerc
 
-    str = json.dumps(read_create_table("modules/route_sqlite/route_sqlite.json", query_name)["query"])
-    print(" --- str :", str)
-
-    query_create_autexerc = '\"'+str+'\"' 
-    print(" --- query_create_autexerc :", query_create_autexerc)
-
-    cursor.execute(query_create_autexerc)
-    """
     
-    query_create_autexerc = """
-    CREATE TABLE IF NOT EXISTS AUTEXERC (
-        TYPE_D_IDENTIFIANT_PP            TEXT, 
-        IDENTIFIANT_PP                   TEXT,
-        IDENTIFICATION_NATIONALE_PP      TEXT,
-        DATE_EFFET_AUTORISATION          TEXT,
-        CODE_TYPE_AUTORISATION           TEXT,
-        LIBELLE_TYPE_AUTORISATION        TEXT,
-        DATE_FIN_AUTORISATION            TEXT,
-        DATE_DE_MISE_A_JOUR_AUTORISATION TEXT,
-        CODE_DISCIPLINE_AUTORISATION     TEXT,
-        LIBELLE_DISCIPLINE_AUTORISATION  TEXT,
-        CODE_PROFESSION                  TEXT,
-        LIBELLE_PROFESSION               TEXT,
-        UNNAMED                          TEXT
-    );
-    """
+    #query_create_autexerc = """
+    #CREATE TABLE IF NOT EXISTS AUTEXERC (
+    #    TYPE_D_IDENTIFIANT_PP            TEXT, 
+    #    IDENTIFIANT_PP                   TEXT,
+    #    IDENTIFICATION_NATIONALE_PP      TEXT,
+    #    DATE_EFFET_AUTORISATION          TEXT,
+    #    CODE_TYPE_AUTORISATION           TEXT,
+    #    LIBELLE_TYPE_AUTORISATION        TEXT,
+    #    DATE_FIN_AUTORISATION            TEXT,
+    #    DATE_DE_MISE_A_JOUR_AUTORISATION TEXT,
+    #    CODE_DISCIPLINE_AUTORISATION     TEXT,
+    #    LIBELLE_DISCIPLINE_AUTORISATION  TEXT,
+    #    CODE_PROFESSION                  TEXT,
+    #    LIBELLE_PROFESSION               TEXT,
+    #    UNNAMED                          TEXT
+    #);
+    #"""
     cursor.execute(query_create_autexerc)
 
     query_create_activite = """

@@ -136,7 +136,7 @@ def transform_export(filepath_activites, filepath_personnes, database="database"
         LEFT JOIN INSEE_REGION reg ON dep.REG=reg.reg;
         """
     for chunk in pd.read_sql_query(select_activites_sql, conn, chunksize=10000):
-       chunk.to_csv(os.path.join(filepath_activites), mode='a',sep=';',encoding='utf-8')
+       chunk.to_csv(os.path.join(filepath_activites), index = True, index_label = "INDEX", mode='a',sep=';',encoding='utf-8')
     print(" - - - Transformations et export des données personnes...")
     select_personnes_sql = """
         SELECT
@@ -246,4 +246,4 @@ def transform_export(filepath_activites, filepath_personnes, database="database"
         LEFT JOIN INSEE_REGION reg ON dep.REG=reg.reg ;
         """
     for chunk in pd.read_sql_query(select_personnes_sql, conn, chunksize=10000):
-       chunk.to_csv(os.path.join(filepath_personnes), mode='a',sep=';',encoding='utf-8')
+       chunk.to_csv(os.path.join(filepath_personnes), index = True, index_label = "INDEX", mode='a',sep=';',encoding='utf-8')
