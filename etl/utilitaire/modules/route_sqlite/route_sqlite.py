@@ -5,7 +5,7 @@ import os
 import pandas as pd
 
 from modules import route_sftp, route_sqlite
-from .requetes_sql_route_sqlite import *
+#from .requetes_sql_route_sqlite import *
 
 # Lecture du paramétrage
 def read_config_db(path_in, server="LOCAL SERVER"):
@@ -51,7 +51,7 @@ def init_empty_schema(database = "database", verbose = True):
     print(" --- Initialisation de la BDD --- ")
     conn = sqlite3.connect(database = database)
     cursor = conn.cursor()
-    
+    print(" --- requetes_sql_route_sqlite :", requetes_sql_route_sqlite.query_create_autexerc)    
     query_create_autexerc = requetes_sql_route_sqlite.query_create_autexerc
 
     

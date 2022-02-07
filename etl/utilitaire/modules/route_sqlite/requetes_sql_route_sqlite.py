@@ -1,4 +1,4 @@
-query_create_autexerc = '"""
+query_create_autexerc = (''' \"\"\"
     CREATE TABLE IF NOT EXISTS AUTEXERC (
         TYPE_D_IDENTIFIANT_PP            TEXT, 
         IDENTIFIANT_PP                   TEXT,
@@ -14,4 +14,4 @@ query_create_autexerc = '"""
         LIBELLE_PROFESSION               TEXT,
         UNNAMED                          TEXT
     );
-    """'
+   \"\"\" ''')
