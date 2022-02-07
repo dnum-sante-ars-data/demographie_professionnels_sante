@@ -4,8 +4,11 @@ import json
 import os
 import pandas as pd
 
-from modules import route_sftp, route_sqlite
-#from .requetes_sql_route_sqlite import *
+from modules import route_sftp
+from .requetes_sql_route_sqlite import query, queryautexerc
+#from route_sqlite import *
+#import route_sqlite 
+#import requetes_sql_route_sqlite
 
 # Lecture du paramétrage
 def read_config_db(path_in, server="LOCAL SERVER"):
@@ -20,8 +23,10 @@ def read_config_db(path_in, server="LOCAL SERVER"):
     return param_config
 
 
+
 # Lecture du paramétrage
 def read_create_table(path_in, table_name):
+    table_name = table_name.upper()
     with open(path_in) as f:
         dict_ret = json.load(f)
     L_ret = dict_ret["CREATE TABLE"]
@@ -51,9 +56,15 @@ def init_empty_schema(database = "database", verbose = True):
     print(" --- Initialisation de la BDD --- ")
     conn = sqlite3.connect(database = database)
     cursor = conn.cursor()
-    print(" --- requetes_sql_route_sqlite :", requetes_sql_route_sqlite.query_create_autexerc)    
-    query_create_autexerc = requetes_sql_route_sqlite.query_create_autexerc
-
+    
+    #dict_names = read_table_name("modules/route_sqlite/query_sqlite.json")
+    #list_names = list(dict_names.values())
+    #print(" --- tables names :", list_names)
+    
+    
+    query_create_autexerc = str(read_create_table("modules/route_sqlite/query_sqlite.json", table_name = "autexerc")["query"])
+    print(" --- json :", query_create_autexerc)
+    cursor.execute(query_create_autexerc)
     
     #query_create_autexerc = """
     #CREATE TABLE IF NOT EXISTS AUTEXERC (
@@ -72,45 +83,47 @@ def init_empty_schema(database = "database", verbose = True):
     #    UNNAMED                          TEXT
     #);
     #"""
-    cursor.execute(query_create_autexerc)
+    #cursor.execute(query_create_autexerc)
 
-    query_create_activite = """
-    CREATE TABLE IF NOT EXISTS ACTIVITE (
-        TYPE_D_IDENTIFIANT_PP                    TEXT,
-        IDENTIFIANT_PP                           TEXT,
-        IDENTIFIANT_DE_L_ACTIVITE                TEXT,
-        IDENTIFICATION_NATIONALE_PP              TEXT,
-        IDENTIFIANT_TECHNIQUE_DE_LA_STRUCTURE    TEXT,
-        CODE_FONCTION                            TEXT,
-        LIBELLE_FONCTION                         TEXT,
-        CODE_MODE_EXERCICE                       TEXT,
-        LIBELLE_MODE_EXERCICE                    TEXT,
-        DATE_DE_DEBUT_ACTIVITE                   TEXT,
-        DATE_DE_FIN_ACTIVITE                     TEXT,
-        DATE_DE_MISE_A_JOUR_ACTIVITE             TEXT,
-        CODE_REGION_EXERCICE                     TEXT,
-        LIBELLE_REGION_EXERCICE                  TEXT,
-        CODE_GENRE_ACTIVITE                      TEXT,
-        LIBELLE_GENRE_ACTIVITE                   TEXT,
-        CODE_MODIF_DE_FIN_D_ACTIVITE             TEXT,
-        LIBELLE_MOTIF_DE_FIN_D_ACTIVITE          TEXT,
-        CODE_SECTION_TABLEAU_PHARMACIENS         TEXT,
-        LIBELLE_SECTION_TABLEAU_PHARMACIENS      TEXT,
-        CODE_SOUS_SECTION_TABLEAU_PHARMACIENS    TEXT,
-        LIBELLE_SOUS_SECTION_TABLEAU_PHARMACIENS TEXT,
-        CODE_TYPE_ACTIVITE_LIBERALE              TEXT,
-        LIBELLE_TYPE_ACTIVITE_LIBERALE           TEXT,
-        CODE_STATUT_DES_PS_DU_SSA                TEXT,
-        LIBELLE_STATUT_DES_PS_DU_SSA             TEXT,
-        CODE_STATUT_HOSPITALIER                  TEXT,
-        LIBELLE_STATUT_HOSPITALIER               TEXT,
-        CODE_PROFESSION                          TEXT,
-        LIBELLE_PROFESSION                       TEXT,
-        CODE_CATEGORIE_PROFESSIONNELLE           TEXT,
-        LIBELLE_CATEGORIE_PROFESSIONNELLE        TEXT,
-        UNNAMED                                  TEXT
-    );
-    """
+    #query_create_activite = """
+    #CREATE TABLE IF NOT EXISTS ACTIVITE (
+    #    TYPE_D_IDENTIFIANT_PP                    TEXT,
+    #    IDENTIFIANT_PP                           TEXT,
+    #    IDENTIFIANT_DE_L_ACTIVITE                TEXT,
+    #    IDENTIFICATION_NATIONALE_PP              TEXT,
+    #    IDENTIFIANT_TECHNIQUE_DE_LA_STRUCTURE    TEXT,
+    #    CODE_FONCTION                            TEXT,
+    #    LIBELLE_FONCTION                         TEXT,
+    #    CODE_MODE_EXERCICE                       TEXT,
+    #    LIBELLE_MODE_EXERCICE                    TEXT,
+    #    DATE_DE_DEBUT_ACTIVITE                   TEXT,
+    #    DATE_DE_FIN_ACTIVITE                     TEXT,
+    #    DATE_DE_MISE_A_JOUR_ACTIVITE             TEXT,
+    #    CODE_REGION_EXERCICE                     TEXT,
+    #    LIBELLE_REGION_EXERCICE                  TEXT,
+    #    CODE_GENRE_ACTIVITE                      TEXT,
+    #    LIBELLE_GENRE_ACTIVITE                   TEXT,
+    #    CODE_MODIF_DE_FIN_D_ACTIVITE             TEXT,
+    #    LIBELLE_MOTIF_DE_FIN_D_ACTIVITE          TEXT,
+    #    CODE_SECTION_TABLEAU_PHARMACIENS         TEXT,
+    #    LIBELLE_SECTION_TABLEAU_PHARMACIENS      TEXT,
+    #    CODE_SOUS_SECTION_TABLEAU_PHARMACIENS    TEXT,
+    #    LIBELLE_SOUS_SECTION_TABLEAU_PHARMACIENS TEXT,
+    #    CODE_TYPE_ACTIVITE_LIBERALE              TEXT,
+    #    LIBELLE_TYPE_ACTIVITE_LIBERALE           TEXT,
+    #    CODE_STATUT_DES_PS_DU_SSA                TEXT,
+    #    LIBELLE_STATUT_DES_PS_DU_SSA             TEXT,
+    #    CODE_STATUT_HOSPITALIER                  TEXT,
+    #    LIBELLE_STATUT_HOSPITALIER               TEXT,
+    #    CODE_PROFESSION                          TEXT,
+    #    LIBELLE_PROFESSION                       TEXT,
+    #    CODE_CATEGORIE_PROFESSIONNELLE           TEXT,
+    #    LIBELLE_CATEGORIE_PROFESSIONNELLE        TEXT,
+    #    UNNAMED                                  TEXT
+    #);
+    #"""
+    query_create_activite = str(read_create_table("modules/route_sqlite/query_sqlite.json", table_name = "activite")["query"])
+    print(" --- json :", query_create_activite)
     cursor.execute(query_create_activite)
 
     query_create_coordact = """
