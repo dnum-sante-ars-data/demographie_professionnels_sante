@@ -5,10 +5,8 @@ import os
 import pandas as pd
 
 from modules import route_sftp
-from .query_sqlite import query_create_table, list_table_name
-#from route_sqlite import *
-#import route_sqlite 
-#import requetes_sql_route_sqlite
+from .query_sqlite import query_create_table, list_table_name, query_drop_index, query_create_index, get_column_and_table_names_for_insee
+
 
 # Lecture du paramétrage
 def read_config_db(path_in, server="LOCAL SERVER"):
@@ -21,22 +19,6 @@ def read_config_db(path_in, server="LOCAL SERVER"):
             param_config = param.copy()
     print("Lecture configuration serveur " + path_in + ".")
     return param_config
-
-
-
-# Lecture du paramétrage
-def read_create_table(path_in, table_name):
-    table_name = table_name.upper()
-    with open(path_in) as f:
-        dict_ret = json.load(f)
-    L_ret = dict_ret["CREATE TABLE"]
-    query_create_table = {}
-    for table in L_ret :
-        if table["table_name"] == table_name :
-            query_create_table = table.copy()
-    print("Lecture configuration serveur " + path_in + ".")
-    return query_create_table
-
 
 
 # Création de la BDD
@@ -89,24 +71,14 @@ def drop_indexes(database="database", verbose = True):
         database = database
     )
     cursor = conn.cursor()
-    cursor.executescript("""
-    DROP INDEX IF EXISTS ACTIVITE_IDENTIFIANT_PP;
-    DROP INDEX IF EXISTS ACTIVITE_IDENTIFIANT_DE_L_ACTIVITE;
-    DROP INDEX IF EXISTS AUTORISATION_EXERCICE_IDENTIFIANT_PP;
-    DROP INDEX IF EXISTS COORDONNEES_ACTIVITE_IDENTIFIANT_DE_L_ACTIVITE;
-    DROP INDEX IF EXISTS COORDONNEES_CORRESPONDANCE_IDENTIFIANT_PP;
-    DROP INDEX IF EXISTS COORDONNEES_STRUCTURE_IDENTIFIANT_TECHNIQUE_DE_LA_STRUCTURE;
-    DROP INDEX IF EXISTS DIPLOME_OBTENU_IDENTIFIANT_PP;
-    DROP INDEX IF EXISTS ETAT_CIVIL_IDENTIFIANT_PP;
-    DROP INDEX IF EXISTS EXERCICE_PROFESSIONNEL_IDENTIFIANT_PP;
-    DROP INDEX IF EXISTS INSCRIPTION_ORDRE_IDENTIFIANT_PP;
-    DROP INDEX IF EXISTS PERSONNE_IDENTIFIANT_PP;
-    DROP INDEX IF EXISTS SAVOIR_FAIRE_IDENTIFIANT_PP;
-    DROP INDEX IF EXISTS STRUCTURE_ACTIVITE_IDENTIFIANT_TECHNIQUE_DE_LA_STRUCTURE;
-    """)
+
+    query = query_drop_index()
+    cursor.executescript(query)
+    print(" --- query drop index réalisée")
     cursor.close()
     conn.commit()
     conn.close()
+
 
 def insert_data(database, path_insee, path_os, verbose = True):
     """
@@ -145,6 +117,9 @@ def create_indexes(database="database", verbose = True):
         database = database
     )
     cursor = conn.cursor()
+    #query = str(query_create_index)
+    #print(" --- query_create_index :", query)
+    #cursor.executescript(query)
     cursor.executescript("""
     CREATE INDEX ACTIVITE_IDENTIFIANT_PP on ACTIVITE(IDENTIFIANT_PP);
     CREATE INDEX ACTIVITE_IDENTIFIANT_DE_L_ACTIVITE on ACTIVITE(IDENTIFIANT_DE_L_ACTIVITE);
@@ -163,53 +138,7 @@ def create_indexes(database="database", verbose = True):
     cursor.close()
     conn.commit()
     conn.close()
-
-
-# Récupération du nom des colonnes et de la table à compléter
-def get_column_and_table_names_for_insee(files):
-    """
-    Fonction appelée dans insert_data_from_insee afin de récupérer le nom de la table et des colonnes   
-    cible.
-    """
-    if files[:8] == "communes":
-        table_name = "INSEE_COMMUNES"
-        column_names = (
-        'TYPECOM',
-        'COM',
-        'REG',
-        'DEP',
-        'ARR',
-        'TNCC',
-        'NCC',
-        'NCCENR',
-        'LIBELLE',
-        'CAN',
-        'COMPARENT'
-        )
-    elif files[:11] == "departement":
-        table_name = "INSEE_DEPARTEMENT"
-        column_names = (
-        'DEP',
-        'REG',
-        'CHEFLIEU',
-        'TNCC',
-        'NCC',
-        'NCCENR',
-        'LIBELLE'        
-        )
-    elif files[:6] == "region":
-        table_name = "INSEE_REGION"
-        column_names = (
-        'REG',
-        'CHEFLIEU',
-        'TNCC',
-        'NCC',
-        'NCCENR',
-        'LIBELLE'
-        )
-
-    return column_names, table_name
-
+   
 
 def insert_data_from_insee(conn, path_insee, verbose = True):
     """
