@@ -94,7 +94,8 @@ def insert_data_from_source_files(conn, path_os_input, verbose = True):
     print(" ")
 
     for files in filenames_from_os:
-        print(" ------------------------------------------------------------------------------------ ")        print(" --- Insertion des données depuis : ", files.upper(), "--- ")
+        print(" ------------------------------------------------------------------------------------ ")
+        print(" --- Insertion des données depuis : ", files.upper(), "--- ")
         print(" ------------------------------------------------------------------------------------ ")
         # Récupération du chemin où sont stockés les fichiers csv
         filepath = path_os_input + files
@@ -197,30 +198,23 @@ def create_indexes(database="database", verbose = True):
     """
     if verbose :
         print(" --- Création des index --- ")
+    
+    # Connexion à la bdd
     conn = sqlite3.connect(
         database = database
     )
     cursor = conn.cursor()
     
-    #query = query_create_index
-    #print(" --- query_create_index :", query)
-    #cursor.executescript(query)
+    # Création d'une liste create_index pour stocker les requêtes présentent 
+    # dans query_create_index() de query_sqlite.py
+    create_index = []
+    create_index = query_create_index()
     
-    cursor.executescript("""
-    CREATE INDEX ACTIVITE_IDENTIFIANT_PP on ACTIVITE(IDENTIFIANT_PP);
-    CREATE INDEX ACTIVITE_IDENTIFIANT_DE_L_ACTIVITE on ACTIVITE(IDENTIFIANT_DE_L_ACTIVITE);
-    CREATE INDEX AUTORISATION_EXERCICE_IDENTIFIANT_PP on AUTEXERC(IDENTIFIANT_PP);
-    CREATE INDEX COORDONNEES_ACTIVITE_IDENTIFIANT_DE_L_ACTIVITE on COORDACT(IDENTIFIANT_DE_L_ACTIVITE);
-    CREATE INDEX COORDONNEES_CORRESPONDANCE_IDENTIFIANT_PP on COORDCORRESP(IDENTIFIANT_PP);
-    CREATE INDEX COORDONNEES_STRUCTURE_IDENTIFIANT_TECHNIQUE_DE_LA_STRUCTURE on COORDSTRUCT(IDENTIFIANT_TECHNIQUE_DE_LA_STRUCTURE);
-    CREATE INDEX DIPLOME_OBTENU_IDENTIFIANT_PP on DIPLOBT(IDENTIFIANT_PP);
-    CREATE INDEX ETAT_CIVIL_IDENTIFIANT_PP on ETATCIV(IDENTIFIANT_PP);
-    CREATE INDEX EXERCICE_PROFESSIONNEL_IDENTIFIANT_PP on EXERCPRO(IDENTIFIANT_PP);
-    CREATE INDEX INSCRIPTION_ORDRE_IDENTIFIANT_PP on REFERAE(IDENTIFIANT_PP);
-    CREATE INDEX PERSONNE_IDENTIFIANT_PP on PERSONNE(IDENTIFIANT_PP);
-    CREATE INDEX SAVOIR_FAIRE_IDENTIFIANT_PP on SAVOIRFAIRE(IDENTIFIANT_PP);
-    CREATE INDEX STRUCTURE_ACTIVITE_IDENTIFIANT_TECHNIQUE_DE_LA_STRUCTURE on STRUCTURE(IDENTIFIANT_TECHNIQUE_DE_LA_STRUCTURE);
-    """)
+    # Execution de la requete pour créer l'index
+    for requete in create_index:
+        print(" --- Requête create_index :", requete)
+        cursor.executescript(requete)
+
     cursor.close()
     conn.commit()
     conn.close()

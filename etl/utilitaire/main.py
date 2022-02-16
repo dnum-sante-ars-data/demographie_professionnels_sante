@@ -21,6 +21,8 @@ def __main__(args):
         transform_export()
     elif args.commande == "export_sftp":
         export_to_sftp()
+    elif args.commande == "all":
+        all_functions()        
     return
 
 
@@ -89,6 +91,12 @@ def export_to_sftp():
 
     print(" --- Fichiers exportés vers SFTP --- ")
 
+
+def all_functions():
+    import_wget_sftp()
+    exe_db_init()
+    transform_export()
+    export_to_sftp()
 
 # Initialisation du parsing
 parser = argparse.ArgumentParser()
