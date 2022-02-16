@@ -8,7 +8,7 @@ from tabnanny import verbose
 
 
 # Modules personnalisés
-from modules import route_sftp, route_sqlite, private_transform, pgp_decrypt
+from modules import route_sftp, route_sqlite, private_transform, pgp_decrypt, control
 
 
 # Commandes
@@ -21,6 +21,8 @@ def __main__(args):
         transform_export()
     elif args.commande == "export_sftp":
         export_to_sftp()
+    elif args.commande == "control":
+        control_output()
     elif args.commande == "all":
         all_functions()        
     return
@@ -69,6 +71,7 @@ def transform_export():
     param_path_personnes = private_transform.read_filepath("settings/settings.json", file_name = "personnes.csv")
     private_transform.transform_export(filepath_activites = param_path_activites["path"], filepath_personnes = param_path_personnes["path"], database = param_config["database"], verbose = True)
 
+
 # Fonction export vers SFTP
 def export_to_sftp():
     print(" ")
@@ -92,11 +95,16 @@ def export_to_sftp():
     print(" --- Fichiers exportés vers SFTP --- ")
 
 
+def control_output():
+    control.test_not_null("data/output/")
+
+
 def all_functions():
     import_wget_sftp()
     exe_db_init()
     transform_export()
     export_to_sftp()
+    control_output()
 
 # Initialisation du parsing
 parser = argparse.ArgumentParser()
