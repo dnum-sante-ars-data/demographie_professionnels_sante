@@ -370,7 +370,7 @@ def get_column_and_table_names_for_insee(files):
     Fonction appelée dans insert_data_from_insee afin de récupérer le nom de 
     la table et des colonnes cibles.
     """
-    if files[:8] == "communes":
+    if files[:7] == "commune":
         table_name = "INSEE_COMMUNES"
         column_names = (
         'TYPECOM',      
