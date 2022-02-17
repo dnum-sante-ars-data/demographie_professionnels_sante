@@ -4,21 +4,8 @@ import json
 import os
 import pandas as pd
 
-from modules import route_sftp
-from .query_sqlite import query_create_table, list_table_name, query_drop_index, query_create_index, get_column_and_table_names_for_insee, get_column_and_table_names_for_source_files
-
-
-# Lecture du paramétrage
-def read_config_db(path_in, server="LOCAL SERVER"):
-    with open(path_in) as f:
-        dict_ret = json.load(f)
-    L_ret = dict_ret["sqlite_db"]
-    param_config = {}
-    for param in L_ret :
-        if param["server"] == server :
-            param_config = param.copy()
-    print("Lecture configuration serveur " + path_in + ".")
-    return param_config
+from utils import *
+from .query_sqlite import *
 
 
 # Création de la BDD
@@ -90,7 +77,7 @@ def insert_data_from_source_files(conn, path_os_input, verbose = True):
         - path_os_input : Chemin du dossier où sont stockés les fichiers sources.
     """
     #Récupération du nom des fichiers sources    
-    filenames_from_os = route_sftp.get_filenames_from_os(path_os_input)[1]
+    filenames_from_os = utils.get_filenames_from_os(path_os_input)[1]
     print(" ")
 
     for files in filenames_from_os:
@@ -137,7 +124,7 @@ def insert_data_from_insee(conn, path_insee, verbose = True):
         - path_insee : Chemin du dossier où sont stockés les fichiers de données issus de l'INSEE.     
     """
     # Récupération du nom des fichiers INSEE
-    filenames_from_insee = route_sftp.get_filenames_from_os(path_insee)[1]
+    filenames_from_insee = utils.get_filenames_from_os(path_insee)[1]
 
     # Boucle permettant d'importer les données de chaque fichier INSEE dans la BDD
     for files in filenames_from_insee:

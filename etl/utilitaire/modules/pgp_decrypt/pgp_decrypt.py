@@ -1,7 +1,10 @@
+# coding: utf-8
+
 # Modules
 import gnupg
 import os
 
+from utils import *
 
 # Récupération des noms des fichiers .gpg téléchargés dans data/input
 def get_os_filenames(path):
@@ -28,8 +31,11 @@ def delete_old_csv_files_in_os(path):
     dans le répertoire data/input de l'OS avant décryptage des nouveaux
     fichiers .gpg.
     """
-    gpg_files_in_os, csv_files_in_os = get_os_filenames(path)
 
+    #gpg_files_in_os, csv_files_in_os = get_os_filenames(path)
+    
+    gpg_files_in_os, csv_files_in_os = utils.get_filenames_from_os(path)
+    
     gpg_files = []
     for elem in gpg_files_in_os:
         gpg_files.append(elem[:-4])
@@ -69,7 +75,7 @@ def decrypt_file(path):
     # Récupération du nom des fichiers .gpg qui viennent d'être 
     # téléchargés au sein de data/input
     path = path
-    files_to_decrypt = get_os_filenames(path)[0]
+    files_to_decrypt = utils.get_filenames_from_os(path)[0]
     #print(" --- files_to_decrypt :", files_to_decrypt)
     print(" ")
 
