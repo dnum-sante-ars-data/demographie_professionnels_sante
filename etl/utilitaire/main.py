@@ -96,7 +96,9 @@ def export_to_sftp():
 
 
 def control_output():
-    control.test_not_null("data/output/")
+    param_path_os_output = route_sftp.read_path_os("settings/settings.json", folder_name 
+= "os_output")
+    control.test_not_null(param_path_os_output)
 
 
 def all_functions():
