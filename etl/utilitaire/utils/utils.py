@@ -82,6 +82,18 @@ def read_filepath(path_in, file_name):
     return file_config
 
 
+# retourne la config pour décrypter les fichiers .gpg
+def read_config_decrypt_gpg(path_in) :
+    with open(path_in) as f:
+        dict_ret = json.load(f)
+    L_ret = dict_ret["gpg"]
+    config = {}
+    for elem in L_ret :
+        config = elem.copy()
+    logging.info("Lecture config GPG " + path_in + ".")
+    return config
+
+
 # def get_filenames_from_sftp(sftp):
 def get_filenames_from_sftp(sftp, path_sftp) :
     """

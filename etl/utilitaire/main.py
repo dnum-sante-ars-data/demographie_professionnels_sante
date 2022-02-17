@@ -35,9 +35,10 @@ def import_wget_sftp():
     param_config = utils.read_config_sftp("settings/settings.json", server_name = "FTP ODS")    
     param_path_sftp_input = utils.read_path("settings/settings.json", folder_name = "sftp_input")
     param_path_os_input = utils.read_path("settings/settings.json", folder_name = "os_input")
-    
+    param_gpg = utils.read_config_decrypt_gpg("settings/settings.json")
+
     route_sftp.save_wget_sftp(param_config, param_path_os_input["path"], param_path_sftp_input["path"])
-    pgp_decrypt.decrypt_file(path = param_path_os_input["path"])
+    pgp_decrypt.decrypt_file(path_to_decrypt = param_path_os_input["path"], path_gpg = param_gpg["path"], password_gpg = param_gpg["password"])
 
 
 # Exécution de l'initialisation de la BDD
