@@ -11,94 +11,9 @@ import wget
 import os
 import ftplib
 from progressbar import AnimatedMarker, Bar, BouncingBar, Counter, ETA, AdaptiveETA, FileTransferSpeed, FormatLabel, Percentage, ProgressBar, ReverseBar, RotatingMarker, SimpleProgress, Timer, UnknownLength
+from utils import *
 
 global ftp
-
-
-# retourne la config d'un serveur au format dictionnaire
-def read_config_sftp(path_in, server_name) :
-    with open(path_in) as f:
-        dict_ret = json.load(f)
-    L_ret = dict_ret["sftp"]
-    server_config = {}
-    for server in L_ret :
-        if server["server"] == server_name :
-            server_config = server.copy()
-    logging.info("Lecture config SFTP " + path_in + ".")
-    return server_config
-
-
-# Retourne le path_sftp
-def read_path_os(path_in, folder_name):
-    with open(path_in) as f:
-        dict_ret = json.load(f)
-    L_ret = dict_ret["path_os"]
-    path_config = {}
-    for folder in L_ret:
-        if folder["folder"] == folder_name:
-            path_config = folder.copy()
-    logging.info("Lecture path " + path_in + ".")
-    return path_config
-
-
-# Retourne le path_sftp
-def read_path_sftp(path_in, folder_name):
-    with open(path_in) as f:
-        dict_ret = json.load(f)
-    L_ret = dict_ret["path_sftp"]
-    path_config = {}
-    for folder in L_ret:
-        if folder["folder"] == folder_name:
-            path_config = folder.copy()
-    logging.info("Lecture path " + path_in + ".")
-    return path_config
-
-
-# def get_filenames_from_sftp(sftp):
-def get_filenames_from_sftp(sftp, path_sftp) :
-    """
-    Fonction permettant de récupérer le nom des 
-    fichiers .gpg et .csv présents au sein du sftp
-    
-    get_filenames_from_sftp(sftp, path_sftp)[0] : Récupère uniquement fichiers .gpg
-    get_filenames_from_sftp(sftp, path_sftp)[1] : Récupère uniquement fichiers .csv
-    """
-    # Récupération des noms des fichiers sources
-    directory_structure = sftp.listdir_attr(path_sftp)
-    dict_filenames = [attr.filename for attr in directory_structure]
-    gpg_files=[]
-    csv_files=[]
-
-    # Boucle permettant de ne récupérer que les fichiers .csv
-    for elem in dict_filenames:
-        if elem[-4::]=='.gpg':
-            gpg_files.append(elem)
-        elif elem[-4::]=='.csv':
-            csv_files.append(elem)
-
-    return gpg_files, csv_files
-
-
-# Fonction pour récupérer nom des fichiers .gpg
-def get_filenames_from_os(path):
-    """
-    Fonction permettant de récupérer le nom des 
-    fichiers .gpg et .csv présents au sein d'un dossier de l'OS
-    
-    get_filenames_from_os(path)[0] : Récupère uniquement fichiers .gpg
-    get_filenames_from_os(path)[1] : Récupère uniquement fichiers .csv
-    """
-    dict_filenames = os.listdir(path)
-    gpg_files = []
-    csv_files = []
-
-    for elem in dict_filenames:
-        if elem[-4::]=='.gpg':
-            gpg_files.append(elem)
-        elif elem[-4::]=='.csv':
-            csv_files.append(elem)
-
-    return gpg_files, csv_files
 
 
 def delete_old_gpg_files_in_os(sftp, path_os, path_sftp):
@@ -113,9 +28,9 @@ def delete_old_gpg_files_in_os(sftp, path_os, path_sftp):
         path_sftp : Direction du dossier SFTP depuis lequel les fichiers vont être importés.
     """
     # Récupération du nom des fichiers présents dans data/input
-    files_in_os = get_filenames_from_os(path = path_os)[0]
+    files_in_os = utils.get_filenames_from_os(path = path_os)[0]
        
-    files_in_sftp = get_filenames_from_sftp(sftp, path_sftp)[0]
+    files_in_sftp = utils.get_filenames_from_sftp(sftp, path_sftp)[0]
         
     # Comparaison entre fichiers présents dans data/input et ceux dans sftp
     files_to_delete = set(files_in_sftp) & set(files_in_os)
@@ -151,9 +66,9 @@ def delete_old_files_in_sftp(server_in_config, path_sftp, path_os):
     cnopts.hostkeys = None
     sftp = pysftp.Connection(host=host, username=username, password=password, port = 2222, cnopts=cnopts)
 
-    files_in_sftp = get_filenames_from_sftp(sftp, path_sftp)[1]
+    files_in_sftp = utils.get_filenames_from_sftp(sftp, path_sftp)[1]
 
-    files_in_os = get_filenames_from_os(path_os)[1]
+    files_in_os = utils.get_filenames_from_os(path_os)[1]
 
     files_to_delete = set(files_in_sftp) & set(files_in_os)
 
@@ -174,11 +89,14 @@ def delete_old_files_in_sftp(server_in_config, path_sftp, path_os):
 
 # telechargement complet via wget
 def save_wget_sftp(server_in_config, path_os, path_sftp):
-    """Telechargement complet via wget
+    """Telechargement complet via wget depuis le path_sftp vers 
+       le path_os.
 
     Args:
-        server_in_config ([dict]): Configuration du server au 
+        - server_in_config ([dict]): Configuration du server au 
         format dictionnaire. Récupéré via read_config_sftp
+        - path_os : Chemin du dossier où stocker les fichiers téléchargés
+        - path_sftp : Chemin du dossier où sont stockés les fichiers à télécharger
     """
     print(" ")
     print(' --- Lancement de la commande wget --- ')
@@ -196,8 +114,7 @@ def save_wget_sftp(server_in_config, path_os, path_sftp):
         print(" ")
 
         # Récupération des fichiers à importer
-        filenames_from_sftp = get_filenames_from_sftp(sftp, path_sftp)[0]
-        #filenames_from_sftp = get_sftp_gpg_filenames(sftp, path_sftp)
+        filenames_from_sftp = utils.get_filenames_from_sftp(sftp, path_sftp)[0]
         print(" -- Fichiers à importer depuis sftp : ", filenames_from_sftp)
         print(" ")
 
@@ -228,21 +145,6 @@ def save_wget_sftp(server_in_config, path_os, path_sftp):
     return
 
 
-# Lecture de la configuration du serveur SFTP avec le compte en écriture
-def read_config_ecriture(path_in, server_name):
-    print(" ")
-    print(" --- Lancement de la lecture de la configuration du serveur en écriture")
-    with open(path_in) as f:
-        dict_ret = json.load(f)
-    L_ret = dict_ret["sftp"]
-    param_config = {}
-    for server in L_ret:
-        if server["server"] == server_name:
-            server_config = server.copy()
-    print(" --- Lecture de la configuration en écriture", path_in, ".")
-    return server_config
-
-
 # Test export_sftp
 def execute_upload(server_in_config, path_os, path_sftp):
     """
@@ -271,7 +173,7 @@ def execute_upload(server_in_config, path_os, path_sftp):
     delete_old_files_in_sftp(server_in_config = server_in_config, path_sftp = path_sftp, path_os = path_os)
 
     # Récupération des noms des fichiers .csv présent dans data/output à transférer vers SFTP
-    files_to_sftp = get_filenames_from_os(path_os)[1]
+    files_to_sftp = utils.get_filenames_from_os(path_os)[1]
 
     # Boucle permettant d'exporter un à un les fichiers présents dans data/output vers le SFTP
     for files in files_to_sftp:
