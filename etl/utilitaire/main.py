@@ -32,12 +32,17 @@ def __main__(args):
 def import_wget_sftp():
     print(" ")
     print(" --- Import des fichiers depuis le SFTP --- ")
-    param_config = utils.read_config_sftp("settings/settings.json", server_name = "FTP ODS")    
-    param_path_sftp_input = utils.read_path("settings/settings.json", folder_name = "sftp_input")
-    param_path_os_input = utils.read_path("settings/settings.json", folder_name = "os_input")
-    param_gpg = utils.read_config_decrypt_gpg("settings/settings.json")
+    
+    param_config = utils.read_settings("settings/settings.json", dict = "sftp", elem = "FTP ODS")
+    
+    param_path_sftp_input = utils.read_settings("settings/settings.json", dict = "path_sftp", elem = "sftp_input")   
+ 
+    param_path_os_input = utils.read_settings("settings/settings.json", dict = "path_os", elem = "os_input")
 
+    param_gpg = utils.read_settings("settings/settings.json", dict = "gpg", elem = "param_gpg")   
+ 
     route_sftp.save_wget_sftp(param_config, param_path_os_input["path"], param_path_sftp_input["path"])
+    
     pgp_decrypt.decrypt_file(path_to_decrypt = param_path_os_input["path"], path_gpg = param_gpg["path"], password_gpg = param_gpg["password"])
 
 
@@ -46,9 +51,9 @@ def exe_db_init():
     print(" ")
     print(" --- Deploiement --- ")
     print(" --- Récupération des paramètres :")
-    param_config = utils.read_config_db("settings/settings.json", server="LOCAL SERVER")
-    param_path_os_insee = utils.read_path("settings/settings.json", folder_name = "os_insee")
-    param_path_os_input = utils.read_path("settings/settings.json", folder_name = "os_input")
+    param_config = utils.read_settings("settings/settings.json", dict = "sqlite_db", elem = "LOCAL SERVER")
+    param_path_os_insee = utils.read_settings("settings/settings.json", dict = "path_os", elem = "os_insee")
+    param_path_os_input = utils.read_settings("settings/settings.json", dict = "path_os", elem = "os_input")
     print(" --- param_config :", param_config)
     print(" --- param_path_os_insee :", param_path_os_insee)
     print(" --- param_path_os_input :", param_path_os_input)
@@ -69,9 +74,12 @@ def exe_db_init():
 def transform_export():
     print(" ")
     print(" --- Transformation et export --- ")
-    param_config = utils.read_config_db("settings/settings.json", server = "LOCAL SERVER")
-    param_path_activites = utils.read_filepath("settings/settings.json", file_name = "activites.csv")
-    param_path_personnes = utils.read_filepath("settings/settings.json", file_name = "personnes.csv")
+    param_config = utils.read_settings("settings/settings.json", dict = "sqlite_db", elem = "LOCAL SERVER")
+
+    param_path_activites = utils.read_settings("settings/settings.json", dict = "file_to_transform_export", elem = "activites")
+
+    param_path_personnes = utils.read_settings("settings/settings.json", dict = "file_to_transform_export", elem = "personnes")
+
     private_transform.transform_export(filepath_activites = param_path_activites["path"], filepath_personnes = param_path_personnes["path"], database = param_config["database"], verbose = True)
 
 
@@ -80,10 +88,10 @@ def export_to_sftp():
     print(" ")
     print(" --- Exportation vers SFTP --- ")
     print(" --- Récupération des paramètres :")
-    param_config = utils.read_config_ecriture("settings/settings.json", server_name = "FTP ODS")
-    param_path_sftp_output = utils.read_path("settings/settings.json", folder_name = "sftp_output")
-    param_path_os_output = utils.read_path("settings/settings.json", folder_name = "os_output")
-    param_path_os_input = utils.read_path("settings/settings.json", folder_name = "os_input")
+    param_config = utils.read_settings("settings/settings.json", dict = "sftp", elem = "FTP ODS")
+    param_path_sftp_output = utils.read_settings("settings/settings.json", dict = "path_sftp", elem = "sftp_output")
+    param_path_os_output = utils.read_settings("settings/settings.json", dict = "path_os", elem = "os_output")
+    param_path_os_input = utils.read_settings("settings/settings.json", dict = "path_os", elem = "os_input")
     
     print(" --- param_config :", param_config)
     print(" --- param_path_sftp_output :", param_path_sftp_output)
@@ -99,7 +107,7 @@ def export_to_sftp():
 
 
 def control_output():
-    param_path_os_output = utils.read_path("settings/settings.json", folder_name = "os_output")
+    param_path_os_output = utils.read_settings("settings/settings.json", dict = "path_os", elem = "os_output")
     control.test_not_null(param_path_os_output["path"])
 
 
