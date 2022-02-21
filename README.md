@@ -63,22 +63,25 @@ _etl
 
 
 ## Commandes du script d'ETL
-### Import
-* Suppression des anciens fichiers .csv présents localement dans /data/input
-* Téléchargement des fichiers sources du serveur FTP ODS /demographie/input en local dans /data/input
+### `import`
+* Suppression des anciens fichiers .csv présents localement dans `/data/input`
+* Téléchargement des fichiers sources du serveur FTP ODS `/demographie/input`en local dans `/data/input`
 * Déchiffrement des fichiers importés localement de .gpg à .csv
 
-### Init_database
+### `init_database`
 * Déploiement de la base de données et création des tables
-* Dump des données depuis les fichiers sources data/input et /utils vers la base de données locale crée précédemment
+* Dump des données depuis les fichiers sources `/data/input` et `/utils` vers la base de données locale crée précédemment
 
-### Transform 
-* Création 
-* Import des données  depuis le serveur FTP Atlasanté
-* Déchiffrement et décompression de l'archive
-* Dump des données dans une base de données en local SQLite
-* Transformations sur les données
-* Publication des données sur un serveur FTP
+### `transform`
+* Transformation des données pour créer les fichiers cibles `activites.csv` et `personnes.csv`
+* Exportation des fichiers cibles dans `/data/output`
+
+### `export_sftp`
+* Publication des fichiers cibles `activites.csv` et `personnes.csv` depuis `/data/output` sur le serveur FTP dans `/demographie/output`
+
+### `control`
+* Analyse globale des fichiers cibles `activites.csv` et `personnes.csv` présents au sein de `/data/output`
+
 
 ## Précautions d'emploi
 * L'initialisation des tables de la base de données demographie_ps.db est sensible au nom des fichiers issus du dossier data/input. En cas de changement de nom des fichiers, il est nécessaire de modifier la fonction import_data_from_source_files() présente dans le fichier route_sqlite.py afin de faire converger le nom du fichier et le nom de la table à compléter. Il en va de même avec les fichiers issus des données de l'INSEE présents dans le dossier utils.
