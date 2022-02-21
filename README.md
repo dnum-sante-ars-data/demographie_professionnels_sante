@@ -14,22 +14,30 @@ _etl
     |__ _log
     |__ main.py
     |__ _modules
-        |__ _pgp_decrypt
+        |__ _control
             |__ __init__.py
-            |__ _pgp_decrypt.py
+            |__ control.py
+        |__ _gpg_decrypt
+            |__ __init__.py
+            |__ gpg_decrypt.py
         |__ _private_transform
             |__ __init__.py
-            |__ _public_transform.py
+            |__ private_transform.py
+            |__ query_private_transform.py
             |__ sql_queries
         |__ _route_sftp
             |__ __init__.py
             |__ route_sftp.py
         |__ _route_sqlite
             |__ __init__.py
+            |__ query_sqlite.py
             |__ route_sqlite.py
     |__ _settings
+        |__ settings_demo.json
         |__ settings.json
-    |__ _utils 
+    |__ _utils
+            |__ __init__.py
+            |__ utils.py
 ```
 
 ## Environnement
@@ -37,16 +45,35 @@ _etl
 * python 3.9
 ### Modules
 * argparse
-* logging
 * datetime
-* pysqlite3
-* json
-* wget
 * ftplib
 * gnupg
 * gzip
+* json
+* logging
+* os
+* pandas
+* progressbar
+* pysftp
+* subprocess
+* sqlite3
+* tqdm
+* verbose
+* wget
+
 
 ## Commandes du script d'ETL
+### Import
+* Suppression des anciens fichiers .csv présents localement dans /data/input
+* Téléchargement des fichiers sources du serveur FTP ODS /demographie/input en local dans /data/input
+* Déchiffrement des fichiers importés localement de .gpg à .csv
+
+### Init_database
+* Déploiement de la base de données et création des tables
+* Dump des données depuis les fichiers sources data/input et /utils vers la base de données locale crée précédemment
+
+### Transform 
+* Création 
 * Import des données  depuis le serveur FTP Atlasanté
 * Déchiffrement et décompression de l'archive
 * Dump des données dans une base de données en local SQLite
