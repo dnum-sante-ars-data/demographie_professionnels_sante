@@ -8,7 +8,7 @@ from tabnanny import verbose
 
 
 # Modules personnalisés
-from modules import route_sftp, route_sqlite, private_transform, pgp_decrypt, control
+from modules import route_sftp, route_sqlite, private_transform, gpg_decrypt, control
 from utils import utils
 
 # Commandes
@@ -17,7 +17,7 @@ def __main__(args):
         import_wget_sftp()
     elif args.commande == "init_database":
         exe_db_init()
-    elif args.commande == "transform_export":
+    elif args.commande == "transform":
         transform_export()
     elif args.commande == "export_sftp":
         export_to_sftp()
@@ -101,7 +101,7 @@ def export_to_sftp():
     # execute_upload permettant d'importer fichiers .csv de data/output vers SFTP
     route_sftp.execute_upload(param_config, path_os = param_path_os_output["path"], path_sftp = param_path_sftp_output["path"])
     # execute_upload permettant d'importer fichiers .csv de data/input vers SFTP
-    route_sftp.execute_upload(param_config, path_os = param_path_os_input["path"], path_sftp = param_path_sftp_output["path"])
+    #route_sftp.execute_upload(param_config, path_os = param_path_os_input["path"], path_sftp = param_path_sftp_output["path"])
 
     print(" --- Fichiers exportés vers SFTP --- ")
 
