@@ -56,6 +56,11 @@ def delete_old_files_in_sftp(server_in_config, path_sftp, path_os):
     Fonction permettant de supprimer les fichiers présents dans le dossier 
     demographie_ps/output du SFTP et dont une nouvelle version est sur le 
     point d'être transférée.
+
+    Paramètres : 
+        - server_in_config : Paramètres de connexion au SFTP.
+        - path_sftp : Chemin du dossier SFTP où supprimer les anciens fichiers.
+        - path_os : Chemin du dossier OS d'où vont être importer les nouveaux fichiers vers le SFTP.
     """
     host = server_in_config["host"]
     username = server_in_config["username"]
@@ -88,14 +93,14 @@ def delete_old_files_in_sftp(server_in_config, path_sftp, path_os):
 
 # telechargement complet via wget
 def save_wget_sftp(server_in_config, path_os, path_sftp):
-    """Telechargement complet via wget depuis le path_sftp vers 
-       le path_os.
+    """
+    Telechargement complet via wget depuis le path_sftp vers le path_os.
 
-    Args:
+    Paramètres :
         - server_in_config ([dict]): Configuration du server au 
         format dictionnaire. Récupéré via read_config_sftp
-        - path_os : Chemin du dossier où stocker les fichiers téléchargés
-        - path_sftp : Chemin du dossier où sont stockés les fichiers à télécharger
+        - path_os : Chemin du dossier cible,  où stocker les fichiers téléchargés
+        - path_sftp : Chemin du dossier source, où sont stockés les fichiers à télécharger
     """
     print(" ")
     print(' --- Lancement de la commande wget --- ')
@@ -149,6 +154,11 @@ def execute_upload(server_in_config, path_os, path_sftp):
     """
     Fonction permettant de transférer un fichier présent dans le dossier "path_os" de l'os, 
     vers le dossier "path_sftp" du SFTP.
+
+    Paramètres :
+       - server_in_config : Paramètres de connexion au SFTP.
+       - path_os : Chemin du dossier source.
+       - path_sftp : Chemin du dossier cible.
     """
     print(" ")
     print(" --- Execution de l'upload depuis data/output vers SFTP --- ")

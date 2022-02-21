@@ -10,6 +10,12 @@ from .query_sqlite import *
 
 # Création de la BDD
 def deploy_database(database="database") :
+    """
+    Déploiement de la database.
+
+    Paramètre : 
+        - database : Paramètres de la database à déployer.
+    """ 
     conn = sqlite3.connect(
         database=database
     )
@@ -25,6 +31,9 @@ def init_empty_schema(database = "database", verbose = True):
     """
     Fonction permettant d'initialiser la base de données et de 
     créer les tables nécessaires.
+    
+    Paramètre :
+        - database : Paramètres de la database.
     """
     # Initialisation de la bdd
     print(" --- Initialisation de la BDD --- ")

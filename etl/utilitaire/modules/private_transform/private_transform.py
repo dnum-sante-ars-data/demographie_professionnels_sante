@@ -9,6 +9,11 @@ def transform_export(filepath_activites, filepath_personnes, database="database"
     """
     Création des fichiers activités.csv et personnes.csv à partir des fichiers .csv 
     présents dans data/input.
+
+    Paramètres :
+        - filepath_activites : Désignation du chemin où créer le fichier activités.csv.
+        - filepath_personnes : Désignation du chemin où créer le fichier personnes.csv.
+        - database : Paramètres de connexion à la base de données souhaitées.
     """
     conn = sqlite3.connect(
         database=database

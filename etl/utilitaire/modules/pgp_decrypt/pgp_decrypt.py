@@ -13,6 +13,9 @@ def delete_old_csv_files_in_os(path):
     Fonction permettant de supprimer les anciens fichiers .csv présents
     dans le répertoire data/input de l'OS avant décryptage des nouveaux
     fichiers .gpg.
+ 
+    Paramètres :
+        - path : Chemin du dossier où vérifier et éventuellement supprimer les anciens fichiers.
     """  
     gpg_files_in_os, csv_files_in_os = utils.get_filenames_from_os(path)
     
