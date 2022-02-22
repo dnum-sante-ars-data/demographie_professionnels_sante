@@ -3,6 +3,7 @@
     "sqlite_db":
     [
         {
+            "name":"LOCAL SERVER",
             "server" : "LOCAL SERVER",
             "database" : "data/database/demographie_ps.db"
         }
@@ -11,11 +12,66 @@
     "sftp":
     [
         {
-            "server" : "ATLASANTE SFTP DEPOT",
-            "username" : "sftp_rdvvaccins_ars",
-            "password" : "****",
-            "host" : "www.atlasante.fr"
+            "name":"FTP ODS",
+            "server" : "FTP ODS",
+            "username" : "sgsocialgouv",
+            "password" : "*****",
+            "host" : "fr.ftp.opendatasoft.com"
+        }
+    ],
+
+    "path_sftp":
+    [
+        {
+            "name" : "sftp_input",
+            "path" : "demographie_ps/input/"
+        },
+
+        {
+            "name" : "sftp_output",
+            "path" : "demographie_ps/output/"
+        }
+    ],
+
+    "path_os":
+    [
+        {
+            "name" : "os_input",
+            "path" : "data/input/"
+        },
+
+        {
+            "name" : "os_output",
+            "path" : "data/output/"
+        },
+
+        {
+            "name" : "os_insee",
+            "path"   : "utils/"
+        }
+    ],
+
+    "file_to_transform_export":
+    [
+        {
+            "name" : "activites",
+            "file" : "activites.csv",
+            "path" : "data/output/activites.csv"
+        },
+
+        {
+            "name" : "personnes",
+            "file" : "personnes.csv",
+            "path" : "data/output/personnes.csv"
+        }
+    ],
+
+    "gpg":
+    [
+        {
+            "name":"param_gpg",
+            "path" : "/usr/bin/gpg",
+            "password" : "*****"
         }
     ]
-
 }
