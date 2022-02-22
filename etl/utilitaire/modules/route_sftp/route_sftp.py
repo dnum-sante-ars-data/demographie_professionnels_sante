@@ -161,7 +161,7 @@ def execute_upload(server_in_config, path_os, path_sftp):
        - path_sftp : Chemin du dossier cible.
     """
     print(" ")
-    print(" --- Execution de l'upload depuis data/output vers SFTP --- ")
+    print(" --- Execution de l'upload depuis", path_os, "vers le  SFTP --- ")
     print(" ")
     host = server_in_config["host"]
     username = server_in_config["username"]

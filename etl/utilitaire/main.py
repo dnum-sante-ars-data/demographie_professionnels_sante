@@ -43,7 +43,7 @@ def import_wget_sftp():
  
     route_sftp.save_wget_sftp(param_config, param_path_os_input["path"], param_path_sftp_input["path"])
     
-    pgp_decrypt.decrypt_file(path_to_decrypt = param_path_os_input["path"], path_gpg = param_gpg["path"], password_gpg = param_gpg["password"])
+    gpg_decrypt.decrypt_file(path_to_decrypt = param_path_os_input["path"], path_gpg = param_gpg["path"], password_gpg = param_gpg["password"])
 
 
 # Exécution de l'initialisation de la BDD
@@ -101,7 +101,7 @@ def export_to_sftp():
     # execute_upload permettant d'importer fichiers .csv de data/output vers SFTP
     route_sftp.execute_upload(param_config, path_os = param_path_os_output["path"], path_sftp = param_path_sftp_output["path"])
     # execute_upload permettant d'importer fichiers .csv de data/input vers SFTP
-    #route_sftp.execute_upload(param_config, path_os = param_path_os_input["path"], path_sftp = param_path_sftp_output["path"])
+    route_sftp.execute_upload(param_config, path_os = param_path_os_input["path"], path_sftp = param_path_sftp_output["path"])
 
     print(" --- Fichiers exportés vers SFTP --- ")
 
