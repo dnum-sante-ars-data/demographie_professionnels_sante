@@ -145,7 +145,7 @@ def insert_data_from_insee(conn, path_insee, verbose = True):
 
         # Récupération du nom des colonnes et de la table en fonction du fichier
         column_names, table_name = get_column_and_table_names_for_insee(files)
-
+        
         # Lecture du fichier csv
         print(" --- Lecture et transformation du fichier :", files)
         insert_file = pd.read_csv(filepath, sep=",", header = 0, names = column_names, dtype="str")    

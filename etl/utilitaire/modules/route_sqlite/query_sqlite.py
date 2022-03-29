@@ -284,13 +284,8 @@ def query_create_table(table_name):
         NUMERO_FINESS_ETABLISSEMENT              TEXT,
         NUMERO_FINESS_EJ                         TEXT,
         RPPS_RANG                                TEXT,
-        ADELI_RANG                               TEXT,
-        NUMERO_LICENCE_OFFICINE                  TEXT,
-        DATE_D_OUVERTURE_STRUCTURE               TEXT,
         DATE_DE_FERMETURE_STRUCTURE              TEXT,
         DATE_DE_MISE_A_JOUR_STRUCTURE            TEXT,
-        CODE_APE                                 TEXT,
-        LIBELLE_APE                              TEXT,
         CODE_CATEGORIE_JURIDIQUE                 TEXT,
         LIBELLE_CATEGORIE_JURIDIQUE              TEXT,
         CODE_SECTEUR_D_ACTIVITE                  TEXT,
@@ -312,7 +307,8 @@ def query_create_table(table_name):
         NCCENR    TEXT,
         LIBELLE   TEXT,
         CAN       TEXT,
-        COMPARENT TEXT
+        COMPARENT TEXT,
+        UNNAMED   TEXT
     );"""
 
     elif table_name == "INSEE_DEPARTEMENT":
@@ -383,7 +379,8 @@ def get_column_and_table_names_for_insee(files):
         'NCCENR',
         'LIBELLE',
         'CAN',
-        'COMPARENT'
+        'COMPARENT',
+        'UNNAMED'
         )
     elif files[:11] == "departement":
         table_name = "INSEE_DEPARTEMENT"
