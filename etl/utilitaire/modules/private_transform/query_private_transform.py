@@ -1,8 +1,8 @@
 def query_select_activites_sql():
     query = """
        SELECT
-            dep.NCC as DEPARTEMENT_COORD_CORRESPONDANCE,
-            reg.NCC as REGION_COORD_CORRESPONDANCE,
+            dep.NCC as DEPARTEMENT_COORD_ACTIVITE,
+            reg.NCC as REGION_COORD_ACTIVITE,
             a.TYPE_D_IDENTIFIANT_PP,
             a.IDENTIFIANT_PP,
             a.IDENTIFIANT_DE_L_ACTIVITE,
