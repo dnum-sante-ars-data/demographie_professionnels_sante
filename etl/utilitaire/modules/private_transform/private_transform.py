@@ -32,7 +32,7 @@ def transform_export(filepath_activites, filepath_personnes, filepath_activites_
     select_activites_sql = query_select_activites_sql()
 
     for chunk in pd.read_sql_query(select_activites_sql, conn, chunksize=10000):
-       chunk.to_csv(os.path.join(filepath_activites), header = False, index = True, index_label = "INDEX", mode='a',sep=';',encoding='utf-8')
+       chunk.to_csv(os.path.join(filepath_activites), index = True, index_label = "INDEX", mode='a',sep=';',encoding='utf-8')
     
     print(" --- select_activites_sql : OK")
     
@@ -43,7 +43,7 @@ def transform_export(filepath_activites, filepath_personnes, filepath_activites_
     select_personnes_sql = query_select_personnes_sql()
 
     for chunk in pd.read_sql_query(select_personnes_sql, conn, chunksize=10000):
-       chunk.to_csv(os.path.join(filepath_personnes), header = False, index = True, index_label = "INDEX", mode='a',sep=';',encoding='utf-8')
+       chunk.to_csv(os.path.join(filepath_personnes), index = True, index_label = "INDEX", mode='a',sep=';',encoding='utf-8')
 
     print(" --- select_personnes_sql : OK")
 
@@ -54,6 +54,6 @@ def transform_export(filepath_activites, filepath_personnes, filepath_activites_
     select_activites_vs_savoirfaire_sql = query_select_activites_vs_savoirfaire_sql()
 
     for chunk in pd.read_sql_query(select_activites_vs_savoirfaire_sql, conn, chunksize=10000):
-       chunk.to_csv(os.path.join(filepath_activites_vs_savoirfaire), header = False, index = True, index_label = "INDEX", mode='a',sep=';',encoding='utf-8')
+       chunk.to_csv(os.path.join(filepath_activites_vs_savoirfaire), index = True, index_label = "INDEX", mode='a',sep=';',encoding='utf-8')
 
     print(" --- select_activites_vs_savoirfaire_sql : OK")
