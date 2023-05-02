@@ -1,7 +1,7 @@
 /etl/utilitaire/data/output/
 /etl/utilitaire/data/input/
 /etl/utilitaire/data/database/
-/etl/utilitaire/utils/T_GEO_COM.csv
+T_GEO_COM.csv
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
