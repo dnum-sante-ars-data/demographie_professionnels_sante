@@ -82,7 +82,9 @@ def transform_export():
 
     param_path_activites_vs_savoirfaire = utils.read_settings("settings/settings.json", dict = "file_to_transform_export", elem = "activites_vs_savoirfaire")
 
-    private_transform.transform_export(filepath_activites = param_path_activites["path"], filepath_personnes = param_path_personnes["path"], filepath_activites_vs_savoirfaire = param_path_activites_vs_savoirfaire["path"], database = param_config["database"], verbose = True)
+    param_path_last_activites_vs_savoirfaire = utils.read_settings("settings/settings.json", dict = "file_to_transform_export", elem = "last_activites_vs_savoirfaire")
+
+    private_transform.transform_export(filepath_activites = param_path_activites["path"], filepath_personnes = param_path_personnes["path"], filepath_activites_vs_savoirfaire = param_path_activites_vs_savoirfaire["path"], filepath_last_activites_vs_savoirfaire = param_path_last_activites_vs_savoirfaire["path"], database = param_config["database"], verbose = True)
 
 
 # Fonction export vers SFTP
